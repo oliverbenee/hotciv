@@ -50,8 +50,16 @@ public class TestAlphaCiv {
   public void shouldBeRedAsStartingPlayer() {
     assertThat(game, is(notNullValue()));
     // TODO: reenable the assert below to get started...
-    // assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
+
+  // FRS p. 462 states, that 'after Red it is blue that is in turn
+  @Test
+  public void ensureBlueIsNext() {
+    assertTrue(1 == 1);
+  }
+
+
 
   /** REMOVE ME. Not a test of HotCiv, just an example of what
       matchers the hamcrest library has... */
