@@ -41,7 +41,7 @@ public class GameImpl implements Game {
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
-  public void endOfTurn() { Game.endOfTurn();}
+  public void endOfTurn() { endOfTurn(); }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}

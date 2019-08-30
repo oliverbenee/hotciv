@@ -56,7 +56,19 @@ public class TestAlphaCiv {
   // FRS p. 462 states, that 'after Red it is blue that is in turn
   @Test
   public void ensureBlueIsNext() {
-    assertTrue(1 == 1);
+    /*
+     * First ensure, that test CAN work.
+     */
+    assertThat(game, is(notNullValue()));
+    // TODO: reenable the assert below to get started...
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+  }
+
+  // FRS p. 462 states, that 'Red wins in year 3000 BC'
+  @Test
+  public void redShouldWinInYear3000BC() {
+    assertThat(game.getAge(), is(3000));
+    assertThat(game.getWinner(), is(Player.RED));
   }
 
 
