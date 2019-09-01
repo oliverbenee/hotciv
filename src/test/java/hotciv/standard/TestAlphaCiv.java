@@ -53,6 +53,16 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
+  // FRS p. 462 states that 'Red's city is at (1,1)
+  @Test
+  public void shouldReturn1Point1AsRedsStartingCity() {
+    Position pcurrent = new Position(1,1);
+    assertTrue(game.getCityAt(pcurrent).getOwner() != null);
+    assertThat(game.getCityAt(pcurrent).getOwner(), is(Player.RED));
+  }
+
+
+
   // FRS p. 462 states, that 'after Red it is blue that is in turn
   @Test
   public void ensureBlueIsNext() {
@@ -67,9 +77,19 @@ public class TestAlphaCiv {
   // FRS p. 462 states, that 'Red wins in year 3000 BC'
   @Test
   public void redShouldWinInYear3000BC() {
-    assertThat(game.getAge(), is(3000));
+    assertThat(game.getAge(), is(-4000));
+    for(int i=0; i < 20; i++){
+      game.endOfTurn();
+    }
     assertThat(game.getWinner(), is(Player.RED));
   }
+
+  // Extra test - ensure, that the game starts in year 4000 BC
+  @Test
+  public void gameShouldStartAtYear4000(){
+    assertThat(game.getAge(), is(-4000));
+  }
+
 
 
 
