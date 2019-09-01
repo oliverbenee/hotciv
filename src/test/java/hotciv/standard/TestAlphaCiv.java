@@ -72,6 +72,8 @@ public class TestAlphaCiv {
     assertThat(game, is(notNullValue()));
     // TODO: reenable the assert below to get started...
     assertThat(game.getPlayerInTurn(), is(Player.RED));
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
   // FRS p. 462 states, that 'Red wins in year 3000 BC'
@@ -86,7 +88,7 @@ public class TestAlphaCiv {
 
   // Extra test - ensure, that the game starts in year 4000 BC
   @Test
-  public void gameShouldStartAtYear4000(){
+  public void gameShouldStartAtYear4000BC(){
     assertThat(game.getAge(), is(-4000));
   }
 

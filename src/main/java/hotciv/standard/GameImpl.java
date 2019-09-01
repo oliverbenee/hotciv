@@ -48,7 +48,7 @@ public class GameImpl implements Game {
       return null;
     }
   }
-  public int getAge() { return 3000; }
+  public int getAge() { return currentYear; }
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
