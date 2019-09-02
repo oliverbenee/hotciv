@@ -40,19 +40,26 @@ public class GameImpl implements Game {
   public Tile getTileAt( Position p ) { return null; }
   public Unit getUnitAt( Position p ) { return null; }
   public City getCityAt( Position p ) { return null; }
-  public Player getPlayerInTurn() { return Player.RED; }
+  public Player getPlayerInTurn() {
+    return playerInTurn;
+  }
   public Player getWinner() {
     if (currentYear == -3000) {
       return Player.RED;
-    } else {
-      return null;
-    }
+    } else { return null; }
   }
   public int getAge() { return currentYear; }
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
-  public void endOfTurn() { endOfTurn(); }
+  public void endOfTurn() {
+    if (playerInTurn == Player.RED) {
+      playerInTurn = Player.BLUE;
+    } else {
+      playerInTurn = Player.RED;
+      currentYear += 100;
+    }
+  }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}

@@ -8,3 +8,8 @@
 [ * ] after Red it is Blue that is in turn
 [ * ] Red wins in year 3000 BC
 [] Red’s unit attack and destroy Blue’s unit
+
+Custom implemented test:
+
+[ * ] Game starts at year 4000 BC
+[ * ] No winner is found before year 3000 BC

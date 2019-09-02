@@ -38,6 +38,7 @@ import java.util.*;
 */
 public class TestAlphaCiv {
   private Game game;
+  private City redCity;
 
   /** Fixture for alphaciv testing. */
   @Before
@@ -80,10 +81,21 @@ public class TestAlphaCiv {
   @Test
   public void redShouldWinInYear3000BC() {
     assertThat(game.getAge(), is(-4000));
+    // IntelliJ hates for-loops
     for(int i=0; i < 20; i++){
       game.endOfTurn();
     }
     assertThat(game.getWinner(), is(Player.RED));
+  }
+  // Extra test - ensure, that no winner is found before year 3000 BC
+  @Test
+  public void noWinnerIsFoundBeforeYear3000BC() {
+    assertThat(game.getAge(), is(-4000));
+    // IntelliJ hates for-loops
+    for(int i=0; i < 10; i++){
+      game.endOfTurn();
+    }
+    assertTrue(game.getWinner() == null);
   }
 
   // Extra test - ensure, that the game starts in year 4000 BC
@@ -92,32 +104,17 @@ public class TestAlphaCiv {
     assertThat(game.getAge(), is(-4000));
   }
 
-
-
-
-  /** REMOVE ME. Not a test of HotCiv, just an example of what
-      matchers the hamcrest library has... */
+  // Ensure, that population of cities is always 1.
   @Test
-  public void shouldDefinetelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
+  public void populationOfCitiesIsAlways1(){
+    Position pcurrent = new Position(1,1);
+    assertThat(game.getCityAt(pcurrent).getSize(), is(1));
+  }
 
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
-
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
-
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
+  // Ensure, that cities produce 6 production per round
+  @Test
+  public void citiesShouldProduce6ProductionPerRound(){
+    game.endOfTurn();
+    assertTrue(redCity.getTreasury() == 6);
   }
 }
