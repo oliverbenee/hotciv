@@ -3,8 +3,8 @@
 [] there is ocean at (1,0)
 [] units cannot move over mountain
 [] Red cannot move Blue’s units
-[] cities produce 6 ‘production’ after a round has ended
-[] cities’ population size is always 1
+[] cities produce 6 ‘production’ after a round has ended    NOT FULLY IMPLEMENTED
+[] cities’ population size is always 1                      NOT FULLY IMPLEMENTED
 [ * ] after Red it is Blue that is in turn
 [ * ] Red wins in year 3000 BC
 [] Red’s unit attack and destroy Blue’s unit

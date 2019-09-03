@@ -1,5 +1,5 @@
 package hotciv.standard;
-
+import java.util.HashMap;
 import hotciv.framework.*;
 
 /** Skeleton implementation of HotCiv.
@@ -33,25 +33,43 @@ import hotciv.framework.*;
 public class GameImpl implements Game {
   Player playerInTurn;
   int currentYear;
+  private HashMap<Position, TileImpl> world = new HashMap();
   public GameImpl(){
     playerInTurn = Player.RED;
     currentYear = -4000;
+    for(int i=0; i<GameConstants.WORLDSIZE; i++){
+      for(int j=0; j<GameConstants.WORLDSIZE; j++){
+        createTile(new Position(i,j), new TileImpl(GameConstants.PLAINS));
+      }
+    }
+    createTile(new Position(1,0), new TileImpl(GameConstants.OCEANS));
+    createTile(new Position(0,1), new TileImpl(GameConstants.HILLS));
+    createTile(new Position(1,1), new TileImpl(GameConstants.MOUNTAINS));
   }
+  public void createTile(Position p, TileImpl type) {world.put(p, type); }
+
   public Tile getTileAt( Position p ) { return null; }
+
   public Unit getUnitAt( Position p ) { return null; }
+
   public City getCityAt( Position p ) { return null; }
+
   public Player getPlayerInTurn() {
     return playerInTurn;
   }
+
   public Player getWinner() {
     if (currentYear == -3000) {
       return Player.RED;
     } else { return null; }
   }
+
   public int getAge() { return currentYear; }
+
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
+
   public void endOfTurn() {
     if (playerInTurn == Player.RED) {
       playerInTurn = Player.BLUE;
@@ -60,7 +78,10 @@ public class GameImpl implements Game {
       currentYear += 100;
     }
   }
+
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
+
   public void changeProductionInCityAt( Position p, String unitType ) {}
+
   public void performUnitActionAt( Position p ) {}
 }

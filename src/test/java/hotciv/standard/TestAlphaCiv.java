@@ -3,6 +3,8 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import org.junit.*;
+
+import static hotciv.framework.GameConstants.PLAINS;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -58,11 +60,9 @@ public class TestAlphaCiv {
   @Test
   public void shouldReturn1Point1AsRedsStartingCity() {
     Position pcurrent = new Position(1,1);
-    assertTrue(game.getCityAt(pcurrent).getOwner() != null);
+    assertNotNull(game.getCityAt(pcurrent));
     assertThat(game.getCityAt(pcurrent).getOwner(), is(Player.RED));
   }
-
-
 
   // FRS p. 462 states, that 'after Red it is blue that is in turn
   @Test
@@ -107,6 +107,7 @@ public class TestAlphaCiv {
   // Ensure, that population of cities is always 1.
   @Test
   public void populationOfCitiesIsAlways1(){
+    assertThat(redCity.getSize(), is(1));
     Position pcurrent = new Position(1,1);
     assertThat(game.getCityAt(pcurrent).getSize(), is(1));
   }
@@ -114,7 +115,17 @@ public class TestAlphaCiv {
   // Ensure, that cities produce 6 production per round
   @Test
   public void citiesShouldProduce6ProductionPerRound(){
+    int firstTreasury = redCity.getTreasury();
     game.endOfTurn();
-    assertTrue(redCity.getTreasury() == 6);
+    assertTrue(redCity.getTreasury() == firstTreasury + 6);
+  }
+
+  @Test
+  public void ensurePopulatedTiles(){
+    for(int i=0; i< GameConstants.WORLDSIZE - 1; i++){
+      for(int j=0; j<GameConstants.WORLDSIZE - 1; j++){
+        assertThat(game.getTileAt(new Position(i,j)).getTypeString(), equals(gameConstants.PLAINS));
+      }
+    }
   }
 }
