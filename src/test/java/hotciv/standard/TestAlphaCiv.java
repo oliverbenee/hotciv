@@ -40,7 +40,6 @@ import java.util.*;
 */
 public class TestAlphaCiv {
   private Game game;
-  private City redCity;
 
   /** Fixture for alphaciv testing. */
   @Before
@@ -58,10 +57,13 @@ public class TestAlphaCiv {
 
   // FRS p. 462 states that 'Red's city is at (1,1)
   @Test
-  public void shouldReturn1Point1AsRedsStartingCity() {
-    Position pcurrent = new Position(1,1);
-    assertNotNull(game.getCityAt(pcurrent));
-    assertThat(game.getCityAt(pcurrent).getOwner(), is(Player.RED));
+  public void playerRedHasACityAt1Point1(){
+    assertEquals(game.getCityAt(new Position(1,1)).getOwner(), Player.RED);
+  }
+
+  @Test
+  public void blueHasACityAt4Point1(){
+    assertEquals(game.getCityAt(new Position(4,1)).getOwner(), Player.BLUE);
   }
 
   // FRS p. 462 states, that 'after Red it is blue that is in turn
@@ -107,7 +109,6 @@ public class TestAlphaCiv {
   // Ensure, that population of cities is always 1.
   @Test
   public void populationOfCitiesIsAlways1(){
-    assertThat(redCity.getSize(), is(1));
     Position pcurrent = new Position(1,1);
     assertThat(game.getCityAt(pcurrent).getSize(), is(1));
   }
@@ -115,17 +116,26 @@ public class TestAlphaCiv {
   // Ensure, that cities produce 6 production per round
   @Test
   public void citiesShouldProduce6ProductionPerRound(){
-    int firstTreasury = redCity.getTreasury();
+    int firstTreasury = game.getCityAt(new Position(1,1)).getTreasury();
     game.endOfTurn();
-    assertTrue(redCity.getTreasury() == firstTreasury + 6);
+    assertTrue(game.getCityAt(new Position(1,1)).getTreasury() == firstTreasury + 6);
   }
 
+  // Ensure, that an ocean tile exists at (1,0)
   @Test
-  public void ensurePopulatedTiles(){
-    for(int i=0; i< GameConstants.WORLDSIZE - 1; i++){
-      for(int j=0; j<GameConstants.WORLDSIZE - 1; j++){
-        assertThat(game.getTileAt(new Position(i,j)).getTypeString(), equals(gameConstants.PLAINS));
+  public void ensureThatThereIsOceanAt1Point0(){
+    assertEquals(game.getTileAt(new Position(1,0)).getTypeString(), "ocean");
+  }
+
+  // TEST NOT FULLY IMPLEMENTED.
+  /**
+  @Test
+  public void unitsCannotPassOverOceanOrMountains(){
+    for (int i = 0; i < GameConstants.WORLDSIZE; i++){
+      for (int j = 0; j < GameConstants.WORLDSIZE; j++){
+        assertTrue(game.getTileAt(new Position(i,j)), movementIsAllowed());
       }
     }
   }
+  */
 }

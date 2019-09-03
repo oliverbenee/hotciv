@@ -34,6 +34,7 @@ public class GameImpl implements Game {
   Player playerInTurn;
   int currentYear;
   private HashMap<Position, TileImpl> world = new HashMap();
+  private HashMap<Position, CityImpl> cities = new HashMap();
   public GameImpl(){
     playerInTurn = Player.RED;
     currentYear = -4000;
@@ -45,14 +46,18 @@ public class GameImpl implements Game {
     createTile(new Position(1,0), new TileImpl(GameConstants.OCEANS));
     createTile(new Position(0,1), new TileImpl(GameConstants.HILLS));
     createTile(new Position(1,1), new TileImpl(GameConstants.MOUNTAINS));
+    createCity(new Position(1,1), new CityImpl(Player.RED));
+    createCity(new Position(4,1), new CityImpl(Player.BLUE));
   }
   public void createTile(Position p, TileImpl type) {world.put(p, type); }
 
-  public Tile getTileAt( Position p ) { return null; }
+  public void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
+
+  public Tile getTileAt( Position p ) { return world.get(p); }
 
   public Unit getUnitAt( Position p ) { return null; }
 
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) { return cities.get(p); }
 
   public Player getPlayerInTurn() {
     return playerInTurn;
