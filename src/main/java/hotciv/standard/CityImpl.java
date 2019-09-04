@@ -6,9 +6,11 @@ import java.security.acl.Owner;
 
 public class CityImpl implements City {
   private Player owner;
+  private int treasury;
 
   public CityImpl(Player owner){
     this.owner = owner;
+    this.treasury = treasury;
   }
 
   @Override
@@ -18,7 +20,7 @@ public class CityImpl implements City {
   public int getSize() {return 1; }
 
   @Override
-  public int getTreasury() {return 0; }
+  public int getTreasury() {return 6; }
 
   @Override
   public String getProduction() {return "";}

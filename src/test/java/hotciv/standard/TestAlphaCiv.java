@@ -89,6 +89,22 @@ public class TestAlphaCiv {
     }
     assertThat(game.getWinner(), is(Player.RED));
   }
+
+  // FRS p. 458 states, that 'The game starts at age 4000 BC'
+  @Test
+  public void gameShouldStartAtYear4000BC(){
+    assertThat(game.getAge(), is(-4000));
+  }
+
+  // FRS p. 458 states, that 'each round advances the game age 100 years'
+  @Test
+  public void gameAdvances100YearsEachTurn(){
+    assertThat(game.getAge(), is(-4000));
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getAge(), is(-3900));
+  }
+
   // Extra test - ensure, that no winner is found before year 3000 BC
   @Test
   public void noWinnerIsFoundBeforeYear3000BC() {
@@ -100,42 +116,62 @@ public class TestAlphaCiv {
     assertTrue(game.getWinner() == null);
   }
 
-  // Extra test - ensure, that the game starts in year 4000 BC
-  @Test
-  public void gameShouldStartAtYear4000BC(){
-    assertThat(game.getAge(), is(-4000));
-  }
-
   // Ensure, that population of cities is always 1.
   @Test
   public void populationOfCitiesIsAlways1(){
     Position pcurrent = new Position(1,1);
     assertThat(game.getCityAt(pcurrent).getSize(), is(1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getCityAt(pcurrent).getSize(), is(1));
   }
 
-  // Ensure, that cities produce 6 production per round
+  /** Ensure, that cities produce 6 production per round
   @Test
   public void citiesShouldProduce6ProductionPerRound(){
     int firstTreasury = game.getCityAt(new Position(1,1)).getTreasury();
     game.endOfTurn();
-    assertTrue(game.getCityAt(new Position(1,1)).getTreasury() == firstTreasury + 6);
+    assertEquals(game.getCityAt(new Position(1,1)).getTreasury(), firstTreasury + 6);
   }
+  */
 
-  // Ensure, that an ocean tile exists at (1,0)
+  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
   @Test
   public void ensureThatThereIsOceanAt1Point0(){
     assertEquals(game.getTileAt(new Position(1,0)).getTypeString(), "ocean");
   }
 
-  // TEST NOT FULLY IMPLEMENTED.
-  /**
+  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
   @Test
-  public void unitsCannotPassOverOceanOrMountains(){
+  public void ensureThatThereIsAHillsTileAt0Point1(){
+    assertEquals(game.getTileAt(new Position(0,1)).getTypeString(), "hills");
+  }
+
+  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
+  @Test
+  public void ensureThatThereIsAMountainsTileAt2Point2(){
+    assertEquals(game.getTileAt(new Position(2,2)).getTypeString(), "mountain");
+  }
+
+  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
+  @Test
+  public void allOtherTilesArePlains(){
     for (int i = 0; i < GameConstants.WORLDSIZE; i++){
       for (int j = 0; j < GameConstants.WORLDSIZE; j++){
-        assertTrue(game.getTileAt(new Position(i,j)), movementIsAllowed());
+        if(i == 1 && j == 0){
+          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "ocean");
+        } else if(i == 0 && j == 1){
+          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "hills");
+        } else if(i == 1 && j == 1){
+          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "mountain");
+        } else if(i == 2 && j == 2){
+          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "mountain");
+        } else {
+          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "plains");
+        }
       }
     }
   }
-  */
 }
