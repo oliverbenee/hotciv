@@ -36,21 +36,11 @@ Requirements:
 
 14 / 25 functions implemented
 
+Missing features thus currently include:
 
-
-// OLD TEST LIST:
-
-[ * ] Red is the first player in turn
-[ * ] Red’s city is at (1,1)
-[ * ] there is ocean at (1,0)
-[] units cannot move over mountain
-[] Red cannot move Blue’s units
-[] cities produce 6 ‘production’ after a round has ended    NOT FULLY IMPLEMENTED
-[ * ] cities’ population size is always 1
-[ * ] after Red it is Blue that is in turn
-[ * ] Red wins in year 3000 BC
-[] Red’s unit attack and destroy Blue’s unit
-
-[ * ] Game starts at year 4000 BC
-[ * ] No winner is found before year 3000 BC
-[ * ] Blue has a city at (4,1)
+- Only one unit is allowed on a tile at any time.
+- Attacks are resolved like this: The attacking unit always wins no matter what the defensive or attacking strengths are of either units.
+- Unit production (no implementation)
+- The player may select to produce either archers, legions, or settlers.
+- Cities produce 6 production per round, which is a fixed setup         - A TEST HAS BEEN MADE FOR THIS FEATURE, BUT HAS NOT BEEN IMPLEMENTED - PRODUCTION CODE FOR THIS FEATURE HAS NOT BEEN ADDED.
+- No associated actions are supported by any unit. Specifically, the settler’s action does nothing.

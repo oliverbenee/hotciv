@@ -128,7 +128,7 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(pcurrent).getSize(), is(1));
   }
 
-  /** NOT IMPLEMENTED
+  /** THIS TEST IS NOT IMPLEMENTED
   // Ensure, that cities produce 6 production per round
   @Test
   public void citiesShouldProduce6ProductionPerRound(){
@@ -184,6 +184,7 @@ public class TestAlphaCiv {
     assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
   }
 
+  //FRS p. 462 states, that "Red cannot move Blue’s units"
   @Test
   public void blueCannotMoveRedsUnits(){
     game.endOfTurn();
