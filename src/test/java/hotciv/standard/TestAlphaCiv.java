@@ -208,4 +208,17 @@ public class TestAlphaCiv {
     assertTrue(game.getUnitAt(bluepos).getOwner().equals(Player.RED));
     assertFalse(game.getUnitAt(bluepos).getOwner().equals(Player.BLUE));
   }
+
+  //FRS p. 458 states, that "The attacking unit always wins no matter what the defensive or attacking strengths are of either units."
+  @Test
+  public void attackingUnitAlwaysWins(){
+    Position pos1 = new Position(2,0);
+    Position pos2 = new Position(3,0);
+    assertEquals(game.getPlayerInTurn(), Player.RED);
+    Unit redUnit = game.getUnitAt(pos1);
+    Unit blueUnit = game.getUnitAt(pos2);
+    assertEquals(game.getUnitAt(pos2), blueUnit);
+    game.moveUnit(pos1, pos2);
+    assertEquals(game.getUnitAt(pos2), redUnit);
+  }
 }

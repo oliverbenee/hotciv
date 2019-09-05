@@ -13,8 +13,8 @@ Requirements:
     [ * ] Red has initially one archer at (2,0),
     [] Blue has one legion at (3,2),
     [] and Red a settler at (4,3).
-[] Attacking. (1)
-    [] Attacks are resolved like this: The attacking unit always wins no matter what the defensive or attacking strengths are of either units.
+[ * ] Attacking. (1)
+    [ * ] Attacks are resolved like this: The attacking unit always wins no matter what the defensive or attacking strengths are of either units.
 [] Unit actions. (1)
     [] No associated actions are supported by any unit. Specifically, the settler’s action does nothing.
 [] Cities. (5)
@@ -34,17 +34,21 @@ Requirements:
 [ * ] Winning. (1)
     [ * ] Red wins in year 3000 BC.
 
-15 / 25 functions implemented
+16 / 25 functions implemented.
+5 / 9 categories implemented.
 
 Missing features thus currently include:
 
 - Blue has one legion at (3,2).
 - Red has one settler at (4,3).
-- Attacking.
 - Unit actions.
 - The player may select to produce either archers, legions, or settlers.
 - Cities produce 6 production per round, which is a fixed setup
     - A TEST HAS BEEN MADE FOR THIS FEATURE, BUT HAS NOT BEEN IMPLEMENTED - PRODUCTION CODE FOR THIS FEATURE HAS NOT BEEN ADDED.
-- Unit production (no implementation)
+- Unit production (no implementation) - 4 functions missing:
+    - When a city has accumulated enough production it produces the unit selected for production,
+    - and the unit’s cost is deducted from the city’s treasury of production.
+    - The unit is placed on the city tile if no other unit is present,
+    - otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
 
 Please refer to the list above for more details.
