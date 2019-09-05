@@ -31,3 +31,5 @@ allOtherTilesArePlains():                   Ensure, that all other tiles than (1
 redHasAnArcherAt2Point0():                  Ensure, that player red has an archer at (2,0).
 
 blueCannotMoveRedsUnits():                  Ensure, that player blue cannot move player red's units.
+
+onlyOneUnitAtATileAtATime():                Ensure, that there is only one unit on a tile at a given time.

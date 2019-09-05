@@ -9,7 +9,7 @@ Requirements:
     [ * ] tile (0,1) = Hills,
     [ * ] tile (2,2) = Mountains.
 [] Units. (4)
-    [] Only one unit is allowed on a tile at any time.
+    [ * ] Only one unit is allowed on a tile at any time.
     [ * ] Red has initially one archer at (2,0),
     [] Blue has one legion at (3,2),
     [] and Red a settler at (4,3).
@@ -34,7 +34,7 @@ Requirements:
 [ * ] Winning. (1)
     [ * ] Red wins in year 3000 BC.
 
-14 / 25 functions implemented
+15 / 25 functions implemented
 
 Missing features thus currently include:
 

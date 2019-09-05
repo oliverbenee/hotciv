@@ -57,11 +57,12 @@ public class GameImpl implements Game {
 
   public void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
 
+  // Note: was Unit, changed to UnitImpl
   public void createUnit(Position p, UnitImpl owner) {units.put(p, owner); }
 
   public Tile getTileAt( Position p ) { return world.get(p); }
 
-  public Unit getUnitAt( Position p ) {
+  public UnitImpl getUnitAt( Position p ) {
     return units.get(p);
   }
 
@@ -80,12 +81,9 @@ public class GameImpl implements Game {
   public int getAge() { return currentYear; }
 
   public boolean moveUnit( Position from, Position to ) {
-    /**
     UnitImpl unit = getUnitAt(from);
     units.remove(from);
-    UnitImpl unitimpl = unit;
-    units.put(to, unitimpl);
-     */
+    createUnit(to, unit);
     return false;
   }
 

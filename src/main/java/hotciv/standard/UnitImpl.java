@@ -16,7 +16,7 @@ public class UnitImpl implements Unit {
   }
 
   public Player getOwner(){
-    return Player.RED;
+    return owner;
   }
 
   public int getMoveCount(){

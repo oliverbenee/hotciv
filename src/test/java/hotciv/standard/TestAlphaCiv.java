@@ -128,11 +128,12 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(pcurrent).getSize(), is(1));
   }
 
-  /** THIS TEST IS NOT IMPLEMENTED
+  /**
   // Ensure, that cities produce 6 production per round
   @Test
   public void citiesShouldProduce6ProductionPerRound(){
     int firstTreasury = game.getCityAt(new Position(1,1)).getTreasury();
+    game.endOfTurn();
     game.endOfTurn();
     assertEquals(game.getCityAt(new Position(1,1)).getTreasury(), firstTreasury + 6);
   }
@@ -193,5 +194,17 @@ public class TestAlphaCiv {
     Unit unit = game.getUnitAt(pos1);
     assert(!game.moveUnit(pos1,pos2));
     assertThat(game.getUnitAt(pos1), is(unit));
+  }
+
+  //FRS p. 458 states, that "only one unit is allowed on a tile at any time."
+  @Test
+  public void onlyOneUnitAtATileAtATime(){
+    Position redpos = new Position(2,0);
+    assertTrue(game.getUnitAt(redpos).getOwner().equals(Player.RED));
+    Position bluepos = new Position(3,2);
+    assertTrue(game.getUnitAt(bluepos).getOwner().equals(Player.BLUE));
+    game.moveUnit(redpos, bluepos);
+    assertTrue(game.getUnitAt(bluepos).getOwner().equals(Player.RED));
+    assertFalse(game.getUnitAt(bluepos).getOwner().equals(Player.BLUE));
   }
 }
