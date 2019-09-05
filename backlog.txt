@@ -38,11 +38,13 @@ Requirements:
 
 Missing features thus currently include:
 
-- Attacks are resolved like this: The attacking unit always wins no matter what the defensive or attacking strengths are of either units.
-- Unit production (no implementation)
+- Blue has one legion at (3,2).
+- Red has one settler at (4,3).
+- Attacking.
+- Unit actions.
 - The player may select to produce either archers, legions, or settlers.
-- Cities produce 6 production per round, which is a fixed setup         - A TEST HAS BEEN MADE FOR THIS FEATURE, BUT HAS NOT BEEN IMPLEMENTED - PRODUCTION CODE FOR THIS FEATURE HAS NOT BEEN ADDED.
+- Cities produce 6 production per round, which is a fixed setup
+    - A TEST HAS BEEN MADE FOR THIS FEATURE, BUT HAS NOT BEEN IMPLEMENTED - PRODUCTION CODE FOR THIS FEATURE HAS NOT BEEN ADDED.
+- Unit production (no implementation)
 
-No code has been added to ensure the following (but no code needs to be added?
-
-- No associated actions are supported by any unit. Specifically, the settler’s action does nothing.
+Please refer to the list above for more details.

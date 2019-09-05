@@ -82,8 +82,19 @@ public class GameImpl implements Game {
 
   public boolean moveUnit( Position from, Position to ) {
     UnitImpl unit = getUnitAt(from);
-    units.remove(from);
-    createUnit(to, unit);
+    if(getPlayerInTurn().equals(Player.RED)){
+      if(unit.getOwner().equals(Player.RED)){
+        units.remove(from);
+        createUnit(to, unit);
+      }
+    }
+    if(getPlayerInTurn().equals(Player.BLUE)){
+      if(unit.getOwner().equals(Player.BLUE)){
+        units.remove(from);
+        createUnit(to, unit);
+      }
+    }
+
     return false;
   }
 

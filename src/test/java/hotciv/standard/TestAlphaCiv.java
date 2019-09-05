@@ -192,6 +192,7 @@ public class TestAlphaCiv {
     Position pos1 = new Position(2,0);
     Position pos2 = new Position(3,0);
     Unit unit = game.getUnitAt(pos1);
+    game.moveUnit(pos1, pos2);
     assert(!game.moveUnit(pos1,pos2));
     assertThat(game.getUnitAt(pos1), is(unit));
   }
