@@ -94,7 +94,6 @@ public class GameImpl implements Game {
         createUnit(to, unit);
       }
     }
-
     return false;
   }
 
