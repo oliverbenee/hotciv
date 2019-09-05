@@ -174,4 +174,22 @@ public class TestAlphaCiv {
       }
     }
   }
+
+  //FRS p. 458 states, that "Red has initially one archer at (2,0)"
+  @Test
+  public void redHasAnArcherAt2Point0(){
+    Position currentpos = new Position(2,0);
+    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.ARCHER));
+    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
+  }
+
+  @Test
+  public void blueCannotMoveRedsUnits(){
+    game.endOfTurn();
+    Position pos1 = new Position(2,0);
+    Position pos2 = new Position(3,0);
+    Unit unit = game.getUnitAt(pos1);
+    assert(!game.moveUnit(pos1,pos2));
+    assertThat(game.getUnitAt(pos1), is(unit));
+  }
 }
