@@ -128,7 +128,8 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(pcurrent).getSize(), is(1));
   }
 
-  /** Ensure, that cities produce 6 production per round
+  /** NOT IMPLEMENTED
+  // Ensure, that cities produce 6 production per round
   @Test
   public void citiesShouldProduce6ProductionPerRound(){
     int firstTreasury = game.getCityAt(new Position(1,1)).getTreasury();

@@ -80,10 +80,12 @@ public class GameImpl implements Game {
   public int getAge() { return currentYear; }
 
   public boolean moveUnit( Position from, Position to ) {
-   /**
-    UnitImpl unit = world.remove(from);
-    world.put(to, unit);
-   */
+    /**
+    UnitImpl unit = getUnitAt(from);
+    units.remove(from);
+    UnitImpl unitimpl = unit;
+    units.put(to, unitimpl);
+     */
     return false;
   }
 

@@ -20,7 +20,7 @@ public class CityImpl implements City {
   public int getSize() {return 1; }
 
   @Override
-  public int getTreasury() {return 6; }
+  public int getTreasury() {return treasury; }
 
   @Override
   public String getProduction() {return "";}
