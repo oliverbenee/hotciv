@@ -83,7 +83,6 @@ public class TestAlphaCiv {
   @Test
   public void redShouldWinInYear3000BC() {
     assertThat(game.getAge(), is(-4000));
-    // IntelliJ hates for-loops
     for(int i=0; i < 20; i++){
       game.endOfTurn();
     }
