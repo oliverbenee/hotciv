@@ -1,18 +1,17 @@
 package hotciv.standard;
-
-import hotciv.framework.Player;
-import hotciv.framework.Unit;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 
 public class UnitImpl implements Unit {
   private Player owner;
+  private String type;
 
-  public UnitImpl(Player owner){
-    this.owner = owner;
+  public UnitImpl(Player owner, String unitType){
+    owner = owner;
+    type = unitType;
   }
 
   public String getTypeString() {
-    return "archer";
+    return type;
   }
 
   public Player getOwner(){

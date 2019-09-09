@@ -1,10 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-
 import org.junit.*;
-
-import static hotciv.framework.GameConstants.PLAINS;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -184,6 +181,13 @@ public class TestAlphaCiv {
     assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
   }
 
+  //FRS p. 458 states, that "Blue has one legion at (3,2)"
+  @Test
+  public void blueHasALegionAt3Point2(){
+    Position currentpos = new Position(3,2);
+    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.LEGION));
+  }
+
   //FRS p. 462 states, that "Red cannot move Blue’s units"
   @Test
   public void blueCannotMoveRedsUnits(){
@@ -222,5 +226,10 @@ public class TestAlphaCiv {
     assertEquals(game.getUnitAt(pos2), blueUnit);
     game.moveUnit(pos1, pos2);
     assertEquals(game.getUnitAt(pos2), redUnit);
+  }
+
+  @Test
+  public void settlersActionDoesNothing(){
+    assertThat(game.getUnitAt())
   }
 }

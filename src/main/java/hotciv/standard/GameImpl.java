@@ -50,8 +50,8 @@ public class GameImpl implements Game {
     createTile(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
     createCity(new Position(1,1), new CityImpl(Player.RED));
     createCity(new Position(4,1), new CityImpl(Player.BLUE));
-    createUnit(new Position(2,0), new UnitImpl(Player.RED));
-    createUnit(new Position(3,2), new UnitImpl(Player.BLUE));
+    createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER));
+    createUnit(new Position(3,2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
   }
   public void createTile(Position p, TileImpl type) {world.put(p, type); }
 
