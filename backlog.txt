@@ -8,7 +8,7 @@ The following requiremnets are set for the project - all requirements, that have
     [ * ] tile(1,0) = Ocean,
     [ * ] tile (0,1) = Hills,
     [ * ] tile (2,2) = Mountains.
-[] Units. (4)
+[ * ] Units. (4)
     [ * ] Only one unit is allowed on a tile at any time.
     [ * ] Red has initially one archer at (2,0),
     [ * ] Blue has one legion at (3,2),
