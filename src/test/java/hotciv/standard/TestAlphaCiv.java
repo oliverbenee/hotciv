@@ -36,7 +36,7 @@ import java.util.*;
 
 */
 public class TestAlphaCiv {
-  private Game game;
+  private GameImpl game;
 
   /** Fixture for alphaciv testing. */
   @Before
@@ -186,6 +186,16 @@ public class TestAlphaCiv {
   public void blueHasALegionAt3Point2(){
     Position currentpos = new Position(3,2);
     assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.LEGION));
+    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.BLUE));
+
+  }
+
+  //FRS p. 458 states, that "Player red has a settler at (4,3)"
+  @Test
+  public void redHasASettlerAt4Point3(){
+    Position currentpos = new Position(4,3);
+    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.SETTLER));
+    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
   }
 
   //FRS p. 462 states, that "Red cannot move Blue’s units"
@@ -230,6 +240,8 @@ public class TestAlphaCiv {
 
   @Test
   public void settlersActionDoesNothing(){
-    assertThat(game.getUnitAt())
+    Position currentpos = new Position(4,3);
+    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.SETTLER));
+    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
   }
 }

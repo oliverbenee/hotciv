@@ -6,8 +6,8 @@ public class UnitImpl implements Unit {
   private String type;
 
   public UnitImpl(Player owner, String unitType){
-    owner = owner;
-    type = unitType;
+    this.owner = owner;
+    this.type = unitType;
   }
 
   public String getTypeString() {

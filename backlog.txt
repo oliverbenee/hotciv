@@ -11,8 +11,8 @@ The following requiremnets are set for the project - all requirements, that have
 [] Units. (4)
     [ * ] Only one unit is allowed on a tile at any time.
     [ * ] Red has initially one archer at (2,0),
-    [] Blue has one legion at (3,2),
-    [] and Red a settler at (4,3).
+    [ * ] Blue has one legion at (3,2),
+    [ * ] and Red a settler at (4,3).
 [ * ] Attacking. (1)
     [ * ] Attacks are resolved like this: The attacking unit always wins no matter what the defensive or attacking strengths are of either units.
 [] Unit actions. (1)
