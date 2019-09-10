@@ -135,42 +135,22 @@ public class TestAlphaCiv {
   }
   */
 
-  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
+  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type "plain" except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
   @Test
   public void ensureThatThereIsOceanAt1Point0(){
     assertEquals(game.getTileAt(new Position(1,0)).getTypeString(), "ocean");
   }
 
-  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
+  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type "plain" except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
   @Test
   public void ensureThatThereIsAHillsTileAt0Point1(){
     assertEquals(game.getTileAt(new Position(0,1)).getTypeString(), "hills");
   }
 
-  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
+  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type "plain" except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
   @Test
   public void ensureThatThereIsAMountainsTileAt2Point2(){
     assertEquals(game.getTileAt(new Position(2,2)).getTypeString(), "mountain");
-  }
-
-  // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type “plains” except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
-  @Test
-  public void allOtherTilesArePlains(){
-    for (int i = 0; i < GameConstants.WORLDSIZE; i++){
-      for (int j = 0; j < GameConstants.WORLDSIZE; j++){
-        if(i == 1 && j == 0){
-          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "ocean");
-        } else if(i == 0 && j == 1){
-          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "hills");
-        } else if(i == 1 && j == 1){
-          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "mountain");
-        } else if(i == 2 && j == 2){
-          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "mountain");
-        } else {
-          assertEquals(game.getTileAt(new Position(i,j)).getTypeString(), "plains");
-        }
-      }
-    }
   }
 
   //FRS p. 458 states, that "Red has initially one archer at (2,0)"
