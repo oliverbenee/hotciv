@@ -109,7 +109,7 @@ public class TestAlphaCiv {
     for(int i=0; i < 10; i++){
       game.endOfTurn();
     }
-    assertTrue(game.getWinner() == null);
+    assertNull(game.getWinner());
   }
 
   // Ensure, that population of cities is always 1.
@@ -156,25 +156,24 @@ public class TestAlphaCiv {
   @Test
   public void redHasAnArcherAt2Point0(){
     Position currentpos = new Position(2,0);
-    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.ARCHER));
-    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
+    assertEquals(game.getUnitAt(currentpos).getTypeString(), GameConstants.ARCHER);
+    assertEquals(game.getUnitAt(currentpos).getOwner(), Player.RED);
   }
 
   //FRS p. 458 states, that "Blue has one legion at (3,2)"
   @Test
   public void blueHasALegionAt3Point2(){
     Position currentpos = new Position(3,2);
-    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.LEGION));
-    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.BLUE));
-
+    assertEquals(game.getUnitAt(currentpos).getTypeString(), GameConstants.LEGION);
+    assertEquals(game.getUnitAt(currentpos).getOwner(), Player.BLUE);
   }
 
   //FRS p. 458 states, that "Player red has a settler at (4,3)"
   @Test
   public void redHasASettlerAt4Point3(){
     Position currentpos = new Position(4,3);
-    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.SETTLER));
-    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
+    assertEquals(game.getUnitAt(currentpos).getTypeString(), GameConstants.SETTLER);
+    assertEquals(game.getUnitAt(currentpos).getOwner(), Player.RED);
   }
 
   //FRS p. 462 states, that "Red cannot move Blue’s units"
@@ -196,12 +195,12 @@ public class TestAlphaCiv {
   @Test
   public void onlyOneUnitAtATileAtATime(){
     Position redpos = new Position(2,0);
-    assertTrue(game.getUnitAt(redpos).getOwner().equals(Player.RED));
+    assertEquals(game.getUnitAt(redpos).getOwner(), Player.RED);
     Position bluepos = new Position(3,2);
-    assertTrue(game.getUnitAt(bluepos).getOwner().equals(Player.BLUE));
+    assertEquals(game.getUnitAt(bluepos).getOwner(), Player.BLUE);
     game.moveUnit(redpos, bluepos);
-    assertTrue(game.getUnitAt(bluepos).getOwner().equals(Player.RED));
-    assertFalse(game.getUnitAt(bluepos).getOwner().equals(Player.BLUE));
+    assertEquals(game.getUnitAt(bluepos).getOwner(), Player.RED);
+    assertNotEquals(game.getUnitAt(bluepos).getOwner(), Player.BLUE);
   }
 
   //FRS p. 458 states, that "The attacking unit always wins no matter what the defensive or attacking strengths are of either units."
@@ -217,10 +216,11 @@ public class TestAlphaCiv {
     assertEquals(game.getUnitAt(defenderPosition), redUnit);
   }
 
+  //FRS p. 458 states, that "Specifically, the settler’s action does nothing."
   @Test
   public void settlersActionDoesNothing(){
     Position currentpos = new Position(4,3);
-    assertTrue(game.getUnitAt(currentpos).getTypeString().equals(GameConstants.SETTLER));
-    assertTrue(game.getUnitAt(currentpos).getOwner().equals(Player.RED));
+    assertEquals(game.getUnitAt(currentpos).getTypeString(), GameConstants.SETTLER);
+    assertEquals(game.getUnitAt(currentpos).getOwner(), Player.RED);
   }
 }
