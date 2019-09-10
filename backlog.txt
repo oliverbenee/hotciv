@@ -34,8 +34,8 @@ The following requiremnets are set for the project - all requirements, that have
 [ * ] Winning. (1)
     [ * ] Red wins in year 3000 BC.
 
-17 / 25 functions implemented.
-6 / 9 categories implemented.
+20 / 25 functions implemented.
+7 / 9 categories implemented.
 
 Missing features thus currently include:
 
