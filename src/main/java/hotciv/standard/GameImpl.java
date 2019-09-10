@@ -31,8 +31,8 @@ import hotciv.framework.*;
 */
 
 public class GameImpl implements Game {
-  Player playerInTurn;
-  int currentYear;
+  private Player playerInTurn;
+  private int currentYear;
   private HashMap<Position, TileImpl> world = new HashMap();
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
