@@ -1,5 +1,5 @@
 package hotciv.standard;
-import java.util.HashMap;
+import java.util.*;
 import hotciv.framework.*;
 
 /** Skeleton implementation of HotCiv.
@@ -103,7 +103,14 @@ public class GameImpl implements Game {
       playerInTurn = Player.BLUE;
     } else {
       playerInTurn = Player.RED;
-      currentYear += 100;
+      endOfRound();
+    }
+  }
+
+  public void endOfRound() {
+    currentYear += 100;
+    for(Map.Entry<Position, CityImpl> entry : cities.entrySet()){
+      entry.getValue().addToTreasury();
     }
   }
 

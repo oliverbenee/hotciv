@@ -10,7 +10,7 @@ public class CityImpl implements City {
 
   public CityImpl(Player owner){
     this.owner = owner;
-    this.treasury = treasury;
+    treasury = 0;
   }
 
   @Override
@@ -27,5 +27,9 @@ public class CityImpl implements City {
 
   @Override
   public String getWorkforceFocus() {return "";}
+
+  public void addToTreasury() {
+    treasury += 6;
+  }
 }
 

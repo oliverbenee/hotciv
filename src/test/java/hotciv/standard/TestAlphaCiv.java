@@ -124,16 +124,15 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(pcurrent).getSize(), is(1));
   }
 
-  /**
-  // Ensure, that cities produce 6 production per round - NOT IMPLEMENTED
+  // Ensure, that cities produce 6 production per round
   @Test
   public void citiesShouldProduce6ProductionPerRound(){
     int firstTreasury = game.getCityAt(new Position(1,1)).getTreasury();
+    assertEquals(0, firstTreasury);
     game.endOfTurn();
     game.endOfTurn();
-    assertEquals(game.getCityAt(new Position(1,1)).getTreasury(), firstTreasury + 6);
+    assertEquals(firstTreasury + 6, game.getCityAt(new Position(1,1)).getTreasury());
   }
-  */
 
   // FRS p. 458 states, that "the layout of terrain is fixed in every game, all tiles are of type "plain" except for tile(1,0) = Ocean, tile (0,1) = Hills, tile (2,2) = Mountains."
   @Test
