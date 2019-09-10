@@ -227,9 +227,4 @@ public class TestAlphaCiv {
     game.moveUnit(pos1, pos2);
     assertEquals(game.getUnitAt(pos2), redUnit);
   }
-
-  @Test
-  public void settlersActionDoesNothing(){
-    assertThat(game.getUnitAt())
-  }
 }
