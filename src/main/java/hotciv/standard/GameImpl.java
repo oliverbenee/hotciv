@@ -36,6 +36,7 @@ public class GameImpl implements Game {
   private HashMap<Position, TileImpl> world = new HashMap();
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
+
   public GameImpl(){
     playerInTurn = Player.RED;
     currentYear = -4000;
@@ -54,6 +55,7 @@ public class GameImpl implements Game {
     createUnit(new Position(3,2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
     createUnit(new Position(4,3), new UnitImpl(Player.RED, GameConstants.SETTLER));
   }
+
   public void createTile(Position p, TileImpl type) {world.put(p, type); }
 
   public void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
