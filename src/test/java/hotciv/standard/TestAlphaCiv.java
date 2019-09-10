@@ -181,15 +181,15 @@ public class TestAlphaCiv {
   @Test
   public void blueCannotMoveRedsUnits(){
     assertEquals(game.getPlayerInTurn(), Player.RED);
-    Position pos1 = new Position(2,0);
-    Position pos2 = new Position(3,0);
-    Unit unit = game.getUnitAt(pos1);
+    Position unitPosition = new Position(2,0);
+    Position targetPosition = new Position(3,0);
+    Unit unit = game.getUnitAt(unitPosition);
     assertEquals(unit.getOwner(), Player.RED);
     game.endOfTurn();
     assertEquals(game.getPlayerInTurn(), Player.BLUE);
-    game.moveUnit(pos1, pos2);
-    assert(!game.moveUnit(pos1,pos2));
-    assertThat(game.getUnitAt(pos1), is(unit));
+    game.moveUnit(unitPosition, targetPosition);
+    assert(!game.moveUnit(unitPosition,targetPosition));
+    assertThat(game.getUnitAt(unitPosition), is(unit));
   }
 
   //FRS p. 458 states, that "only one unit is allowed on a tile at any time."
@@ -207,14 +207,14 @@ public class TestAlphaCiv {
   //FRS p. 458 states, that "The attacking unit always wins no matter what the defensive or attacking strengths are of either units."
   @Test
   public void attackingUnitAlwaysWins(){
-    Position pos1 = new Position(2,0);
-    Position pos2 = new Position(3,0);
+    Position attackerPosition = new Position(2,0);
+    Position defenderPosition = new Position(3,0);
     assertEquals(game.getPlayerInTurn(), Player.RED);
-    Unit redUnit = game.getUnitAt(pos1);
-    Unit blueUnit = game.getUnitAt(pos2);
-    assertEquals(game.getUnitAt(pos2), blueUnit);
-    game.moveUnit(pos1, pos2);
-    assertEquals(game.getUnitAt(pos2), redUnit);
+    Unit redUnit = game.getUnitAt(attackerPosition);
+    Unit blueUnit = game.getUnitAt(defenderPosition);
+    assertEquals(game.getUnitAt(defenderPosition), blueUnit);
+    game.moveUnit(attackerPosition, defenderPosition);
+    assertEquals(game.getUnitAt(defenderPosition), redUnit);
   }
 
   @Test
