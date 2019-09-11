@@ -45,4 +45,11 @@ public class GameConstants {
   // Valid production balance types
   public static final String productionFocus = "hammer";
   public static final String foodFocus = "apple";
+
+  public static int getPriceOfProduction(String produced){
+    if(produced.equals(ARCHER)){return 10;}
+    if(produced.equals(LEGION)){return 15;}
+    if(produced.equals(SETTLER)){return 30;}
+    return 0;
+  }
 }
