@@ -255,6 +255,7 @@ public class TestAlphaCiv {
   public void produceUnitWhenProductionIsAcquired(){
     Position redCityPosition = new Position(1,1);
     assertThat(game.getCityAt(redCityPosition).getTreasury(), is(0));
+    assertNull(game.getUnitAt(redCityPosition));
     game.endOfTurn();
     game.endOfTurn();
     game.endOfTurn();
