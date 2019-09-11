@@ -2,7 +2,6 @@ package hotciv.standard;
 
 import hotciv.framework.City;
 import hotciv.framework.Player;
-import java.security.acl.Owner;
 
 public class CityImpl implements City {
   private Player owner;

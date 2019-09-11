@@ -262,6 +262,6 @@ public class TestAlphaCiv {
     game.endOfTurn();
     assertThat(game.getCityAt(redCityPosition).getTreasury(), is(18));
     game.produceUnit(redCityPosition);
-    assertThat(game.getUnitAt(new Position(1,1)).getTypeString(), is(GameConstants.LEGION));
+    assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.LEGION));
   }
 }

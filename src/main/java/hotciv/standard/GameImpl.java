@@ -56,12 +56,12 @@ public class GameImpl implements Game {
     createUnit(new Position(4,3), new UnitImpl(Player.RED, GameConstants.SETTLER));
   }
 
-  public void createTile(Position p, TileImpl type) {world.put(p, type); }
+  private void createTile(Position p, TileImpl type) {world.put(p, type); }
 
-  public void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
+  private void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
 
   // Note: was Unit, changed to UnitImpl
-  public void createUnit(Position p, UnitImpl owner) {units.put(p, owner); }
+  private void createUnit(Position p, UnitImpl owner) {units.put(p, owner); }
 
   public Tile getTileAt( Position p ) { return world.get(p); }
 
@@ -118,7 +118,7 @@ public class GameImpl implements Game {
     }
   }
 
-  public void endOfRound() {
+  private void endOfRound() {
     currentYear += 100;
     for(Map.Entry<Position, CityImpl> entry : cities.entrySet()){
       entry.getValue().addToTreasury(6);
