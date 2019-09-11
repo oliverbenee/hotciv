@@ -34,7 +34,7 @@ The following requiremnets are set for the project - all requirements, that have
 ### Winning. (1)
 * [OK] Red wins in year 3000 BC.
 
-21 / 25 functions implemented.
+22 / 25 functions implemented.
 7 / 9 categories implemented.
 
 ### Requirements related to hotciv, but not related to AlphaCiv
