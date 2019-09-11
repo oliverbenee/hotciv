@@ -85,18 +85,27 @@ public class GameImpl implements Game {
 
   public boolean moveUnit( Position from, Position to ) {
     UnitImpl unit = getUnitAt(from);
-    if(getPlayerInTurn().equals(Player.RED)){
-      if(unit.getOwner().equals(Player.RED)){
-        units.remove(from);
-        createUnit(to, unit);
-      }
+    // Handle illegal tiles
+    if (world.get(to).getTypeString().equals(GameConstants.OCEANS)) {
+      return false;
     }
-    if(getPlayerInTurn().equals(Player.BLUE)){
-      if(unit.getOwner().equals(Player.BLUE)){
-        units.remove(from);
-        createUnit(to, unit);
-      }
+    if (world.get(to).getTypeString().equals(GameConstants.MOUNTAINS)) {
+      return false;
     }
+
+    // Handle which player should move
+    if (getPlayerInTurn().equals(Player.RED)) {
+        if (unit.getOwner().equals(Player.RED)) {
+          units.remove(from);
+          createUnit(to, unit);
+        }
+      }
+    if (getPlayerInTurn().equals(Player.BLUE)) {
+        if (unit.getOwner().equals(Player.BLUE)) {
+          units.remove(from);
+          createUnit(to, unit);
+        }
+      }
     return false;
   }
 
@@ -112,7 +121,7 @@ public class GameImpl implements Game {
   public void endOfRound() {
     currentYear += 100;
     for(Map.Entry<Position, CityImpl> entry : cities.entrySet()){
-      entry.getValue().addToTreasury();
+      entry.getValue().addToTreasury(6);
     }
   }
 
@@ -121,4 +130,14 @@ public class GameImpl implements Game {
   public void changeProductionInCityAt( Position p, String unitType ) {}
 
   public void performUnitActionAt( Position p ) {}
+
+  public void produceUnit(Position p) {
+    CityImpl city = cities.get(p);
+    if(city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction())) {
+      city.removeFromTreasury(GameConstants.getPriceOfProduction(city.getProduction()));
+      if (units.get(p) == null) {
+        units.put(p, new UnitImpl(city.getOwner(), city.getProduction()));
+      }
+    }
+  }
 }
