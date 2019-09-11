@@ -223,4 +223,45 @@ public class TestAlphaCiv {
     assertEquals(game.getUnitAt(currentpos).getTypeString(), GameConstants.SETTLER);
     assertEquals(game.getUnitAt(currentpos).getOwner(), Player.RED);
   }
+
+  // Ensure, that units cannot move over mountains.
+  @Test
+  public void unitsCannotMoveOverMountains(){
+    Position blueUnitPosition = new Position(3,2);
+    Position mountainPosition = new Position(2,2);
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+    Unit blueUnit = game.getUnitAt(blueUnitPosition);
+    assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
+    game.moveUnit(blueUnitPosition, mountainPosition);
+    assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
+  }
+
+  // Ensure, that units cannot move over oceans.
+  @Test
+  public void unitsCannotMoveOverOceans(){
+    Position blueUnitPosition = new Position(3,2);
+    Position oceanPosition = new Position(1,0);
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+    Unit blueUnit = game.getUnitAt(blueUnitPosition);
+    assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
+    game.moveUnit(blueUnitPosition, oceanPosition);
+    assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
+  }
+
+  //FRS p. 458 states, that "When a city has accumulated enough production it produces the unit selected for production"
+  @Test
+  public void produceUnitWhenProductionIsAcquired(){
+    Position redCityPosition = new Position(1,1);
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(18));
+    game.produceUnit(redCityPosition);
+    assertThat(game.getUnitAt(new Position(1,1)).getTypeString(), is(GameConstants.LEGION));
+  }
 }
