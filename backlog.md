@@ -25,7 +25,7 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] while blue has one at position (4,1).
 ### Unit Production. (4)
 * [OK] When a city has accumulated enough production it produces the unit selected for production,
-* [] and the unit’s cost is deducted from the city’s treasury of production.
+* [OK] and the unit’s cost is deducted from the city’s treasury of production.
 * [] The unit is placed on the city tile if no other unit is present,
 * [] otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
 ### Aging. (2)
@@ -46,7 +46,6 @@ The following requiremnets are set for the project - all requirements, that have
 
 - The player may select to produce either archers, legions, or settlers.
 - Unit production (no implementation) - 4 functions missing:
-    - When a city has accumulated enough production it produces the unit selected for production,
     - and the unit’s cost is deducted from the city’s treasury of production.
     - The unit is placed on the city tile if no other unit is present,
     - otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
