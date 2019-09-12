@@ -265,8 +265,23 @@ public class TestAlphaCiv {
     assertNull(game.getUnitAt(redCityPosition));
     game.endOfTurn();
     game.endOfTurn();
-    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(3));
     assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.LEGION));
+  }
+
+  //FRS p. 458 states, that "the unit’s cost is deducted from the city’s treasury of production."
+  @Test
+  public void deduceUnitCostFromCitysTreasury(){
+    Position redCityPosition = new Position(1,1);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.LEGION));
+    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(0));
+    assertNull(game.getUnitAt(redCityPosition));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(3));
   }
 
   // FRS p. 458 states, that "The player may select to produce either archers, legions, or settlers."
