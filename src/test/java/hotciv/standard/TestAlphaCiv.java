@@ -254,7 +254,58 @@ public class TestAlphaCiv {
   @Test
   public void produceUnitWhenProductionIsAcquired(){
     Position redCityPosition = new Position(1,1);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.LEGION));
     assertThat(game.getCityAt(redCityPosition).getTreasury(), is(0));
+    assertNull(game.getUnitAt(redCityPosition));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(12));
+    assertNull(game.getUnitAt(redCityPosition));
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(3));
+    assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.LEGION));
+  }
+
+  // FRS p. 458 states, that "The player may select to produce either archers, legions, or settlers."
+  @Test
+  public void playerMayChangeProductionToArcher(){
+    Position redCityPosition = new Position(1,1);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.LEGION));
+    game.changeProductionInCityAt(redCityPosition, GameConstants.ARCHER);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.ARCHER));
+  }
+
+  // FRS p. 458 states, that "The player may select to produce either archers, legions, or settlers."
+  @Test
+  public void playerMayChangeProductionToSettler(){
+    Position redCityPosition = new Position(1,1);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.LEGION));
+    game.changeProductionInCityAt(redCityPosition, GameConstants.SETTLER);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.SETTLER));
+  }
+
+  // Extra test to ensure, that the spawned unit has changed.
+  @Test
+  public void changedUnitIsSpawned(){
+    Position redCityPosition = new Position(1,1);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.LEGION));
+    game.changeProductionInCityAt(redCityPosition, GameConstants.ARCHER);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.ARCHER));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.ARCHER));
+    assertThat(game.getUnitAt(new Position(0,0)).getTypeString(), is(GameConstants.ARCHER));
+  }
+
+  // Ensure, that the unit is placed on top of the city when produced, and there are no other units on top.
+  @Test
+  public void placeUnitOnTopOfCityIfNoOtherUnitExists(){
+    Position redCityPosition = new Position(1,1);
     assertNull(game.getUnitAt(redCityPosition));
     game.endOfTurn();
     game.endOfTurn();
@@ -262,9 +313,8 @@ public class TestAlphaCiv {
     game.endOfTurn();
     game.endOfTurn();
     game.endOfTurn();
-    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(18));
     game.produceUnit(redCityPosition);
-    assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.LEGION));
-    assertThat(game.getCityAt(redCityPosition).getTreasury(), is(3));
+    UnitImpl firstUnit = game.getUnitAt(redCityPosition);
+    assertThat(firstUnit.getTypeString(), is(GameConstants.LEGION));
   }
 }

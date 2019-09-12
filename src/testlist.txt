@@ -22,3 +22,4 @@ attackingUnitAlwaysWins():                  Ensure, that the attacking unit alwa
 settlersActionDoesNothing():                Ensure, that the settler's action doesn't do anything.
 unitsCannotMoveOverMountains():             Ensure, that units cannot move over mountain tiles.
 unitsCannotMoveOverOceans():                Ensure, that units cannot move over ocean tiles.
+produceUnitWhenProductionIsAcquired():      Ensure, that a unit is produced when enough production has been acquired.

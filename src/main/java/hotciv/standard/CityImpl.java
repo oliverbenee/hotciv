@@ -11,6 +11,7 @@ public class CityImpl implements City {
   public CityImpl(Player owner){
     this.owner = owner;
     treasury = 0;
+    produced = "legion";
   }
 
   @Override
@@ -23,7 +24,9 @@ public class CityImpl implements City {
   public int getTreasury() {return treasury; }
 
   @Override
-  public String getProduction() {return "legion";}
+  public String getProduction() {return produced;}
+
+  public void setProduction(String unitType) {produced = unitType; }
 
   @Override
   public String getWorkforceFocus() {return "";}
@@ -31,8 +34,6 @@ public class CityImpl implements City {
   public void addToTreasury(int amount) {
     treasury += amount;
   }
-
-  public void setProduced(UnitImpl unitType){}
 
   public void removeFromTreasury(int amount) {treasury -= amount;}
 }

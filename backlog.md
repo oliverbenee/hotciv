@@ -18,7 +18,7 @@ The following requiremnets are set for the project - all requirements, that have
 ### Unit actions. (1)
 * [OK] No associated actions are supported by any unit. Specifically, the settler’s action does nothing.
 ### Cities. (5)
-* [] The player may select to produce either archers, legions, or settlers.
+* [OK] The player may select to produce either archers, legions, or settlers.
 * [OK] Cities do not grow but stay at population size 1.
 * [OK] Cities produce 6 production per round which is a fixed setup.
 * [OK] Red has a city at position (1,1)
@@ -26,28 +26,19 @@ The following requiremnets are set for the project - all requirements, that have
 ### Unit Production. (4)
 * [OK] When a city has accumulated enough production it produces the unit selected for production,
 * [OK] and the unit’s cost is deducted from the city’s treasury of production.
-* [] The unit is placed on the city tile if no other unit is present,
-* [] otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
+* [OK] The unit is placed on the city tile if no other unit is present,
+* [NO TEST] otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
 ### Aging. (2)
 * [OK] The game starts at age 4000 BC, and
 * [OK] Each round advances the game age 100 years.
 ### Winning. (1)
 * [OK] Red wins in year 3000 BC.
 
-22 / 25 functions implemented.
-7 / 9 categories implemented.
+24 / 25 functions implemented.
+8 / 9 categories implemented.
 
 ### Requirements related to hotciv, but not related to AlphaCiv
 
 * [OK] Units cannot move over ocean tiles
 * [OK] Units cannot move over mountain tiles
-
-### Missing features thus currently include: 
-
-- The player may select to produce either archers, legions, or settlers.
-- Unit production (no implementation) - 4 functions missing:
-    - and the unit’s cost is deducted from the city’s treasury of production.
-    - The unit is placed on the city tile if no other unit is present,
-    - otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
-
-Please refer to the list above for more details.
+* [OK] When the player changes the unit to be produced, the correct unit is spawned

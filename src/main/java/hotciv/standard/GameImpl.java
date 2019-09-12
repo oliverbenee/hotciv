@@ -122,21 +122,30 @@ public class GameImpl implements Game {
     currentYear += 100;
     for(Map.Entry<Position, CityImpl> entry : cities.entrySet()){
       entry.getValue().addToTreasury(6);
+      produceUnit(entry.getKey());
     }
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
 
-  public void changeProductionInCityAt( Position p, String unitType ) {}
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    CityImpl city = cities.get(p);
+    city.setProduction(unitType);
+  }
 
   public void performUnitActionAt( Position p ) {}
 
   public void produceUnit(Position p) {
     CityImpl city = cities.get(p);
-    if(city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction())) {
+    if(city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction())){
       city.removeFromTreasury(GameConstants.getPriceOfProduction(city.getProduction()));
-      if (units.get(p) == null) {
+      if(units.get(p) == null) {
         units.put(p, new UnitImpl(city.getOwner(), city.getProduction()));
+      }} else {
+        for (Position ps : hotciv.utility.Utility.get8neighborhoodOf(p)){
+          if(units.get(ps) == null) {
+            units.put(ps, new UnitImpl(city.getOwner(), city.getProduction()));
+        }
       }
     }
   }
