@@ -27,14 +27,14 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] When a city has accumulated enough production it produces the unit selected for production,
 * [OK] and the unit’s cost is deducted from the city’s treasury of production.
 * [OK] The unit is placed on the city tile if no other unit is present,
-* [NO TEST] otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
+* [OK] otherwise it is placed on the first non-occupied adjacent tile, starting from the tile just north of the city and moving clockwise.
 ### Aging. (2)
 * [OK] The game starts at age 4000 BC, and
 * [OK] Each round advances the game age 100 years.
 ### Winning. (1)
 * [OK] Red wins in year 3000 BC.
 
-24 / 25 functions implemented.
+25 / 25 functions implemented.
 9 / 9 categories implemented.
 
 ### Requirements related to hotciv, but not related to AlphaCiv

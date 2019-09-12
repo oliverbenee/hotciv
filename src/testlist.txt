@@ -1,25 +1,30 @@
 This file contains a list of test methods in the associated test fixture:
 
-shouldBeRedAsStartingPlayer():              Ensure, that player red is the first in turn.
-playerRedHasACityAt1Point1():               Ensure, that player red has a city at the position (1,1).
-blueHasACityAt4Point1():                    Ensure, that player blue has a city at the position (4,1).
-ensureBlueIsNext():                         Ensure, that after player red has finished his turn, it is blue that is in turn.
-redShouldWinInYear3000BC():                 Ensure, that player red wins in year 3000 BC (or year -3000).
-gameShouldStartAtYear4000BC():              Ensure, that the game age starts at year 4000 BC (or year -4000).
-gameAdvances100YearsEachTurn():             Ensure, that the game age advances by 100 years each turn.
-noWinnerIsFoundBeforeYear3000BC():          Ensure, that a winner is not found before year 3000 BC (or year -3000).
-populationOfCitiesIsAlways1():              Ensure, that the population size of a city is always 1.
-citiesShouldProduce6ProductionPerRound():   Ensure, that cities produce 6 production per round.
-ensureThatThereIsOceanAt1Point0():          Ensure, that there is an Ocean tile at (1,0).
-ensureThatThereIsAHillsTileAt0Point1():     Ensure, that there is a Hills tile at (0,1).
-ensureThatThereIsAMountainsTileAt2Point2(): Ensure, that there is a Mountains tile at (2,2).
-redHasAnArcherAt2Point0():                  Ensure, that player red has an archer at (2,0).
-blueHasALegionAt3Point2():                  Ensure, that player blue has a legion at (3,2).
-redHasASettlerAt4Point3():                  Ensure, that player red has a settler at (4,3).
-blueCannotMoveRedsUnits():                  Ensure, that player blue cannot move player red's units.
-onlyOneUnitAtATileAtATime():                Ensure, that there is only one unit on a tile at a given time.
-attackingUnitAlwaysWins():                  Ensure, that the attacking unit always wins.
-settlersActionDoesNothing():                Ensure, that the settler's action doesn't do anything.
-unitsCannotMoveOverMountains():             Ensure, that units cannot move over mountain tiles.
-unitsCannotMoveOverOceans():                Ensure, that units cannot move over ocean tiles.
-produceUnitWhenProductionIsAcquired():      Ensure, that a unit is produced when enough production has been acquired.
+shouldBeRedAsStartingPlayer():                                  Ensure, that player red is the first in turn.
+playerRedHasACityAt1Point1():                                   Ensure, that player red has a city at the position (1,1).
+blueHasACityAt4Point1():                                        Ensure, that player blue has a city at the position (4,1).
+ensureBlueIsNext():                                             Ensure, that after player red has finished his turn, it is blue that is in turn.
+redShouldWinInYear3000BC():                                     Ensure, that player red wins in year 3000 BC (or year -3000).
+gameShouldStartAtYear4000BC():                                  Ensure, that the game age starts at year 4000 BC (or year -4000).
+gameAdvances100YearsEachTurn():                                 Ensure, that the game age advances by 100 years each turn.
+noWinnerIsFoundBeforeYear3000BC():                              Ensure, that a winner is not found before year 3000 BC (or year -3000).
+populationOfCitiesIsAlways1():                                  Ensure, that the population size of a city is always 1.
+citiesShouldProduce6ProductionPerRound():                       Ensure, that cities produce 6 production per round.
+ensureThatThereIsOceanAt1Point0():                              Ensure, that there is an Ocean tile at (1,0).
+ensureThatThereIsAHillsTileAt0Point1():                         Ensure, that there is a Hills tile at (0,1).
+ensureThatThereIsAMountainsTileAt2Point2():                     Ensure, that there is a Mountains tile at (2,2).
+redHasAnArcherAt2Point0():                                      Ensure, that player red has an archer at (2,0).
+blueHasALegionAt3Point2():                                      Ensure, that player blue has a legion at (3,2).
+redHasASettlerAt4Point3():                                      Ensure, that player red has a settler at (4,3).
+blueCannotMoveRedsUnits():                                      Ensure, that player blue cannot move player red's units.
+onlyOneUnitAtATileAtATime():                                    Ensure, that there is only one unit on a tile at a given time.
+attackingUnitAlwaysWins():                                      Ensure, that the attacking unit always wins.
+settlersActionDoesNothing():                                    Ensure, that the settler's action doesn't do anything.
+unitsCannotMoveOverMountains():                                 Ensure, that units cannot move over mountain tiles.
+unitsCannotMoveOverOceans():                                    Ensure, that units cannot move over ocean tiles.
+produceUnitWhenProductionIsAcquired():                          Ensure, that a unit is produced when enough production has been acquired.
+playerMayChangeProductionToArcher():                            Ensure, that the player may change the produced unit to an archer.
+playerMayChangeProductionToSettler():                           Ensure, that the player may change the produced unit to a settler.
+changedUnitIsSpawned():                                         Ensure, that the spawned unit has changed.
+placeUnitOnTopOfCityIfNoOtherUnitExists():                      Ensure, that the unit is placed on top of the city when produced, and there are no other units on top of the city.
+public void placeUnitToTheNorthIfThereIsAUnitOnTheCity():       Ensure, that the unit is placed to the north of the city when produced, if there is another unit on top of the city.
