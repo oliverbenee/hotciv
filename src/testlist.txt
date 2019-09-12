@@ -23,6 +23,7 @@ settlersActionDoesNothing():                                    Ensure, that the
 unitsCannotMoveOverMountains():                                 Ensure, that units cannot move over mountain tiles.
 unitsCannotMoveOverOceans():                                    Ensure, that units cannot move over ocean tiles.
 produceUnitWhenProductionIsAcquired():                          Ensure, that a unit is produced when enough production has been acquired.
+deduceUnitCostFromCitysTreasury():                              Ensure, that the unit’s cost is deducted from the city’s treasury of production.
 playerMayChangeProductionToArcher():                            Ensure, that the player may change the produced unit to an archer.
 playerMayChangeProductionToSettler():                           Ensure, that the player may change the produced unit to a settler.
 changedUnitIsSpawned():                                         Ensure, that the spawned unit has changed.
