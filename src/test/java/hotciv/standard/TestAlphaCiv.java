@@ -332,7 +332,7 @@ public class TestAlphaCiv {
     UnitImpl firstUnit = game.getUnitAt(redCityPosition);
     assertThat(firstUnit.getTypeString(), is(GameConstants.LEGION));
   }
-  
+
   // Ensure, that the unit is placed north of the city when produced, if there is another unit on top of the city itself.
   @Test
   public void placeUnitToTheNorthIfThereIsAUnitOnTheCity(){
