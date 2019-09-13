@@ -1,4 +1,5 @@
 The following requiremnets are set for the project - all requirements, that have successfully been implemented has been marked with a [ * ]
+
 ### Players. (1)
 * [OK] There are exactly two players, Red and Blue.
 ### World Layout. (6)
