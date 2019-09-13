@@ -37,7 +37,7 @@ The following requiremnets are set for the project - all requirements, that have
 25 / 25 functions implemented.
 9 / 9 categories implemented.
 
-### Requirements related to hotciv, but not related to AlphaCiv
+### Requirements related to HotCiv, but not related to AlphaCiv
 
 * [OK] Units cannot move over ocean tiles
 * [OK] Units cannot move over mountain tiles
