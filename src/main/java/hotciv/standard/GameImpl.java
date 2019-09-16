@@ -31,13 +31,15 @@ import hotciv.framework.*;
 */
 
 public class GameImpl implements Game {
+  private GameType gametype;
   private Player playerInTurn;
   private int currentYear;
   private HashMap<Position, TileImpl> world = new HashMap();
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
 
-  public GameImpl(){
+  public GameImpl(GameType gametype){
+    this.gametype = gametype;
     playerInTurn = Player.RED;
     currentYear = -4000;
     for(int i=0; i<GameConstants.WORLDSIZE; i++){
@@ -76,9 +78,7 @@ public class GameImpl implements Game {
   }
 
   public Player getWinner() {
-    if (currentYear == -3000) {
-      return Player.RED;
-    } else { return null; }
+    return gametype.gameWinner(this);
   }
 
   public int getAge() { return currentYear; }
@@ -119,11 +119,11 @@ public class GameImpl implements Game {
   }
 
   private void endOfRound() {
-    currentYear += 100;
     for(Map.Entry<Position, CityImpl> entry : cities.entrySet()){
       entry.getValue().addToTreasury(6);
       produceUnit(entry.getKey());
     }
+    currentYear = gametype.ageStrategy(currentYear);
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
