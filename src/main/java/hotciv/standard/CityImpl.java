@@ -17,6 +17,8 @@ public class CityImpl implements City {
   @Override
   public Player getOwner() {return owner; }
 
+  public void setOwner(Player p) {owner = p; }
+
   @Override
   public int getSize() {return 1; }
 

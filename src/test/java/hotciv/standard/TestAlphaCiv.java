@@ -355,4 +355,20 @@ public class TestAlphaCiv {
     UnitImpl secondUnit = game.getUnitAt(new Position(1,2));
     assertThat(secondUnit.getTypeString(), is(GameConstants.LEGION));
   }
+
+  //Ensure, that players can conquer cities.
+  @Test
+  public void playerRedCanConquerBluesCity(){
+    UnitImpl redUnit = game.getUnitAt(new Position(2,0));
+    CityImpl blueCity = game.getCityAt(new Position(4,1));
+    assertThat(redUnit.getOwner(), is(Player.RED));
+    assertThat(blueCity.getOwner(), is(Player.BLUE));
+    assertThat(game.getUnitAt(new Position(2,0)).getOwner(), is(Player.RED));
+    game.moveUnit((new Position(2,0)), new Position(3,1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit((new Position(3,1)), new Position(4,1));
+    assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.RED));
+    assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.RED));
+  }
 }
