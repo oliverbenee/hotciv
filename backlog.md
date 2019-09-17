@@ -50,7 +50,7 @@ The following requiremnets are set for the project - all requirements, that have
 
 ### Winner. (1)
 * [OK] Players can conquer cities.
-* [] The winner is the player that first conquers all cities in the world. (HARD CODED, BUT IMPLEMENTED. NEEDS REIMPLEMENTATION.)
+* [REVISE] The winner is the player that first conquers all cities in the world. (HARD CODED, BUT IMPLEMENTED. NEEDS REIMPLEMENTATION.)
 
 ### World aging. (7)
 * [OK] World aging. The world ages using the following algorithm:
