@@ -73,6 +73,8 @@ public class GameImpl implements Game {
 
   public CityImpl getCityAt( Position p ) { return cities.get(p); }
 
+  public HashMap<Position, CityImpl> getCities() {return cities; }
+
   public Player getPlayerInTurn() {
     return playerInTurn;
   }
