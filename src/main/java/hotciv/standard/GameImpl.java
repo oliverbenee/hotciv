@@ -71,7 +71,7 @@ public class GameImpl implements Game {
     return units.get(p);
   }
 
-  public City getCityAt( Position p ) { return cities.get(p); }
+  public CityImpl getCityAt( Position p ) { return cities.get(p); }
 
   public Player getPlayerInTurn() {
     return playerInTurn;
@@ -106,6 +106,13 @@ public class GameImpl implements Game {
           createUnit(to, unit);
         }
       }
+    // Handle city conquest
+    try {
+    if (!cities.get(to).getOwner().equals(playerInTurn)) {
+      getCityAt(to).setOwner(getPlayerInTurn());
+    }
+    } catch(NullPointerException e){}
+
     return false;
   }
 
@@ -124,6 +131,7 @@ public class GameImpl implements Game {
       produceUnit(entry.getKey());
     }
     currentYear = gametype.ageStrategy(currentYear);
+    gametype.gameWinner(this);
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
