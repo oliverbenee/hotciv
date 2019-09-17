@@ -27,6 +27,7 @@ public class BetaCivImpl implements GameType {
   }
 
   public Player gameWinner(Game game) {
+
     if (game.getAge() >= -3000) {
       return Player.RED;
     } else { return null; }
