@@ -1,10 +1,11 @@
 package hotciv.standard;
+import hotciv.standard.GameImpl;
+import hotciv.framework.*;
 
-import hotciv.framework.Game;
-import hotciv.framework.GameType;
-import hotciv.framework.Player;
+import java.util.Map;
 
 public class BetaCivImpl implements GameType {
+  private GameImpl game;
 
   public int ageStrategy(int age) {
     if (age < -100) {
@@ -26,10 +27,18 @@ public class BetaCivImpl implements GameType {
     }
   }
 
-  public Player gameWinner(Game game) {
-
-    if (game.getAge() >= -3000) {
-      return Player.RED;
-    } else { return null; }
+  public Player gameWinner(GameImpl game) {
+    int cityCounter = 0;
+    // Run through hashmap of cities and ensure, that playerInTurn is the owner.
+    for(Map.Entry<Position, CityImpl> entry : game.getCities().entrySet()){
+      if(game.getPlayerInTurn() == entry.getValue().getOwner()){
+        cityCounter += 1;
+      }
+    }
+    if(cityCounter == 2){
+      return game.getPlayerInTurn();
+    } else {
+      return null;
+    }
   }
 }

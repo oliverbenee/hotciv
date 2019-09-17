@@ -108,4 +108,15 @@ public class TestBetaCiv {
     game.endOfTurn();
     assertThat(game.getAge(), is(1971));
   }
+
+  //If player Red conquers blue's city, he wins.
+  @Test
+  public void redConquersBlueCityAndWins(){
+    assertNull(game.getWinner());
+    assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+    game.moveUnit((new Position(4,3)), new Position(4,1));
+    assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.RED));
+    assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.RED));
+    assertThat(game.getWinner(), is(Player.RED));
+  }
 }

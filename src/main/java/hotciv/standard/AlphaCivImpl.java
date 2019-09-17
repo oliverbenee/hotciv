@@ -10,7 +10,7 @@ public class AlphaCivImpl implements GameType {
     return age + 100;
   }
 
-  public Player gameWinner(Game game) {
+  public Player gameWinner(GameImpl game) {
     if (game.getAge() >= -3000) {
       return Player.RED;
     } else { return null; }
