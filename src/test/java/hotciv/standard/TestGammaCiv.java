@@ -1,18 +1,48 @@
 package hotciv.standard;
 
-public class TestGammaCiv
-        /**
-         // Ensure settler can create a city
-         @Test
-         public void settlerCreatesCityWithSameOwnerAndIsRemoved(){
-         Position p = new Position(4,3);
-         // Unit type is settler and owner is the player in turn.
-         assertThat(game.getUnitAt(p).getTypeString(), is(GameConstants.SETTLER));
-         assertThat(game.getUnitAt(p).getOwner(), is(Player.RED));
-         // City is created
+import hotciv.framework.*;
+import org.junit.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
-         assertNull(game.getUnitAt(p));
-         assertThat(game.getCityAt(p).getOwner(), is(Player.RED));
-         }
-         */{
+import java.util.*;
+
+/* BetaCiv test class */
+public class TestGammaCiv {
+  private GameImpl game;
+
+  /**
+   * Fixture for betaciv testing.
+   */
+  @Before
+  public void setUp() {
+    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), new GammaCivActionStrategy());
+  }
+
+  // Ensure, that Settler can found city, and the owner is correct.
+  @Test
+  public void settlerCanFoundCity() {
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getUnitAt(new Position(4,3)).getTypeString(), is(GameConstants.SETTLER));
+    game.performUnitActionAt(new Position(4,3));
+    assertThat(game.getCityAt(new Position(4,3)).getOwner(), is(Player.RED));
+  }
+
+  // Ensure, that the new City's population is 1.
+  @Test
+  public void newCityPopulationSizeIsOne() {
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getUnitAt(new Position(4,3)).getTypeString(), is(GameConstants.SETTLER));
+    game.performUnitActionAt(new Position(4,3));
+    assertThat(game.getCityAt(new Position(4,3)).getSize(), is(1));
+  }
+
+  // Ensure, that settler is removed from the world after creating a new city.
+  @Test
+  public void settlerIsRemovedAfterFoundingACity(){
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getUnitAt(new Position(4,3)).getTypeString(), is(GameConstants.SETTLER));
+    game.performUnitActionAt(new Position(4,3));
+    assertNull(game.getUnitAt(new Position(4,3)));
+  }
 }

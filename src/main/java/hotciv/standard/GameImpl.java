@@ -64,7 +64,7 @@ public class GameImpl implements Game {
 
   private void createTile(Position p, TileImpl type) {world.put(p, type); }
 
-  private void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
+  public void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
 
   // Note: was Unit, changed to UnitImpl
   private void createUnit(Position p, UnitImpl owner) {units.put(p, owner); }
@@ -146,7 +146,7 @@ public class GameImpl implements Game {
     city.setProduction(unitType);
   }
 
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt(Position p) {actionStrategy.performUnitActionAt(p, this);}
 
   public void produceUnit(Position p) {
     CityImpl city = cities.get(p);
@@ -162,4 +162,6 @@ public class GameImpl implements Game {
       }
     }
   }
+
+  public void removeUnit(Position p){units.remove(p);}
 }
