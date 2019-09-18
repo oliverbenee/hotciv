@@ -35,7 +35,7 @@ public class BetaCivImpl implements GameType {
         cityCounter += 1;
       }
     }
-    if(cityCounter == 2){
+    if(cityCounter == game.getCities().size()){
       return game.getPlayerInTurn();
     } else {
       return null;
