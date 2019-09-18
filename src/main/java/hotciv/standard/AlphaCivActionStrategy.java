@@ -1,7 +1,7 @@
 package hotciv.standard;
 import hotciv.framework.*;
 
-import hotciv.framework.WinnerStrategy;
+import hotciv.framework.ActionStrategy;
 
 public class AlphaCivActionStrategy implements ActionStrategy {
   @Override
