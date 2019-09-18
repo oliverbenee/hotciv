@@ -75,10 +75,12 @@ The following requiremnets are set for the project - all requirements, that have
 
 ## DeltaCiv requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-)
 
-
-
-
-
+* [] World layout. 
+    * [] The world’s layout is that shown in Figure 36.1 on page 454. 
+    * [] Red must have a city at position (8,12) 
+    * [] and blue a city at (4,5). 
+* [] Furthermore, it should be easy for programmers to write their own algorithms for generating a world layout to be 
+used in DeltaCiv without any source code changes in the HotCiv production code.
 
 ## BUGS TO BE FIXED
 * [] Empty catch block in moveUnit() method.

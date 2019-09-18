@@ -52,4 +52,11 @@ public class GameConstants {
     if(produced.equals(SETTLER)){return 30;}
     return 0;
   }
+
+  public static int getDefensiveStrength(String unit){
+    if(unit.equals(ARCHER)){return 3;}
+    if(unit.equals(SETTLER)){return 2;}
+    if(unit.equals(LEGION)){return 3;}
+    return 0;
+  }
 }
