@@ -5,8 +5,6 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import java.util.*;
-
 /** Skeleton class for AlphaCiv test cases
 
     Updated Oct 2015 for using Hamcrest matchers
@@ -41,7 +39,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivImpl());
+    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), new AlphaCivActionStrategy());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
