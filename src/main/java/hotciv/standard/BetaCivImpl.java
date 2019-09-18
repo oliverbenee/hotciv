@@ -4,7 +4,7 @@ import hotciv.framework.*;
 
 import java.util.Map;
 
-public class BetaCivImpl implements GameType {
+public class BetaCivImpl {
   private GameImpl game;
 
   public int ageStrategy(int age) {
