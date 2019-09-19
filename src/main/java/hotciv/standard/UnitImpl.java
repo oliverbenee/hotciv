@@ -4,10 +4,12 @@ import hotciv.framework.*;
 public class UnitImpl implements Unit {
   private Player owner;
   private String type;
+  private int defensiveStrength;
 
-  public UnitImpl(Player owner, String unitType){
+  public UnitImpl(Player owner, String unitType, int defensiveStrength){
     this.owner = owner;
     this.type = unitType;
+    this.defensiveStrength = defensiveStrength;
   }
 
   public String getTypeString() {
@@ -23,8 +25,10 @@ public class UnitImpl implements Unit {
   }
 
   public int getDefensiveStrength(){
-    return 0;
+    return defensiveStrength;
   }
+
+  public void setDefensiveStrength(int newDefensiveStrength) { defensiveStrength = newDefensiveStrength; }
 
   public int getAttackingStrength(){
     return 1;

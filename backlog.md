@@ -68,10 +68,10 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] and replaced by a city of population size one. 
 * [OK] Of course, the owner of the city is the same player as the one who owned the settler.
 
-### Archer action. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-)
-* [] When an archer is told to perform its action (fortify), its defensive strength is doubled, 
+### Archer action. (Not fully implemented. Please refer to our mail-discussion from 18-09-2019 :-)
+* [OK] When an archer is told to perform its action (fortify), its defensive strength is doubled, 
 * [] however, it cannot be moved. 
-* [] If an archer is already fortified, invoking this action removes its fortification.
+* [OK] If an archer is already fortified, invoking this action removes its fortification.
 
 ## DeltaCiv requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-)
 

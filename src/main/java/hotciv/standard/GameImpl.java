@@ -57,9 +57,9 @@ public class GameImpl implements Game {
     createTile(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
     createCity(new Position(1,1), new CityImpl(Player.RED));
     createCity(new Position(4,1), new CityImpl(Player.BLUE));
-    createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER));
-    createUnit(new Position(3,2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
-    createUnit(new Position(4,3), new UnitImpl(Player.RED, GameConstants.SETTLER));
+    createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER, 3));
+    createUnit(new Position(3,2), new UnitImpl(Player.BLUE, GameConstants.LEGION, 3));
+    createUnit(new Position(4,3), new UnitImpl(Player.RED, GameConstants.SETTLER , 2));
   }
 
   private void createTile(Position p, TileImpl type) {world.put(p, type); }
@@ -153,11 +153,11 @@ public class GameImpl implements Game {
     if(city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction())){
       city.removeFromTreasury(GameConstants.getPriceOfProduction(city.getProduction()));
       if(units.get(p) == null) {
-        units.put(p, new UnitImpl(city.getOwner(), city.getProduction()));
+        units.put(p, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getDefensiveStrength(city.getProduction())));
       }} else {
         for (Position ps : hotciv.utility.Utility.get8neighborhoodOf(p)){
           if(units.get(ps) == null) {
-            units.put(ps, new UnitImpl(city.getOwner(), city.getProduction()));
+            units.put(ps, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getDefensiveStrength(city.getProduction())));
         }
       }
     }
