@@ -1,4 +1,4 @@
-This file contains a list of test methods in the associated test fixture:
+This file contains a list of test methods in the associated test TestAlphaCiv:
 
 shouldBeRedAsStartingPlayer():                                  Ensure, that player red is the first in turn.
 playerRedHasACityAt1Point1():                                   Ensure, that player red has a city at the position (1,1).
@@ -29,3 +29,21 @@ playerMayChangeProductionToSettler():                           Ensure, that the
 changedUnitIsSpawned():                                         Ensure, that the spawned unit has changed.
 placeUnitOnTopOfCityIfNoOtherUnitExists():                      Ensure, that the unit is placed on top of the city when produced, and there are no other units on top of the city.
 public void placeUnitToTheNorthIfThereIsAUnitOnTheCity():       Ensure, that the unit is placed to the north of the city when produced, if there is another unit on top of the city.
+public void playerRedCanConquerBluesCity():                     Ensure, that players can conquer cities.
+
+This file contains a list of test methods in the associated test TestBetaCiv:
+
+between4000BCand100BC100yearsPassPerRound():                    Ensure, that game age advances by 100 years when round ends, during the time the years are -4000 to -100
+ensureAgeSequenceWorks():                                       Ensure, that Around birth of Christ the sequence is -100, -1, +1, +50.
+ensureBetween50ADAnd1750AD50YearsPass():                        Ensure, that Between 50AD and 1750 50 years pass per round.
+ensureBetween1750ADAnd1900AD25YearsPass():                      Ensure, that Between 1750 and 1900 25 years pass per round.
+ensureBetween1900ADAnd1970AD5YearsPass():                       Ensure, that Between 1900 and 1970 5 years pass per round.
+ensureAfter1970AD1YearPass():                                   Ensure, that After 1970 1 years pass per round.
+redConquersBlueCityAndWins():                                   If player Red conquers blue's city, he wins.
+
+This file contains a list of test methods in the associated test TestGammaCiv:
+
+settlerCanFoundCity():                                          Ensure, that Settler can found city, and the owner is correct.
+newCityPopulationSizeIsOne():                                   Ensure, that the new City's population is 1.
+settlerIsRemovedAfterFoundingACity():                           Ensure, that settler is removed from the world after creating a new city.
+archersDoubleTheirDefensiveStrengthWhenFortifying():            Ensure, that archers can fortify and double their defensive strength.
