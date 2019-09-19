@@ -68,7 +68,7 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] and replaced by a city of population size one. 
 * [OK] Of course, the owner of the city is the same player as the one who owned the settler.
 
-### Archer action. (Not fully implemented. Please refer to our mail-discussion from 18-09-2019 :-)
+### Archer action. (Please refer to our mail-discussion from 18-09-2019 :-))
 * [OK] When an archer is told to perform its action (fortify), its defensive strength is doubled, 
 * [OK] however, it cannot be moved. 
 * [OK] If an archer is already fortified, invoking this action removes its fortification.
