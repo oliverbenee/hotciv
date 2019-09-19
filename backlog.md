@@ -74,7 +74,6 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] If an archer is already fortified, invoking this action removes its fortification.
 
 ## DeltaCiv requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-)
-
 * [] World layout. 
     * [] The world’s layout is that shown in Figure 36.1 on page 454. 
     * [] Red must have a city at position (8,12) 
