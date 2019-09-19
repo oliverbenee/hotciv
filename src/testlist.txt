@@ -47,3 +47,5 @@ settlerCanFoundCity():                                          Ensure, that Set
 newCityPopulationSizeIsOne():                                   Ensure, that the new City's population is 1.
 settlerIsRemovedAfterFoundingACity():                           Ensure, that settler is removed from the world after creating a new city.
 archersDoubleTheirDefensiveStrengthWhenFortifying():            Ensure, that archers can fortify and double their defensive strength.
+unitsLoseMoveCountWhenMoving():                                 Ensure, that units lose movecount when moving.
+archersCannotMoveAfterFortifying():                             Ensure, that when archers fortify, they cannot move.
