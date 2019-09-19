@@ -4,11 +4,14 @@ import hotciv.framework.*;
 public class UnitImpl implements Unit {
   private Player owner;
   private String type;
+  private int moveCount;
   private int defensiveStrength;
+  private boolean fortify;
 
-  public UnitImpl(Player owner, String unitType, int defensiveStrength){
+  public UnitImpl(Player owner, String unitType, int moveCount, int defensiveStrength){
     this.owner = owner;
     this.type = unitType;
+    this.moveCount = moveCount;
     this.defensiveStrength = defensiveStrength;
   }
 
@@ -21,8 +24,16 @@ public class UnitImpl implements Unit {
   }
 
   public int getMoveCount(){
-    return 0;
+    if(fortify) {
+      return 0;
+    } else {
+      return moveCount;
+    }
   }
+
+  void resetMoveCount() { moveCount = 1; }
+
+  void decreaseMoveCount() { moveCount--; }
 
   public int getDefensiveStrength(){
     return defensiveStrength;

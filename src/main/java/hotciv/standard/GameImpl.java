@@ -57,9 +57,9 @@ public class GameImpl implements Game {
     createTile(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
     createCity(new Position(1,1), new CityImpl(Player.RED));
     createCity(new Position(4,1), new CityImpl(Player.BLUE));
-    createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER, 3));
-    createUnit(new Position(3,2), new UnitImpl(Player.BLUE, GameConstants.LEGION, 3));
-    createUnit(new Position(4,3), new UnitImpl(Player.RED, GameConstants.SETTLER , 2));
+    createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER, 1, 3));
+    createUnit(new Position(3,2), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1, 3));
+    createUnit(new Position(4,3), new UnitImpl(Player.RED, GameConstants.SETTLER , 1, 2));
   }
 
   private void createTile(Position p, TileImpl type) {world.put(p, type); }
@@ -99,25 +99,35 @@ public class GameImpl implements Game {
       return false;
     }
 
+    // Handle attempts to move player's own unit on to another of player's own unit.
+    if (getUnitAt(to) != null && getUnitAt(to).getOwner().equals(playerInTurn)){
+      return false;
+    }
+
+    // Handle attempts to move a unit, when the units has no moves left. If this is the case, the unit is not allowed to move.
+    if (getUnitAt(from).getMoveCount() == 0){
+      return false;
+    }
+
     // Handle which player should move
     if (getPlayerInTurn().equals(Player.RED)) {
         if (unit.getOwner().equals(Player.RED)) {
           units.remove(from);
           createUnit(to, unit);
+          getUnitAt(to).decreaseMoveCount();
         }
       }
     if (getPlayerInTurn().equals(Player.BLUE)) {
         if (unit.getOwner().equals(Player.BLUE)) {
           units.remove(from);
           createUnit(to, unit);
+          getUnitAt(to).decreaseMoveCount();
         }
       }
     // Handle city conquest
-    try {
-    if (!cities.get(to).getOwner().equals(playerInTurn)) {
+    if (getCityAt(to) != null && !getCityAt(to).getOwner().equals(playerInTurn)) {
       getCityAt(to).setOwner(getPlayerInTurn());
     }
-    } catch(NullPointerException e){}
 
     return false;
   }
@@ -132,9 +142,14 @@ public class GameImpl implements Game {
   }
 
   private void endOfRound() {
+    // Add 6 production to to treasury
     for(Map.Entry<Position, CityImpl> entry : cities.entrySet()){
       entry.getValue().addToTreasury(6);
       produceUnit(entry.getKey());
+    }
+    // Reset unit move count.
+    for(Position p: units.keySet()){
+      getUnitAt(p).resetMoveCount();
     }
     currentYear = ageStrategy.updateAge(currentYear);
   }
@@ -153,11 +168,11 @@ public class GameImpl implements Game {
     if(city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction())){
       city.removeFromTreasury(GameConstants.getPriceOfProduction(city.getProduction()));
       if(units.get(p) == null) {
-        units.put(p, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getDefensiveStrength(city.getProduction())));
+        units.put(p, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
       }} else {
         for (Position ps : hotciv.utility.Utility.get8neighborhoodOf(p)){
           if(units.get(ps) == null) {
-            units.put(ps, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getDefensiveStrength(city.getProduction())));
+            units.put(ps, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
         }
       }
     }

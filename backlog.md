@@ -50,7 +50,7 @@ The following requiremnets are set for the project - all requirements, that have
 
 ### Winner. (1)
 * [OK] Players can conquer cities.
-* [REVISE] The winner is the player that first conquers all cities in the world. (HARD CODED, BUT IMPLEMENTED. NEEDS REIMPLEMENTATION.)
+* [OK] The winner is the player that first conquers all cities in the world.
 
 ### World aging. (7)
 * [OK] World aging. The world ages using the following algorithm:
@@ -63,14 +63,14 @@ The following requiremnets are set for the project - all requirements, that have
 
 ## GammaCiv requirements
 
-### Settler action. 
+### Settler action. (3)
 * [OK] When a settler is told to perform its action (build city), the settler unit itself is removed from the world 
 * [OK] and replaced by a city of population size one. 
 * [OK] Of course, the owner of the city is the same player as the one who owned the settler.
 
 ### Archer action. (Not fully implemented. Please refer to our mail-discussion from 18-09-2019 :-)
 * [OK] When an archer is told to perform its action (fortify), its defensive strength is doubled, 
-* [] however, it cannot be moved. 
+* [OK] however, it cannot be moved. 
 * [OK] If an archer is already fortified, invoking this action removes its fortification.
 
 ## DeltaCiv requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-)
@@ -83,4 +83,4 @@ The following requiremnets are set for the project - all requirements, that have
 used in DeltaCiv without any source code changes in the HotCiv production code.
 
 ## BUGS TO BE FIXED
-* [] Empty catch block in moveUnit() method.
+* [OK] Empty catch block in moveUnit() method.

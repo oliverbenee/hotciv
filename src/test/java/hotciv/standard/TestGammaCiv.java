@@ -57,4 +57,26 @@ public class TestGammaCiv {
     int newdef = game.getUnitAt(archPos).getDefensiveStrength();
     assertEquals(newdef, inidef*2);
   }
+
+  // Ensure, that units lose movecount when moving.
+  @Test
+  public void unitsLoseMoveCountWhenMoving(){
+    Position archPos = new Position(2,0);
+    assertThat(game.getUnitAt(archPos).getMoveCount(), is(1));
+    game.moveUnit(archPos, new Position(2,1));
+    assertThat(game.getUnitAt(new Position(2,1)).getMoveCount(), is(0));
+  }
+
+  // Ensure, that when archers fortify, they cannot move.
+  @Test
+  public void archersCannotMoveAfterFortifying(){
+    Position archPos = new Position(2,0);
+    Position targetPos = new Position(2,1);
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getUnitAt(archPos).getTypeString(), is(GameConstants.ARCHER));
+    game.performUnitActionAt(archPos);
+    assertThat(game.getUnitAt(archPos).getMoveCount(), is(0));
+    game.moveUnit(archPos, targetPos);
+    assertNull(game.getUnitAt(targetPos));
+  }
 }

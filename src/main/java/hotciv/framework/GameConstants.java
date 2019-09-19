@@ -59,4 +59,12 @@ public class GameConstants {
     if(unit.equals(LEGION)){return 3;}
     return 0;
   }
+
+  public static int getMoveDistance(String unit){
+    if(unit.equals(ARCHER)){return 1;}
+    if(unit.equals(SETTLER)){return 1;}
+    if(unit.equals(LEGION)){return 1;}
+    return 0;
+  }
+
 }
