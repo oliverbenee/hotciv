@@ -14,7 +14,9 @@ public class TestBetaCiv {
   /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new BetaCivWinnerStrategy(), new BetaCivAgeStrategy(), null);
+    MapStrategy mapStrategy = new AlphaCivMapStrategy();
+    game = new GameImpl(new BetaCivWinnerStrategy(), new BetaCivAgeStrategy(), null, mapStrategy);
+    mapStrategy.createWorld(game);
   }
 
   // Ensure, that game age advances by 100 years when round ends, during the time the years are -4000 to -100

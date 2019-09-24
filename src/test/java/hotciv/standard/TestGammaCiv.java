@@ -16,7 +16,9 @@ public class TestGammaCiv {
    */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), new GammaCivActionStrategy());
+    MapStrategy mapStrategy = new AlphaCivMapStrategy();
+    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), new GammaCivActionStrategy(), mapStrategy);
+    mapStrategy.createWorld(game);
   }
 
   // Ensure, that Settler can found city, and the owner is correct.

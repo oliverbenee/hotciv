@@ -34,40 +34,28 @@ public class GameImpl implements Game {
   private WinnerStrategy winnerStrategy;
   private AgeStrategy ageStrategy;
   private ActionStrategy actionStrategy;
+  private MapStrategy mapStrategy;
   private Player playerInTurn;
   private int currentYear;
   private HashMap<Position, TileImpl> world = new HashMap();
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
 
-  public GameImpl(WinnerStrategy winnerStrategy, AgeStrategy ageStrategy, ActionStrategy actionStrategy){
+  public GameImpl(WinnerStrategy winnerStrategy, AgeStrategy ageStrategy, ActionStrategy actionStrategy, MapStrategy mapStrategy){
     this.winnerStrategy = winnerStrategy;
     this.ageStrategy = ageStrategy;
     this.actionStrategy = actionStrategy;
+    this.mapStrategy = mapStrategy;
     playerInTurn = Player.RED;
     currentYear = -4000;
-    for(int i=0; i<GameConstants.WORLDSIZE; i++){
-      for(int j=0; j<GameConstants.WORLDSIZE; j++){
-        createTile(new Position(i,j), new TileImpl(GameConstants.PLAINS));
-      }
-    }
-    createTile(new Position(1,0), new TileImpl(GameConstants.OCEANS));
-    createTile(new Position(0,1), new TileImpl(GameConstants.HILLS));
-    createTile(new Position(1,1), new TileImpl(GameConstants.MOUNTAINS));
-    createTile(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
-    createCity(new Position(1,1), new CityImpl(Player.RED));
-    createCity(new Position(4,1), new CityImpl(Player.BLUE));
-    createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER, 1, 3));
-    createUnit(new Position(3,2), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1, 3));
-    createUnit(new Position(4,3), new UnitImpl(Player.RED, GameConstants.SETTLER , 1, 2));
   }
 
-  private void createTile(Position p, TileImpl type) {world.put(p, type); }
+  void createTile(Position p, TileImpl type) {world.put(p, type); }
 
   public void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
 
   // Note: was Unit, changed to UnitImpl
-  private void createUnit(Position p, UnitImpl owner) {units.put(p, owner); }
+  void createUnit(Position p, UnitImpl owner) {units.put(p, owner); }
 
   public Tile getTileAt( Position p ) { return world.get(p); }
 
