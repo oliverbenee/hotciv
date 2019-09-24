@@ -26,4 +26,11 @@ public class TestDeltaCiv {
     Position redCityPosition = new Position(8,12);
     assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
   }
+
+  //Ensure, that Blue has a city at (4,5)
+  @Test
+  public void blueHasACityAt4Point5(){
+    Position blueCityPosition = new Position(4,5);
+    assertThat(game.getCityAt(blueCityPosition).getOwner(), is(Player.BLUE));
+  }
 }

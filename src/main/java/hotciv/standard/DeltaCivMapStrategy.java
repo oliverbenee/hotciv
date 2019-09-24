@@ -34,7 +34,7 @@ import java.util.*;
 
 public class DeltaCivMapStrategy implements MapStrategy {
   // A simple implementation to draw the map of DeltaCiv
-  protected Map<Position,Tile> world;
+  private Map<Position,Tile> world;
   public Tile getTileAt( Position p ) { return world.get(p); }
 
   /** Define the world as the DeltaCiv layout */
@@ -62,7 +62,7 @@ public class DeltaCivMapStrategy implements MapStrategy {
                     ".....ooooooooo..",
             };
     // Conversion...
-    Map<Position,Tile> theWorld = new HashMap<Position,Tile>();
+    Map<Position,Tile> theWorld = new HashMap<>();
     String line;
     for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
       line = layout[r];
@@ -79,5 +79,6 @@ public class DeltaCivMapStrategy implements MapStrategy {
       }
     }
     game.createCity(new Position(8,12), new CityImpl(Player.RED));
+    game.createCity(new Position(4,5), new CityImpl(Player.BLUE));
   }
 }
