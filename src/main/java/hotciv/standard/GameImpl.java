@@ -91,15 +91,33 @@ public class GameImpl implements Game {
     return false;
   }
 
+  private boolean legalTile(Position to){
+    // Handle illegal tiles
+    boolean isOcean = getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
+    if(isOcean) return false;
+    boolean isMountain = getTileAt(to).getTypeString().equals(GameConstants.MOUNTAINS);
+    if(isMountain) return false;
+    return true;
+  }
+
+  private void conquerCity(Position to){
+    // Handle city conquest
+    if (getCityAt(to) != null && !getCityAt(to).getOwner().equals(getPlayerInTurn())) {
+      getCityAt(to).setOwner(getPlayerInTurn());
+    }
+  }
+
+  private boolean playerOwnsUnit(Position unitPosition){
+    boolean isOwnedByPlayerInTurn = getUnitAt(unitPosition).getOwner().equals(getPlayerInTurn());
+    if(isOwnedByPlayerInTurn) return true;
+    return false;
+  }
+
   public boolean moveUnit( Position from, Position to ) {
     UnitImpl unit = getUnitAt(from);
-    // Handle illegal tiles
-    if (world.get(to).getTypeString().equals(GameConstants.OCEANS)) {
-      return false;
-    }
-    if (world.get(to).getTypeString().equals(GameConstants.MOUNTAINS)) {
-      return false;
-    }
+
+    boolean legalTile = legalTile(to);
+    if(!legalTile) return false;
 
     boolean friendlyTile = friendlyAtTargetPosition(to);
     if(friendlyTile) return false;
@@ -108,24 +126,14 @@ public class GameImpl implements Game {
     if(!hasMoves) return false;
 
     // Handle which player should move
-    if (getPlayerInTurn().equals(Player.RED)) {
-        if (unit.getOwner().equals(Player.RED)) {
-          units.remove(from);
-          createUnit(to, unit);
-          getUnitAt(to).decreaseMoveCount();
-        }
-      }
-    if (getPlayerInTurn().equals(Player.BLUE)) {
-        if (unit.getOwner().equals(Player.BLUE)) {
-          units.remove(from);
-          createUnit(to, unit);
-          getUnitAt(to).decreaseMoveCount();
-        }
-      }
-    // Handle city conquest
-    if (getCityAt(to) != null && !getCityAt(to).getOwner().equals(playerInTurn)) {
-      getCityAt(to).setOwner(getPlayerInTurn());
-    }
+    boolean playerInTurnOwnsUnit = playerOwnsUnit(from);
+    if(!playerInTurnOwnsUnit) return false;
+
+    removeUnit(from);
+    createUnit(to, unit);
+    getUnitAt(to).decreaseMoveCount();
+
+    conquerCity(to);
 
     return false;
   }
