@@ -77,6 +77,13 @@ public class GameImpl implements Game {
 
   public int getAge() { return currentYear; }
 
+  private boolean friendlyAtTargetPosition(Position to){
+    // Handle attempts to move player's own unit on to another of player's own unit.
+    boolean friendlyAtTargetPosition = getUnitAt(to) != null && getUnitAt(to).getOwner().equals(playerInTurn);
+    if(friendlyAtTargetPosition) return true;
+    return false;
+  }
+
   public boolean moveUnit( Position from, Position to ) {
     UnitImpl unit = getUnitAt(from);
     // Handle illegal tiles
@@ -87,10 +94,8 @@ public class GameImpl implements Game {
       return false;
     }
 
-    // Handle attempts to move player's own unit on to another of player's own unit.
-    if (getUnitAt(to) != null && getUnitAt(to).getOwner().equals(playerInTurn)){
-      return false;
-    }
+    boolean friendlyTile = friendlyAtTargetPosition(to);
+    if(friendlyTile) return false;
 
     // Handle attempts to move a unit, when the units has no moves left. If this is the case, the unit is not allowed to move.
     if (getUnitAt(from).getMoveCount() == 0){
