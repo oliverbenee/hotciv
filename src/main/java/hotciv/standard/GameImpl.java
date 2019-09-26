@@ -151,18 +151,34 @@ public class GameImpl implements Game {
 
   public void performUnitActionAt(Position p) {actionStrategy.performUnitActionAt(p, this);}
 
-  public void produceUnit(Position p) {
-    CityImpl city = cities.get(p);
-    if(city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction())){
-      city.removeFromTreasury(GameConstants.getPriceOfProduction(city.getProduction()));
-      if(units.get(p) == null) {
-        units.put(p, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
-      }} else {
-        for (Position ps : hotciv.utility.Utility.get8neighborhoodOf(p)){
-          if(units.get(ps) == null) {
-            units.put(ps, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
+  private boolean cityHasEnoughTreasury(Position cityPosition){
+    CityImpl city = getCityAt(cityPosition);
+    boolean cityTreasuryIsEnough = city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction());
+    if(cityTreasuryIsEnough) return true;
+    return false;
+  }
+
+  private void findValidPositionForUnit(Position cityPosition) {
+    CityImpl city = getCityAt(cityPosition);
+    boolean noUnitAtCityPosition = getUnitAt(cityPosition) == (null);
+    if (noUnitAtCityPosition) {
+      createUnit(cityPosition, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
+    } else {
+      for (Position surroundingCityPosition : hotciv.utility.Utility.get8neighborhoodOf(cityPosition)) {
+        boolean noUnitAtSurroundingPosition = getUnitAt(surroundingCityPosition) == (null);
+        if (noUnitAtSurroundingPosition) {
+          createUnit(surroundingCityPosition, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
         }
       }
+    }
+  }
+
+  public void produceUnit(Position cityPosition) {
+    CityImpl city = getCityAt(cityPosition);
+    boolean cityHasEnoughTreasury = cityHasEnoughTreasury(cityPosition);
+    if(cityHasEnoughTreasury) {
+      city.removeFromTreasury(GameConstants.getPriceOfProduction(city.getProduction()));
+      findValidPositionForUnit(cityPosition);
     }
   }
 

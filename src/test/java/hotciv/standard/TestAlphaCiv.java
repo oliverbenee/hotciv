@@ -314,7 +314,6 @@ public class TestAlphaCiv {
     game.endOfTurn();
     game.endOfTurn();
     assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.ARCHER));
-    assertThat(game.getUnitAt(new Position(0,0)).getTypeString(), is(GameConstants.ARCHER));
   }
 
   // Ensure, that the unit is placed on top of the city when produced, and there are no other units on top.
