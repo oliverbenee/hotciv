@@ -73,12 +73,12 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] however, it cannot be moved. 
 * [OK] If an archer is already fortified, invoking this action removes its fortification.
 
-## DeltaCiv requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-))
+## DeltaCiv requirements. (Please refer to our mail-discussion from 18-09-2019 :-))
 ### World Layout
  * [OK] The world’s layout is that shown in Figure 36.1 on page 454. 
  * [OK] Red must have a city at position (8,12) 
  * [OK] and blue a city at (4,5). 
- * [] Furthermore, it should be easy for programmers to write their own algorithms for generating a world layout to be 
+ * [OK] Furthermore, it should be easy for programmers to write their own algorithms for generating a world layout to be 
 used in DeltaCiv without any source code changes in the HotCiv production code.
 
 ## BUGS TO BE FIXED
