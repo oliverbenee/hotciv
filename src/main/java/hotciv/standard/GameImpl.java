@@ -79,7 +79,7 @@ public class GameImpl implements Game {
 
   private boolean friendlyAtTargetPosition(Position to){
     // Handle attempts to move player's own unit on to another of player's own unit.
-    boolean friendlyAtTargetPosition = getUnitAt(to) != null && getUnitAt(to).getOwner().equals(playerInTurn);
+    boolean friendlyAtTargetPosition = getUnitAt(to) != null && getUnitAt(to).getOwner().equals(getPlayerInTurn());
     if(friendlyAtTargetPosition) return true;
     return false;
   }
