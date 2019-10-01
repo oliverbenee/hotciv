@@ -67,4 +67,10 @@ public class GameConstants {
     return 0;
   }
 
+   public static int getAttackingStrength(String unit){
+   if(unit.equals(ARCHER)){return 2;}
+   if(unit.equals(SETTLER)){return 0;}
+   if(unit.equals(LEGION)){return 4;}
+   return 0;
+   }
 }
