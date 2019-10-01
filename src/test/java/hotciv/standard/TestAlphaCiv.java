@@ -40,7 +40,7 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
     MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), null, mapStrategy);
+    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), null, mapStrategy, new AlphaCivAttackStrategy());
     mapStrategy.createWorld(game);
   }
 

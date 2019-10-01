@@ -17,7 +17,7 @@ public class TestGammaCiv {
   @Before
   public void setUp() {
     MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), new GammaCivActionStrategy(), mapStrategy);
+    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), new GammaCivActionStrategy(), mapStrategy, new AlphaCivAttackStrategy());
     mapStrategy.createWorld(game);
   }
 

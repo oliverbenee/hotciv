@@ -35,16 +35,18 @@ public class GameImpl implements Game {
   private AgeStrategy ageStrategy;
   private ActionStrategy actionStrategy;
   private MapStrategy mapStrategy;
+  private AttackStrategy attackStrategy;
   private Player playerInTurn;
   private int currentYear;
   private HashMap<Position, TileImpl> world = new HashMap();
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
 
-  public GameImpl(WinnerStrategy winnerStrategy, AgeStrategy ageStrategy, ActionStrategy actionStrategy, MapStrategy mapStrategy){
+  public GameImpl(WinnerStrategy winnerStrategy, AgeStrategy ageStrategy, ActionStrategy actionStrategy, MapStrategy mapStrategy, AttackStrategy attackStrategy){
     this.winnerStrategy = winnerStrategy;
     this.ageStrategy = ageStrategy;
     this.actionStrategy = actionStrategy;
+    this.attackStrategy = attackStrategy;
     this.mapStrategy = mapStrategy;
     playerInTurn = Player.RED;
     currentYear = -4000;
@@ -113,6 +115,17 @@ public class GameImpl implements Game {
     return false;
   }
 
+  private boolean enemyAtTargetPosition(Position to){
+    // Handle attempts to move player's own unit on to another of player's own unit.
+    boolean enemyAtTargetPosition = getUnitAt(to) != null && !getUnitAt(to).getOwner().equals(getPlayerInTurn());
+    if(enemyAtTargetPosition) return true;
+    return false;
+  }
+
+  private boolean isAttackWon(Position from, Position to){
+    return attackStrategy.attackerWins(from, to);
+  }
+
   public boolean moveUnit( Position from, Position to ) {
     UnitImpl unit = getUnitAt(from);
 
@@ -125,9 +138,14 @@ public class GameImpl implements Game {
     boolean hasMoves = unitHasMoves(from);
     if(!hasMoves) return false;
 
-    // Handle which player should move
     boolean playerInTurnOwnsUnit = playerOwnsUnit(from);
     if(!playerInTurnOwnsUnit) return false;
+
+    boolean enemyTile = enemyAtTargetPosition(to);
+    if(enemyTile) {
+      boolean attackerWins = isAttackWon(from, to);
+      if (!attackerWins) { removeUnit(from); }
+    }
 
     removeUnit(from);
     createUnit(to, unit);
@@ -178,14 +196,15 @@ public class GameImpl implements Game {
 
   private void findValidPositionForUnit(Position cityPosition) {
     CityImpl city = getCityAt(cityPosition);
+    String unitProduced = city.getProduction();
     boolean noUnitAtCityPosition = getUnitAt(cityPosition) == (null);
     if (noUnitAtCityPosition) {
-      createUnit(cityPosition, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
+      createUnit(cityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced), GameConstants.getDefensiveStrength(unitProduced), GameConstants.getAttackingStrength(unitProduced)));
     } else {
       for (Position surroundingCityPosition : hotciv.utility.Utility.get8neighborhoodOf(cityPosition)) {
         boolean noUnitAtSurroundingPosition = getUnitAt(surroundingCityPosition) == (null);
         if (noUnitAtSurroundingPosition) {
-          createUnit(surroundingCityPosition, new UnitImpl(city.getOwner(), city.getProduction(), GameConstants.getMoveDistance(city.getProduction()), GameConstants.getDefensiveStrength(city.getProduction())));
+          createUnit(surroundingCityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced), GameConstants.getDefensiveStrength(unitProduced), GameConstants.getAttackingStrength(unitProduced)));
         }
       }
     }

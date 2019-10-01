@@ -15,7 +15,7 @@ public class TestBetaCiv {
   @Before
   public void setUp() {
     MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    game = new GameImpl(new BetaCivWinnerStrategy(), new BetaCivAgeStrategy(), null, mapStrategy);
+    game = new GameImpl(new BetaCivWinnerStrategy(), new BetaCivAgeStrategy(), null, mapStrategy, new AlphaCivAttackStrategy());
     mapStrategy.createWorld(game);
   }
 
