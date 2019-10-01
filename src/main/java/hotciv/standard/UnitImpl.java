@@ -6,13 +6,15 @@ public class UnitImpl implements Unit {
   private String type;
   private int moveCount;
   private int defensiveStrength;
+  private int attackingStrength;
   private boolean fortify;
 
-  public UnitImpl(Player owner, String unitType, int moveCount, int defensiveStrength){
+  public UnitImpl(Player owner, String unitType, int moveCount, int defensiveStrength, int attackingStrength){
     this.owner = owner;
     this.type = unitType;
     this.moveCount = moveCount;
     this.defensiveStrength = defensiveStrength;
+    this.attackingStrength = attackingStrength;
   }
 
   public String getTypeString() {
