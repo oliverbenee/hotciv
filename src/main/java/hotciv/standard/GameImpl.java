@@ -220,4 +220,6 @@ public class GameImpl implements Game {
   }
 
   public void removeUnit(Position p){units.remove(p);}
+
+  public int getAttacksWonByPlayer(Player p){return winnerStrategy.getAttacksWonByPlayer(p);}
 }

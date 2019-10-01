@@ -10,7 +10,6 @@ import java.util.Map;
 public class EpsilonCivWinnerStrategy implements WinnerStrategy{
   private HashMap<Player, Integer> attackswon;
 
-
   @Override
   public Player getWinner(GameImpl game) {
     for(Map.Entry<Player, Integer> entry : attackswon.entrySet()){
@@ -30,9 +29,6 @@ public class EpsilonCivWinnerStrategy implements WinnerStrategy{
 
   @Override
   public int getAttacksWonByPlayer(Player p){
-    if (attackswon.get(p) != null) {
-      return attackswon.get(p);
-    }
-    return 0;
+    return attackswon.get(p);
   }
 }
