@@ -74,12 +74,32 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] If an archer is already fortified, invoking this action removes its fortification.
 
 ## DeltaCiv requirements. (Please refer to our mail-discussion from 18-09-2019 :-))
+
 ### World Layout
  * [OK] The world’s layout is that shown in Figure 36.1 on page 454. 
  * [OK] Red must have a city at position (8,12) 
  * [OK] and blue a city at (4,5). 
  * [OK] Furthermore, it should be easy for programmers to write their own algorithms for generating a world layout to be 
 used in DeltaCiv without any source code changes in the HotCiv production code.
+
+## EpsilonCiv requirements. 
+
+### Winner. 
+* [] The winner is the first player to win three attacks. 
+* [] Successful defenses do not count, only successful attacks.
+    
+### Attacking. 
+* [] Attacks are resolved based upon an algorithm that determines the battle outcome based on combined attack strength 
+of the attacking unit and combined defense strength of the defending unit. The combined strength is calculated
+based upon 
+        A) the unit’s own strength, 
+        B) support from adjacent friendly units, and
+        C) terrain factor.
+* [] The combined attack strength, A, is first the attack strength of the unit itself. To this value, 
+a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
+* [] This number is then multiplied by the terrain factor: the terrain factor is 2 if the unit is on a tile of type forest
+or type hill; or multiplied by 3 if the unit is in a city.
+
 
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.
