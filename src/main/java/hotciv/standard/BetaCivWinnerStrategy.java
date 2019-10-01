@@ -21,4 +21,14 @@ public class BetaCivWinnerStrategy implements WinnerStrategy {
       return null;
     }
   }
+
+  //Not used in BetaCiv
+  @Override
+  public void incrementAttacksWonByPlayer(Player p) {}
+
+  //Not used in BetaCiv
+  @Override
+  public int getAttacksWonByPlayer(Player p) {
+    return 0;
+  }
 }

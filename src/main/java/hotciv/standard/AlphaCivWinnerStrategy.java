@@ -12,4 +12,14 @@ public class AlphaCivWinnerStrategy implements WinnerStrategy {
       return Player.RED;
     } else { return null; }
   }
+
+  //Not used in AlphaCiv
+  @Override
+  public void incrementAttacksWonByPlayer(Player p) {}
+
+  //Not used in AlphaCiv
+  @Override
+  public int getAttacksWonByPlayer(Player p) {
+    return 0;
+  }
 }
