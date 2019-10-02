@@ -1,5 +1,4 @@
 ## AlphaCiv requirements.
-
 The following requiremnets are set for the project - all requirements, that have successfully been implemented has been marked with a [ * ]
 ### Players. (1)
 * [OK] There are exactly two players, Red and Blue.
@@ -40,18 +39,15 @@ The following requiremnets are set for the project - all requirements, that have
 9 / 9 categories implemented.
 
 ### Requirements related to HotCiv, but not related to AlphaCiv
-
 * [OK] Units cannot move over ocean tiles
 * [OK] Units cannot move over mountain tiles
 * [OK] When the player changes the unit to be produced, the correct unit is spawned
 * [OK] When a player moves a unit onto an enemy city, the owner is changed. (i.e. if red moves to blues city, it is now reds city.)
 
 ## BetaCiv requirements. 
-
 ### Winner. (1)
 * [OK] Players can conquer cities.
 * [OK] The winner is the player that first conquers all cities in the world.
-
 ### World aging. (7)
 * [OK] World aging. The world ages using the following algorithm:
 * [OK] Between 4000BC and 100BC 100 years pass per round. 
@@ -62,19 +58,16 @@ The following requiremnets are set for the project - all requirements, that have
 * [OK] After 1980 1 year per round.
 
 ## GammaCiv requirements
-
 ### Settler action. (3)
 * [OK] When a settler is told to perform its action (build city), the settler unit itself is removed from the world 
 * [OK] and replaced by a city of population size one. 
 * [OK] Of course, the owner of the city is the same player as the one who owned the settler.
-
 ### Archer action. (Please refer to our mail-discussion from 18-09-2019 :-))
 * [OK] When an archer is told to perform its action (fortify), its defensive strength is doubled, 
 * [OK] however, it cannot be moved. 
 * [OK] If an archer is already fortified, invoking this action removes its fortification.
 
 ## DeltaCiv requirements. (Please refer to our mail-discussion from 18-09-2019 :-))
-
 ### World Layout
  * [OK] The world’s layout is that shown in Figure 36.1 on page 454. 
  * [OK] Red must have a city at position (8,12) 
@@ -83,14 +76,11 @@ The following requiremnets are set for the project - all requirements, that have
 used in DeltaCiv without any source code changes in the HotCiv production code.
 
 ## EpsilonCiv requirements. 
-
 ### Winner. 
 * [OK] The winner is the first player to win three attacks. 
 * [OK] Successful defenses do not count, only successful attacks.
-    
 #### Prerequisites for this to work:
 * [OK] Each player's attack wins are counted.    
-    
 ### Attacking. 
 * [OK] Attacks are resolved based upon an algorithm that determines the battle outcome based on combined attack strength 
 of the attacking unit and combined defense strength of the defending unit. The combined strength is calculated
@@ -98,7 +88,6 @@ based upon
         A) the unit’s own strength, 
         B) support from adjacent friendly units, and
         C) terrain factor.
-        
 #### This is tested through the TestUtility2.java file.
 * [OK] The combined attack strength, A, is first the attack strength of the unit itself. 
 * [OK] To this value, a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
@@ -106,8 +95,14 @@ based upon
         A) the terrain factor is 2 if the unit is on a tile of type forest or type hill; 
         B) or multiplied by 3 if the unit is in a city.
 
-## AbstractFactory requirements
+## ZetaCiv requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-))
+### Winner. 
+* [] The winner is the player that first conquers all cities in the world (like BetaCiv). 
+However, in case the game lasts more than 20 rounds then the winner is the first player to win three attacks 
+(like EpsilonCiv). The counting of attacks won does not start until the 20th round has ended.
 
+## AbstractFactory requirements.
+* [] Implemented?
 
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.

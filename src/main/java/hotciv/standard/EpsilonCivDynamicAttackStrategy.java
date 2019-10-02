@@ -9,27 +9,27 @@ import hotciv.utility.Utility2;
 
 public class EpsilonCivDynamicAttackStrategy implements AttackStrategy{
 
-  public int calculateDefensiveStrength(GameImpl game, Position to){
+  public int calculateDefensiveStrength(GameImpl game, Position defenderPosition){
     int defenderDefensiveStrength = 0;
-    int unitDefensiveStrength = game.getUnitAt(to).getDefensiveStrength();
+    int unitDefensiveStrength = game.getUnitAt(defenderPosition).getDefensiveStrength();
     defenderDefensiveStrength += unitDefensiveStrength;
 
-    int defenderTerrainFactor = 2; //Utility.getTerrainFactor(game, unitPosition);
+    int defenderTerrainFactor = Utility.getTerrainFactor(game, defenderPosition);
     defenderDefensiveStrength *= defenderTerrainFactor;
-    int defenderFriendlySupport = Utility2.getFriendlySupport(game, to, game.getUnitAt(to).getOwner());
+    int defenderFriendlySupport = Utility2.getFriendlySupport(game, defenderPosition, game.getUnitAt(defenderPosition).getOwner());
     defenderDefensiveStrength += defenderFriendlySupport;
     return defenderDefensiveStrength;
   }
 
-  private int calculateAttackingStrength(GameImpl game, Position friendlyPosition){
+  private int calculateAttackingStrength(GameImpl game, Position attackerPosition){
     int attackerStrength = 0;
-    int unitAttackingStrength = game.getUnitAt(friendlyPosition).getAttackingStrength();
+    int unitAttackingStrength = game.getUnitAt(attackerPosition).getAttackingStrength();
     attackerStrength += unitAttackingStrength;
-    boolean attackerIsOnAlliedCity = game.getCityAt(friendlyPosition) != null;
+    boolean attackerIsOnAlliedCity = game.getCityAt(attackerPosition) != null;
     if(attackerIsOnAlliedCity) attackerStrength *=3;
-    int attackerTerrainFactor = Utility.getTerrainFactor(game, friendlyPosition);
+    int attackerTerrainFactor = Utility.getTerrainFactor(game, attackerPosition);
     attackerStrength *= attackerTerrainFactor;
-    int attackerFriendlySupport = Utility2.getFriendlySupport(game, friendlyPosition, game.getUnitAt(friendlyPosition).getOwner());
+    int attackerFriendlySupport = Utility2.getFriendlySupport(game, attackerPosition, game.getUnitAt(attackerPosition).getOwner());
     attackerStrength += attackerFriendlySupport;
     return attackerStrength;
   }
