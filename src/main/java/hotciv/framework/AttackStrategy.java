@@ -5,7 +5,7 @@ import hotciv.standard.GameImpl;
 public interface AttackStrategy {
   boolean attackerWins(GameImpl game, Position friendlyPosition, Position enemyPosition);
 
-  int calculateDefensiveStrength(GameImpl game, Position to);
+  int calculateDefensiveStrength(GameImpl game, Position unitPosition);
 
-  int calculateAttackingStrength(GameImpl game, Position from);
+  int calculateAttackingStrength(GameImpl game, Position unitPosition);
 }
