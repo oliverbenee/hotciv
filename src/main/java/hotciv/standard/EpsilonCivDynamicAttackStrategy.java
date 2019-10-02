@@ -14,10 +14,15 @@ public class EpsilonCivDynamicAttackStrategy implements AttackStrategy{
     int unitDefensiveStrength = game.getUnitAt(defenderPosition).getDefensiveStrength();
     defenderDefensiveStrength += unitDefensiveStrength;
 
+    boolean DefenderIsOnAlliedCity = game.getCityAt(defenderPosition) != null;
+    if(DefenderIsOnAlliedCity) defenderDefensiveStrength *= 3;
+
     int defenderTerrainFactor = Utility.getTerrainFactor(game, defenderPosition);
     defenderDefensiveStrength *= defenderTerrainFactor;
+
     int defenderFriendlySupport = Utility2.getFriendlySupport(game, defenderPosition, game.getUnitAt(defenderPosition).getOwner());
     defenderDefensiveStrength += defenderFriendlySupport;
+
     return defenderDefensiveStrength;
   }
 

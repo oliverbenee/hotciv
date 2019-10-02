@@ -21,7 +21,7 @@ public class TestEpsilonCiv {
             new AlphaCivAgeStrategy(),
             new AlphaCivActionStrategy(),
             mapStrategy,
-            new EpsilonCivFixedAttackStrategy());
+            new EpsilonCivDynamicAttackStrategy());
     mapStrategy.createWorld(game);
     game.createUnit(new Position(3,3), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
   }
