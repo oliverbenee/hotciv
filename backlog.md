@@ -111,3 +111,4 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 
 ## Other
 * [] Refactoring of EpsilonCivDynamicAttackStrategy is VERY MUCH NEEDED.
+* [] Correct design of attackstrategy
