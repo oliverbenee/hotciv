@@ -36,6 +36,7 @@ public class GameImpl implements Game {
   private ActionStrategy actionStrategy;
   private MapStrategy mapStrategy;
   private AttackStrategy attackStrategy;
+  private HotCivFactory hotCivFactory;
   private Player playerInTurn;
   private int currentYear;
   private HashMap<Position, TileImpl> world = new HashMap();
@@ -43,12 +44,13 @@ public class GameImpl implements Game {
   private HashMap<Position, UnitImpl> units = new HashMap();
   private HashMap<Player, Integer> attackswon;
 
-  public GameImpl(WinnerStrategy winnerStrategy, AgeStrategy ageStrategy, ActionStrategy actionStrategy, MapStrategy mapStrategy, AttackStrategy attackStrategy){
-    this.winnerStrategy = winnerStrategy;
-    this.ageStrategy = ageStrategy;
-    this.actionStrategy = actionStrategy;
-    this.attackStrategy = attackStrategy;
-    this.mapStrategy = mapStrategy;
+  public GameImpl(HotCivFactory factory){
+    this.hotCivFactory = factory;
+    this.winnerStrategy = factory.createWinnerStrategy();
+    this.ageStrategy = factory.createAgeStrategy();
+    this.actionStrategy = factory.createActionStrategy();
+    this.attackStrategy = factory.createAttackStrategy();
+    this.mapStrategy = factory.createMapStrategy();
     playerInTurn = Player.RED;
     currentYear = -4000;
   }

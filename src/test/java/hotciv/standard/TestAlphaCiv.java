@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.factory.AlphaCivFactory;
 import hotciv.framework.*;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -40,7 +41,7 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
     MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    game = new GameImpl(new AlphaCivWinnerStrategy(), new AlphaCivAgeStrategy(), null, mapStrategy, new AlphaCivAttackStrategy());
+    game = new GameImpl(new AlphaCivFactory());
     mapStrategy.createWorld(game);
   }
 

@@ -104,11 +104,11 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 (like EpsilonCiv). The counting of attacks won does not start until the 20th round has ended.
 
 ## AbstractFactory requirements.
-* [] Implemented?
+* [OK] Implemented?
 
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.
 
 ## Other
-* [] Refactoring of EpsilonCivDynamicAttackStrategy is VERY MUCH NEEDED.
-* [] Correct design of attackstrategy
+* [OK] Refactoring of EpsilonCivDynamicAttackStrategy is VERY MUCH NEEDED.
+* [PARTIAL] Correct design of attackstrategy

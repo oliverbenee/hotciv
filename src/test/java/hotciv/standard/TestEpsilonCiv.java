@@ -1,5 +1,7 @@
 package hotciv.standard;
 
+import hotciv.factory.AlphaCivFactory;
+import hotciv.factory.EpsilonCivFactory;
 import hotciv.framework.*;
 import org.junit.*;
 
@@ -17,11 +19,7 @@ public class TestEpsilonCiv {
   @Before
   public void setUp() {
     MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    game = new GameImpl(new EpsilonCivWinnerStrategy(),
-            new AlphaCivAgeStrategy(),
-            new AlphaCivActionStrategy(),
-            mapStrategy,
-            new EpsilonCivDynamicAttackStrategy());
+    game = new GameImpl(new EpsilonCivFactory());
     mapStrategy.createWorld(game);
     game.createUnit(new Position(3,3), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
   }
@@ -72,5 +70,20 @@ public class TestEpsilonCiv {
     game.moveUnit(redVillagerPosition, blueLegionPosition);
     int attacksWonByBlue = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByBlue, is(0));
+  }
+
+  @Test
+  public void ensureStrengthIs28ForArcherAtCity(){
+    game.createCity(new Position(2,1), new CityImpl(Player.RED));
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy();
+    game.createUnit(new Position(2,1), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    game.createTile(new Position(2,1), new TileImpl(GameConstants.FOREST));
+    int createdUnitsBaseDefense = 3;
+    int alliedCityFactor = 3;
+    int defenderTerrainFactor = 2;
+    //TODO: This estimate of allied units is most likely wrong, and needs double checking...
+    int allyUnitFactor = 10;
+    int correctDefense = createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor;
+    assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(2,1)));
   }
 }
