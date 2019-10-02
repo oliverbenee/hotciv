@@ -92,12 +92,14 @@ used in DeltaCiv without any source code changes in the HotCiv production code.
 * [OK] Each player's attack wins are counted.    
     
 ### Attacking. 
-* [] Attacks are resolved based upon an algorithm that determines the battle outcome based on combined attack strength 
+* [OK] Attacks are resolved based upon an algorithm that determines the battle outcome based on combined attack strength 
 of the attacking unit and combined defense strength of the defending unit. The combined strength is calculated
 based upon 
         A) the unit’s own strength, 
         B) support from adjacent friendly units, and
         C) terrain factor.
+        
+#### This is tested through the TestUtility2.java file.
 * [OK] The combined attack strength, A, is first the attack strength of the unit itself. 
 * [OK] To this value, a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
 * [OK] This number is then multiplied by the terrain factor: 
