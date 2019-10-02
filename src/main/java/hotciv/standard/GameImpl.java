@@ -41,6 +41,7 @@ public class GameImpl implements Game {
   private HashMap<Position, TileImpl> world = new HashMap();
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
+  private HashMap<Player, Integer> attackswon;
 
   public GameImpl(WinnerStrategy winnerStrategy, AgeStrategy ageStrategy, ActionStrategy actionStrategy, MapStrategy mapStrategy, AttackStrategy attackStrategy){
     this.winnerStrategy = winnerStrategy;
@@ -126,6 +127,10 @@ public class GameImpl implements Game {
     return attackStrategy.attackerWins(from, to);
   }
 
+  public void playerWonAttack(Player p) {
+    winnerStrategy.incrementAttacksWonByPlayer(p);
+  }
+
   public boolean moveUnit( Position from, Position to ) {
     UnitImpl unit = getUnitAt(from);
 
@@ -144,7 +149,12 @@ public class GameImpl implements Game {
     boolean enemyTile = enemyAtTargetPosition(to);
     if(enemyTile) {
       boolean attackerWins = isAttackWon(from, to);
-      if (!attackerWins) { removeUnit(from); }
+      if (!attackerWins) {
+        removeUnit(from);
+        return false;
+      } else {
+        playerWonAttack(getPlayerInTurn());
+      }
     }
 
     removeUnit(from);
@@ -221,5 +231,9 @@ public class GameImpl implements Game {
 
   public void removeUnit(Position p){units.remove(p);}
 
+  public HashMap<Player, Integer> getAttacksWonForPlayers(){return attackswon;}
+
   public int getAttacksWonByPlayer(Player p){return winnerStrategy.getAttacksWonByPlayer(p);}
+
+  public void setAttacksWonByPlayers(Player p, int i){winnerStrategy.incrementAttacksWonByPlayer(p);}
 }

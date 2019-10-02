@@ -85,8 +85,11 @@ used in DeltaCiv without any source code changes in the HotCiv production code.
 ## EpsilonCiv requirements. 
 
 ### Winner. 
-* [] The winner is the first player to win three attacks. 
+* [OK] The winner is the first player to win three attacks. 
 * [] Successful defenses do not count, only successful attacks.
+    
+#### Prerequisites for this to work:
+* [OK] Each player's attack wins are counted.    
     
 ### Attacking. 
 * [] Attacks are resolved based upon an algorithm that determines the battle outcome based on combined attack strength 
@@ -99,6 +102,8 @@ based upon
 a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
 * [] This number is then multiplied by the terrain factor: the terrain factor is 2 if the unit is on a tile of type forest
 or type hill; or multiplied by 3 if the unit is in a city.
+
+## AbstractFactory requirements
 
 
 ## BUGS TO BE FIXED
