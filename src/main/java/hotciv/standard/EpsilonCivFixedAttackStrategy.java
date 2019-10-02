@@ -5,6 +5,7 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.utility.Utility;
+import hotciv.utility.Utility2;
 
 public class EpsilonCivFixedAttackStrategy implements AttackStrategy{
 
@@ -19,7 +20,7 @@ public class EpsilonCivFixedAttackStrategy implements AttackStrategy{
     int defenderTerrainFactor = Utility.getTerrainFactor(game, unitPosition);
     defenderDefensiveStrength *= defenderTerrainFactor;
 
-    int defenderFriendlySupport = Utility.getFriendlySupport(game, unitPosition, game.getUnitAt(unitPosition).getOwner());
+    int defenderFriendlySupport = Utility2.getFriendlySupport(game, unitPosition, game.getUnitAt(unitPosition).getOwner());
     defenderDefensiveStrength += defenderFriendlySupport;
     return defenderDefensiveStrength;
   }
@@ -32,7 +33,7 @@ public class EpsilonCivFixedAttackStrategy implements AttackStrategy{
     if(attackerIsOnAlliedCity) attackerStrength *=3;
     int attackerTerrainFactor = Utility.getTerrainFactor(game, friendlyPosition);
     attackerStrength *= attackerTerrainFactor;
-    int attackerFriendlySupport = Utility.getFriendlySupport(game, friendlyPosition, game.getUnitAt(friendlyPosition).getOwner());
+    int attackerFriendlySupport = Utility2.getFriendlySupport(game, friendlyPosition, game.getUnitAt(friendlyPosition).getOwner());
     attackerStrength += attackerFriendlySupport;
     return attackerStrength;
   }

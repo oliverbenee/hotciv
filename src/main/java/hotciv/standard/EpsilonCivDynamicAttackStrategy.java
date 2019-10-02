@@ -5,20 +5,18 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.utility.Utility;
+import hotciv.utility.Utility2;
 
 public class EpsilonCivDynamicAttackStrategy implements AttackStrategy{
 
-  public int calculateDefensiveStrength(GameImpl game, Position unitPosition){
+  public int calculateDefensiveStrength(GameImpl game, Position to){
     int defenderDefensiveStrength = 0;
-    int unitDefensiveStrength = game.getUnitAt(unitPosition).getDefensiveStrength();
+    int unitDefensiveStrength = game.getUnitAt(to).getDefensiveStrength();
     defenderDefensiveStrength += unitDefensiveStrength;
-
-    boolean DefenderIsOnAlliedCity = game.getCityAt(unitPosition) != null;
-    if(DefenderIsOnAlliedCity) defenderDefensiveStrength *= 3;
 
     int defenderTerrainFactor = 2; //Utility.getTerrainFactor(game, unitPosition);
     defenderDefensiveStrength *= defenderTerrainFactor;
-    int defenderFriendlySupport = Utility.getFriendlySupport(game, unitPosition, game.getUnitAt(unitPosition).getOwner());
+    int defenderFriendlySupport = Utility2.getFriendlySupport(game, to, game.getUnitAt(to).getOwner());
     defenderDefensiveStrength += defenderFriendlySupport;
     return defenderDefensiveStrength;
   }
@@ -31,7 +29,7 @@ public class EpsilonCivDynamicAttackStrategy implements AttackStrategy{
     if(attackerIsOnAlliedCity) attackerStrength *=3;
     int attackerTerrainFactor = Utility.getTerrainFactor(game, friendlyPosition);
     attackerStrength *= attackerTerrainFactor;
-    int attackerFriendlySupport = Utility.getFriendlySupport(game, friendlyPosition, game.getUnitAt(friendlyPosition).getOwner());
+    int attackerFriendlySupport = Utility2.getFriendlySupport(game, friendlyPosition, game.getUnitAt(friendlyPosition).getOwner());
     attackerStrength += attackerFriendlySupport;
     return attackerStrength;
   }
@@ -41,7 +39,6 @@ public class EpsilonCivDynamicAttackStrategy implements AttackStrategy{
 
     int defenderDefensiveStrength = calculateDefensiveStrength(game, enemyPosition);
     int attackerAttackingStrength = calculateAttackingStrength(game, friendlyPosition);
-
     return attackerAttackingStrength > defenderDefensiveStrength;
   }
 }

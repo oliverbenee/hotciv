@@ -79,33 +79,4 @@ public class Utility {
     }
     return 1;
   }
-
-  /**
-   * calculate the additional support a unit at position p owned by a given
-   * player gets from friendly units on the given game.
-   *
-   * @param game
-   *          the game to calculate on
-   * @param position
-   *          the position of the unit whose support is wanted
-   * @param player
-   *          the player owning the unit at position 'position'
-   * @return the support for the unit, +1 for each friendly unit in the 8
-   *         neighborhood.
-   */
-  public static int getFriendlySupport(Game game, Position position,
-                                       Player player) {
-    Iterator<Position> neighborhood = hotciv.utility.Utility.get8neighborhoodIterator(position);
-    Position p;
-    int support = 0;
-    while ( neighborhood.hasNext() ) {
-      p = neighborhood.next();
-      if ( game.getUnitAt(p) != null &&
-              game.getUnitAt(p).getOwner() == player ) {
-        support++;
-      }
-    }
-    return support;
-  }
-
 }

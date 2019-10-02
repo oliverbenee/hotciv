@@ -73,13 +73,4 @@ public class TestEpsilonCiv {
     int attacksWonByBlue = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByBlue, is(0));
   }
-
-  //@Test
-  //public void adjacentUnitsAddDefense(){
-  //}
-
-  //@Test
-  //public void defensiveStrengthDoublesIfOnForest(){
-  //}
-
 }

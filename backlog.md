@@ -99,8 +99,8 @@ based upon
         B) support from adjacent friendly units, and
         C) terrain factor.
 * [OK] The combined attack strength, A, is first the attack strength of the unit itself. 
-* [] To this value, a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
-* [] This number is then multiplied by the terrain factor: 
+* [OK] To this value, a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
+* [OK] This number is then multiplied by the terrain factor: 
         A) the terrain factor is 2 if the unit is on a tile of type forest or type hill; 
         B) or multiplied by 3 if the unit is in a city.
 
