@@ -86,7 +86,7 @@ used in DeltaCiv without any source code changes in the HotCiv production code.
 
 ### Winner. 
 * [OK] The winner is the first player to win three attacks. 
-* [] Successful defenses do not count, only successful attacks.
+* [OK] Successful defenses do not count, only successful attacks.
     
 #### Prerequisites for this to work:
 * [OK] Each player's attack wins are counted.    
@@ -98,13 +98,17 @@ based upon
         A) the unit’s own strength, 
         B) support from adjacent friendly units, and
         C) terrain factor.
-* [] The combined attack strength, A, is first the attack strength of the unit itself. To this value, 
-a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
-* [] This number is then multiplied by the terrain factor: the terrain factor is 2 if the unit is on a tile of type forest
-or type hill; or multiplied by 3 if the unit is in a city.
+* [OK] The combined attack strength, A, is first the attack strength of the unit itself. 
+* [] To this value, a supporting strength of +1 is added for each adjacent tile that has a friendly unit. 
+* [] This number is then multiplied by the terrain factor: 
+        A) the terrain factor is 2 if the unit is on a tile of type forest or type hill; 
+        B) or multiplied by 3 if the unit is in a city.
 
 ## AbstractFactory requirements
 
 
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.
+
+## Other
+* [] Refactoring of EpsilonCivDynamicAttackStrategy is VERY MUCH NEEDED.

@@ -54,6 +54,7 @@ public class GameConstants {
   }
 
   public static int getDefensiveStrength(String unit){
+    if(unit.equals("Villager")){return -10;}
     if(unit.equals(ARCHER)){return 3;}
     if(unit.equals(SETTLER)){return 2;}
     if(unit.equals(LEGION)){return 3;}
@@ -61,16 +62,18 @@ public class GameConstants {
   }
 
   public static int getMoveDistance(String unit){
+    if(unit.equals("Villager")){return 0;}
     if(unit.equals(ARCHER)){return 1;}
     if(unit.equals(SETTLER)){return 1;}
     if(unit.equals(LEGION)){return 1;}
     return 0;
   }
 
-   public static int getAttackingStrength(String unit){
-   if(unit.equals(ARCHER)){return 2;}
-   if(unit.equals(SETTLER)){return 0;}
-   if(unit.equals(LEGION)){return 4;}
-   return 0;
-   }
+  public static int getAttackingStrength(String unit){
+    if(unit.equals("Villager")){return -10;}
+    if(unit.equals(ARCHER)){return 2;}
+    if(unit.equals(SETTLER)){return 0;}
+    if(unit.equals(LEGION)){return 4;}
+    return 0;
+  }
 }

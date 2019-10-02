@@ -1,5 +1,9 @@
 package hotciv.framework;
 
+import hotciv.standard.GameImpl;
+
 public interface AttackStrategy {
-  boolean attackerWins(Position friendlyPosition, Position enemyPosition);
+  boolean attackerWins(GameImpl game, Position friendlyPosition, Position enemyPosition);
+
+  int calculateDefensiveStrength(GameImpl game, Position unitPosition);
 }

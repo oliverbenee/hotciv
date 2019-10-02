@@ -6,7 +6,7 @@ import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.utility.Utility;
 
-public class EpsilonCivFixedAttackStrategy implements AttackStrategy{
+public class EpsilonCivDynamicAttackStrategy implements AttackStrategy{
 
   public int calculateDefensiveStrength(GameImpl game, Position unitPosition){
     int defenderDefensiveStrength = 0;
@@ -16,9 +16,8 @@ public class EpsilonCivFixedAttackStrategy implements AttackStrategy{
     boolean DefenderIsOnAlliedCity = game.getCityAt(unitPosition) != null;
     if(DefenderIsOnAlliedCity) defenderDefensiveStrength *= 3;
 
-    int defenderTerrainFactor = Utility.getTerrainFactor(game, unitPosition);
+    int defenderTerrainFactor = 2; //Utility.getTerrainFactor(game, unitPosition);
     defenderDefensiveStrength *= defenderTerrainFactor;
-
     int defenderFriendlySupport = Utility.getFriendlySupport(game, unitPosition, game.getUnitAt(unitPosition).getOwner());
     defenderDefensiveStrength += defenderFriendlySupport;
     return defenderDefensiveStrength;

@@ -55,7 +55,7 @@ public class GameImpl implements Game {
 
   void createTile(Position p, TileImpl type) {world.put(p, type); }
 
-  public void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
+  void createCity(Position p, CityImpl owner) {cities.put(p, owner); }
 
   // Note: was Unit, changed to UnitImpl
   void createUnit(Position p, UnitImpl owner) {units.put(p, owner); }
@@ -68,7 +68,7 @@ public class GameImpl implements Game {
 
   public CityImpl getCityAt( Position p ) { return cities.get(p); }
 
-  public HashMap<Position, CityImpl> getCities() {return cities; }
+  HashMap<Position, CityImpl> getCities() {return cities; }
 
   public Player getPlayerInTurn() {
     return playerInTurn;
@@ -124,10 +124,10 @@ public class GameImpl implements Game {
   }
 
   private boolean isAttackWon(Position from, Position to){
-    return attackStrategy.attackerWins(from, to);
+    return attackStrategy.attackerWins(this, from, to);
   }
 
-  public void playerWonAttack(Player p) {
+  private void playerWonAttack(Player p) {
     winnerStrategy.incrementAttacksWonByPlayer(p);
   }
 
@@ -209,12 +209,12 @@ public class GameImpl implements Game {
     String unitProduced = city.getProduction();
     boolean noUnitAtCityPosition = getUnitAt(cityPosition) == (null);
     if (noUnitAtCityPosition) {
-      createUnit(cityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced), GameConstants.getDefensiveStrength(unitProduced), GameConstants.getAttackingStrength(unitProduced)));
+      createUnit(cityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced)));
     } else {
       for (Position surroundingCityPosition : hotciv.utility.Utility.get8neighborhoodOf(cityPosition)) {
         boolean noUnitAtSurroundingPosition = getUnitAt(surroundingCityPosition) == (null);
         if (noUnitAtSurroundingPosition) {
-          createUnit(surroundingCityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced), GameConstants.getDefensiveStrength(unitProduced), GameConstants.getAttackingStrength(unitProduced)));
+          createUnit(surroundingCityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced)));
         }
       }
     }
@@ -229,11 +229,13 @@ public class GameImpl implements Game {
     }
   }
 
-  public void removeUnit(Position p){units.remove(p);}
+  void removeUnit(Position p){units.remove(p);}
 
   public HashMap<Player, Integer> getAttacksWonForPlayers(){return attackswon;}
 
   public int getAttacksWonByPlayer(Player p){return winnerStrategy.getAttacksWonByPlayer(p);}
 
   public void setAttacksWonByPlayers(Player p, int i){winnerStrategy.incrementAttacksWonByPlayer(p);}
+
+  public int getDefensiveStrength(Position p){return attackStrategy.calculateDefensiveStrength(this, p);}
 }

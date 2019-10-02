@@ -13,12 +13,7 @@ public class GammaCivActionStrategy implements ActionStrategy {
     }
     // Archer unit action
     if(unit.getTypeString().equals(GameConstants.ARCHER)) {
-      if(unit.getDefensiveStrength() == 3) {
-        unit.setDefensiveStrength(6);
-        unit.decreaseMoveCount();
-      } else {
-        unit.setDefensiveStrength(3);
-      }
+      unit.setFortify();
     }
   }
 }

@@ -5,16 +5,12 @@ public class UnitImpl implements Unit {
   private Player owner;
   private String type;
   private int moveCount;
-  private int defensiveStrength;
-  private int attackingStrength;
   private boolean fortify;
 
-  public UnitImpl(Player owner, String unitType, int moveCount, int defensiveStrength, int attackingStrength){
+  public UnitImpl(Player owner, String unitType, int moveCount){
     this.owner = owner;
     this.type = unitType;
     this.moveCount = moveCount;
-    this.defensiveStrength = defensiveStrength;
-    this.attackingStrength = attackingStrength;
   }
 
   public String getTypeString() {
@@ -37,11 +33,15 @@ public class UnitImpl implements Unit {
 
   void decreaseMoveCount() { moveCount--; }
 
-  public int getDefensiveStrength(){
-    return defensiveStrength;
+  void setFortify(){
+    fortify = !fortify;
   }
 
-  public void setDefensiveStrength(int newDefensiveStrength) { defensiveStrength = newDefensiveStrength; }
+  public int getDefensiveStrength(){
+    int defensiveStrength = GameConstants.getDefensiveStrength(type);
+    if(fortify) defensiveStrength*=2;
+    return defensiveStrength;
+  }
 
   public int getAttackingStrength(){
     return 1;
