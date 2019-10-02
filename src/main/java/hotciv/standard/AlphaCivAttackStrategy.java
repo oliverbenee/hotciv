@@ -13,4 +13,9 @@ public class AlphaCivAttackStrategy implements AttackStrategy {
   public int calculateDefensiveStrength(GameImpl game, Position to){
     return 0;
   }
+
+  @Override
+  public int calculateAttackingStrength(GameImpl gamge, Position from) {
+    return 1;
+  }
 }

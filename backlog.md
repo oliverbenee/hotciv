@@ -94,6 +94,8 @@ based upon
 * [OK] This number is then multiplied by the terrain factor: 
         A) the terrain factor is 2 if the unit is on a tile of type forest or type hill; 
         B) or multiplied by 3 if the unit is in a city.
+### Other
+* [OK] Test stub for attacking strategy.    
 
 ## ZetaCiv requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-))
 ### Winner. 

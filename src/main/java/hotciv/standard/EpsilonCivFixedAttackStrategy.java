@@ -26,7 +26,7 @@ public class EpsilonCivFixedAttackStrategy implements AttackStrategy{
     return defenderDefensiveStrength;
   }
 
-  private int calculateAttackingStrength(GameImpl game, Position attackerPosition){
+  public int calculateAttackingStrength(GameImpl game, Position attackerPosition){
     int attackerStrength = 0;
     int unitAttackingStrength = game.getUnitAt(attackerPosition).getAttackingStrength();
     attackerStrength += unitAttackingStrength;
