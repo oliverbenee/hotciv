@@ -1,11 +1,8 @@
 package hotciv.standard;
 
-import hotciv.factory.AlphaCivFactory;
 import hotciv.factory.EpsilonCivFactory;
 import hotciv.framework.*;
 import org.junit.*;
-
-import java.util.HashMap;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -79,7 +76,7 @@ public class TestEpsilonCiv {
 
   @Test
   public void ensureDefensiveStrengthIs12ForArcherAtCityOnForestWithARollOf6(){
-    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(6));
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
     game.createUnit(new Position(9,9), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     game.createTile(new Position(9,9), new TileImpl(GameConstants.FOREST));
     int createdUnitsBaseDefense = 3;
@@ -94,7 +91,7 @@ public class TestEpsilonCiv {
   @Test
   public void ensureDefensiveStrengthIs40ForArcherAtCityOnForestWithARollOf4withAllyUnitFactorOf10(){
     game.createCity(new Position(2,1), new CityImpl(Player.RED));
-    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(4));
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(4));
     game.createUnit(new Position(2,1), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     game.createTile(new Position(2,1), new TileImpl(GameConstants.FOREST));
     int createdUnitsBaseDefense = 3;
@@ -108,7 +105,7 @@ public class TestEpsilonCiv {
 
   @Test
   public void ensureStrengthIs30ForArcherAtCityWith3NeighborsWithARollOf6(){
-    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(6));
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
     Position cityPosition = new Position(2,1);
     game.createCity(cityPosition, new CityImpl(Player.RED));
     game.createUnit(cityPosition, new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
