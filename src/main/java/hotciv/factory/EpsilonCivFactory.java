@@ -16,7 +16,7 @@ public class EpsilonCivFactory implements HotCivFactory {
 
   @Override
   public AttackStrategy createAttackStrategy() {
-    return new EpsilonCivAttackStrategy();
+    return new EpsilonCivAttackStrategy(new RandomDieStrategy());
   }
 
   @Override

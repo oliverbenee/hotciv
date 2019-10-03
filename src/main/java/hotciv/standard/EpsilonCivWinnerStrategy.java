@@ -22,7 +22,7 @@ public class EpsilonCivWinnerStrategy implements WinnerStrategy{
       int value = entry.getValue();
       if(value >= 3){return entry.getKey();}
     }
-    return Player.RED;
+    return null;
   }
 
   @Override

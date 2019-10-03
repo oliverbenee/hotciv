@@ -63,6 +63,11 @@ public class TestEpsilonCiv {
   }
 
   @Test
+  public void noWinnerBefore3Wins(){
+    assertNull(game.getWinner());
+  }
+
+  @Test
   public void defensesDontAddToVictory(){
     Position blueLegionPosition = new Position(3,2);
     Position redVillagerPosition = new Position(3,1);
@@ -73,17 +78,43 @@ public class TestEpsilonCiv {
   }
 
   @Test
-  public void ensureStrengthIs28ForArcherAtCity(){
+  public void ensureDefensiveStrengthIs12ForArcherAtCityOnForestWithARollOf6(){
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(6));
+    game.createUnit(new Position(9,9), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    game.createTile(new Position(9,9), new TileImpl(GameConstants.FOREST));
+    int createdUnitsBaseDefense = 3;
+    int alliedCityFactor = 1;
+    int defenderTerrainFactor = 2;
+    int allyUnitFactor = 0;
+    int dieValue = 6;
+    int correctDefense = (createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor)*dieValue;
+    assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(9,9))*dieValue);
+  }
+
+  @Test
+  public void ensureDefensiveStrengthIs40ForArcherAtCityOnForestWithARollOf4withAllyUnitFactorOf10(){
     game.createCity(new Position(2,1), new CityImpl(Player.RED));
-    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy();
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(4));
     game.createUnit(new Position(2,1), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     game.createTile(new Position(2,1), new TileImpl(GameConstants.FOREST));
     int createdUnitsBaseDefense = 3;
     int alliedCityFactor = 3;
     int defenderTerrainFactor = 2;
-    //TODO: This estimate of allied units is most likely wrong, and needs double checking...
     int allyUnitFactor = 10;
-    int correctDefense = createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor;
-    assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(2,1)));
+    int dieValue = 4;
+    int correctDefense = (createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor)*dieValue;
+    assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(2,1))*dieValue);
+  }
+
+  @Test
+  public void ensureStrengthIs30ForArcherAtCityWith3NeighborsWithARollOf6(){
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(6));
+    Position cityPosition = new Position(2,1);
+    game.createCity(cityPosition, new CityImpl(Player.RED));
+    game.createUnit(cityPosition, new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    game.createUnit(new Position(2,2), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    game.createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    game.createUnit(new Position(3,1), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    assertThat((3+1+1)*3*2, is(as.calculateDefensiveStrength(game, cityPosition)));
   }
 }

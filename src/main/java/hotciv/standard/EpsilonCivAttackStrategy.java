@@ -1,15 +1,16 @@
 package hotciv.standard;
 
-import hotciv.framework.AttackStrategy;
-import hotciv.framework.GameConstants;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 import hotciv.utility.Utility;
 import hotciv.utility.Utility2;
 import java.util.Random;
 
 public class EpsilonCivAttackStrategy implements AttackStrategy{
-  private Random random = new Random();
+  private DieStrategy dieStrategy;
+
+  public EpsilonCivAttackStrategy(DieStrategy dieStrategy){
+    this.dieStrategy = dieStrategy;
+  }
 
   public int calculateDefensiveStrength(GameImpl game, Position defenderPosition){
     int defenderDefensiveStrength = 0;
@@ -47,11 +48,11 @@ public class EpsilonCivAttackStrategy implements AttackStrategy{
 
   @Override
   public boolean attackerWins(GameImpl game, Position friendlyPosition, Position enemyPosition) {
-    int attackerBonus = random.nextInt(6);
-    int defenderBonus = random.nextInt(6);
+    int attackerBonus = dieStrategy.rollDie();
+    int defenderBonus = dieStrategy.rollDie();
 
-    int defenderDefensiveStrength = calculateDefensiveStrength(game, enemyPosition) + defenderBonus;
-    int attackerAttackingStrength = calculateAttackingStrength(game, friendlyPosition) + attackerBonus;
+    int defenderDefensiveStrength = calculateDefensiveStrength(game, enemyPosition) * defenderBonus;
+    int attackerAttackingStrength = calculateAttackingStrength(game, friendlyPosition) * attackerBonus;
 
     if(attackerAttackingStrength > defenderDefensiveStrength)return true;
     else {return false;}
