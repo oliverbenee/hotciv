@@ -99,7 +99,6 @@ public class TestEpsilonCiv {
     int correctDefense = (createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor)*dieValue;
     assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(2,1))*dieValue);
   }
-
   @Test
   public void ensureStrengthIs30ForArcherAtCityWith3NeighborsWithARollOf6(){
     EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
