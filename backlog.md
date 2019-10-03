@@ -108,7 +108,7 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.
-* [] AttackStrategy gives a value, that is either 10 too high or 10 too low. (see TODO.)
+* [OK?] AttackStrategy gives a value, that is either 10 too high or 10 too low. (see TODO.)
 
 ## Other
 * [OK] Refactoring of EpsilonCivDynamicAttackStrategy is VERY MUCH NEEDED.
