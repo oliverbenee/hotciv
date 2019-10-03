@@ -1,8 +1,11 @@
 package hotciv.standard;
 
+import hotciv.factory.AlphaCivFactory;
 import hotciv.factory.EpsilonCivFactory;
 import hotciv.framework.*;
 import org.junit.*;
+
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -20,7 +23,6 @@ public class TestEpsilonCiv {
     mapStrategy.createWorld(game);
     game.createUnit(new Position(3,3), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
   }
-
   @Test
   public void blueLegionsAttackWinIsCounted(){
     Position blueLegionPosition = new Position(3,2);
@@ -32,7 +34,6 @@ public class TestEpsilonCiv {
     int attacksWonByPlayer = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByPlayer, is(1));
   }
-
   @Test
   public void blueAttacks3VillagersAndWins(){
     Position blueLegionPosition = new Position(3,2);
@@ -58,12 +59,10 @@ public class TestEpsilonCiv {
     assertThat(attacksWonByPlayer, is(3));
     assertThat(game.getWinner(), is(Player.BLUE));
   }
-
   @Test
   public void noWinnerBefore3Wins(){
     assertNull(game.getWinner());
   }
-
   @Test
   public void defensesDontAddToVictory(){
     Position blueLegionPosition = new Position(3,2);
@@ -73,7 +72,6 @@ public class TestEpsilonCiv {
     int attacksWonByBlue = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByBlue, is(0));
   }
-
   @Test
   public void ensureDefensiveStrengthIs12ForArcherAtCityOnForestWithARollOf6(){
     EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
@@ -87,7 +85,6 @@ public class TestEpsilonCiv {
     int correctDefense = (createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor)*dieValue;
     assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(9,9))*dieValue);
   }
-
   @Test
   public void ensureDefensiveStrengthIs40ForArcherAtCityOnForestWithARollOf4withAllyUnitFactorOf10(){
     game.createCity(new Position(2,1), new CityImpl(Player.RED));
@@ -113,5 +110,14 @@ public class TestEpsilonCiv {
     game.createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     game.createUnit(new Position(3,1), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     assertThat((3+1+1)*3*2, is(as.calculateDefensiveStrength(game, cityPosition)));
+  }
+}
+// ================================== TEST STUBS ===
+class DieStub implements DieStrategy {
+  private int eyes;
+
+  public DieStub(int eyes){ this.eyes = eyes;}
+  public int rollDie(){
+    return eyes;
   }
 }
