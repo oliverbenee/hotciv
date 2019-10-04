@@ -17,7 +17,7 @@ public class EpsilonCivAttackStrategy implements AttackStrategy{
     int unitDefensiveStrength = game.getUnitAt(defenderPosition).getDefensiveStrength();
     defenderDefensiveStrength += unitDefensiveStrength;
 
-    boolean DefenderIsOnAlliedCity = game.getCityAt(defenderPosition) != null;
+    boolean DefenderIsOnAlliedCity = game.getCityAt(defenderPosition) != null && game.getCityAt(defenderPosition).getOwner().equals(game.getUnitAt(defenderPosition).getOwner());
     if(DefenderIsOnAlliedCity) defenderDefensiveStrength *= 3;
 
     int defenderTerrainFactor = Utility.getTerrainFactor(game, defenderPosition);
@@ -34,7 +34,7 @@ public class EpsilonCivAttackStrategy implements AttackStrategy{
     int unitAttackingStrength = game.getUnitAt(attackerPosition).getAttackingStrength();
     attackerStrength += unitAttackingStrength;
 
-    boolean attackerIsOnAlliedCity = game.getCityAt(attackerPosition) != null && game.getCityAt(attackerPosition).getOwner() == game.getUnitAt(attackerPosition).getOwner();
+    boolean attackerIsOnAlliedCity = game.getCityAt(attackerPosition) != null && game.getCityAt(attackerPosition).getOwner().equals(game.getUnitAt(attackerPosition).getOwner());
     if(attackerIsOnAlliedCity) attackerStrength *=3;
 
     int attackerTerrainFactor = Utility.getTerrainFactor(game, attackerPosition);
@@ -54,7 +54,9 @@ public class EpsilonCivAttackStrategy implements AttackStrategy{
     int defenderDefensiveStrength = calculateDefensiveStrength(game, enemyPosition) * defenderBonus;
     int attackerAttackingStrength = calculateAttackingStrength(game, friendlyPosition) * attackerBonus;
 
-    if(attackerAttackingStrength > defenderDefensiveStrength)return true;
+    boolean attackerWins = attackerAttackingStrength > defenderDefensiveStrength;
+
+    if(attackerWins)return true;
     else {return false;}
   }
 }
