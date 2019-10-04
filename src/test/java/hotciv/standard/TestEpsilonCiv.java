@@ -1,11 +1,8 @@
 package hotciv.standard;
 
-import hotciv.factory.AlphaCivFactory;
-import hotciv.factory.EpsilonCivFactory;
+import hotciv.factory.TestEpsilonCivFactory;
 import hotciv.framework.*;
 import org.junit.*;
-
-import java.util.HashMap;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -19,42 +16,46 @@ public class TestEpsilonCiv {
   @Before
   public void setUp() {
     MapStrategy mapStrategy = new AlphaCivMapStrategy();
-    game = new GameImpl(new EpsilonCivFactory());
+    game = new GameImpl(new TestEpsilonCivFactory());
     mapStrategy.createWorld(game);
     game.createUnit(new Position(3,3), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
   }
   @Test
   public void blueLegionsAttackWinIsCounted(){
     Position blueLegionPosition = new Position(3,2);
-    Position redVillagerPosition = new Position(2,1);
-    game.createUnit(redVillagerPosition, new UnitImpl(Player.RED, "Villager", 0));
+    Position redSettlerPosition = new Position(2,1);
+    game.createUnit(redSettlerPosition, new UnitImpl(Player.RED, GameConstants.SETTLER, 0));
     game.endOfTurn();
-    game.moveUnit(blueLegionPosition, redVillagerPosition);
-    assertThat(game.getUnitAt(redVillagerPosition).getTypeString(), is(GameConstants.LEGION));
+    game.moveUnit(blueLegionPosition, redSettlerPosition);
+    assertThat(game.getUnitAt(redSettlerPosition).getTypeString(), is(GameConstants.LEGION));
     int attacksWonByPlayer = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByPlayer, is(1));
   }
   @Test
-  public void blueAttacks3VillagersAndWins(){
-    Position blueLegionPosition = new Position(3,2);
-    Position redVillager1Position = new Position(2,0);
-    Position redVillager2Position = new Position(2,1);
-    Position redVillager3Position = new Position(3,1);
-    game.createUnit(redVillager1Position, new UnitImpl(Player.RED, "Villager", 0));
-    game.createUnit(redVillager2Position, new UnitImpl(Player.RED, "Villager", 0));
-    game.createUnit(redVillager3Position, new UnitImpl(Player.RED, "Villager", 0));
+  public void blueAttacks3SettlersThatAreOnPlainsWhileLegionIsOnMountainAndWins(){
+    Position blueLegionPosition = new Position(8,1);
+    Position redSettler1Position = new Position(7,1);
+    Position redSettler2Position = new Position(6,1);
+    Position redSettler3Position = new Position(5,1);
+    game.createUnit(blueLegionPosition, new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
+    game.createUnit(redSettler1Position, new UnitImpl(Player.RED, GameConstants.SETTLER, 0));
+    game.createTile(redSettler1Position, new TileImpl(GameConstants.PLAINS));
+    game.createUnit(redSettler2Position, new UnitImpl(Player.RED, GameConstants.SETTLER, 0));
+    game.createTile(redSettler2Position, new TileImpl(GameConstants.PLAINS));
+    game.createUnit(redSettler3Position, new UnitImpl(Player.RED, GameConstants.SETTLER, 0));
+    game.createTile(redSettler3Position, new TileImpl(GameConstants.PLAINS));
     game.endOfTurn();
 
-    game.moveUnit(blueLegionPosition, redVillager1Position);
-    assertThat(game.getUnitAt(redVillager1Position).getTypeString(), is(GameConstants.LEGION));
+    game.createTile(blueLegionPosition, new TileImpl(GameConstants.MOUNTAINS));
+    game.moveUnit(blueLegionPosition, redSettler1Position);
+    assertThat(game.getUnitAt(redSettler1Position).getTypeString(), is(GameConstants.LEGION));
     game.endOfTurn();
     game.endOfTurn();
-    game.moveUnit(redVillager1Position, redVillager2Position);
-    assertThat(game.getUnitAt(redVillager2Position).getTypeString(), is(GameConstants.LEGION));
+    game.moveUnit(redSettler1Position, redSettler2Position);
+    assertThat(game.getUnitAt(redSettler2Position).getTypeString(), is(GameConstants.LEGION));
     game.endOfTurn();
     game.endOfTurn();
-    game.moveUnit(redVillager2Position, redVillager3Position);
-    assertThat(game.getUnitAt(redVillager3Position).getTypeString(), is(GameConstants.LEGION));
+    game.moveUnit(redSettler2Position, redSettler3Position);
     int attacksWonByPlayer = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByPlayer, is(3));
     assertThat(game.getWinner(), is(Player.BLUE));
@@ -66,9 +67,9 @@ public class TestEpsilonCiv {
   @Test
   public void defensesDontAddToVictory(){
     Position blueLegionPosition = new Position(3,2);
-    Position redVillagerPosition = new Position(3,1);
-    game.createUnit(redVillagerPosition, new UnitImpl(Player.RED, "Villager", 0));
-    game.moveUnit(redVillagerPosition, blueLegionPosition);
+    Position redSettlerPosition = new Position(3,1);
+    game.createUnit(redSettlerPosition, new UnitImpl(Player.RED, GameConstants.SETTLER, 0));
+    game.moveUnit(redSettlerPosition, blueLegionPosition);
     int attacksWonByBlue = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByBlue, is(0));
   }
@@ -109,6 +110,16 @@ public class TestEpsilonCiv {
     game.createUnit(new Position(2,0), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     game.createUnit(new Position(3,1), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     assertThat((3+1+1)*3*2, is(as.calculateDefensiveStrength(game, cityPosition)));
+  }
+  @Test
+  public void attackFailsIfSettlerAttacksLegion(){
+    EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
+    Position settlerPosition = new Position(9,9);
+    Position legionPosition = new Position(8,8);
+    game.createUnit(new Position(9,9), new UnitImpl(Player.RED, GameConstants.SETTLER, 1));
+    game.createUnit(new Position(8,8), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
+    game.moveUnit(settlerPosition, legionPosition);
+
   }
 }
 // ================================== TEST STUBS ===

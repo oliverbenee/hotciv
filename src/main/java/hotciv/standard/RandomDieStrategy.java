@@ -1,6 +1,5 @@
 package hotciv.standard;
 import hotciv.framework.DieStrategy;
-import java.util.Random;
 
 public class RandomDieStrategy implements DieStrategy {
 
