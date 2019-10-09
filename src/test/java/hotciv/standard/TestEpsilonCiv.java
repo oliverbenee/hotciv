@@ -20,6 +20,8 @@ public class TestEpsilonCiv {
     mapStrategy.createWorld(game);
     game.createUnit(new Position(3,3), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
   }
+
+  // Ensure, that the attack win counter for blue increases by 1 for each attack won.
   @Test
   public void blueLegionsAttackWinIsCounted(){
     Position blueLegionPosition = new Position(3,2);
@@ -31,6 +33,8 @@ public class TestEpsilonCiv {
     int attacksWonByPlayer = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByPlayer, is(1));
   }
+
+  // Ensure, that player blue wins when attacking 3 settlers.
   @Test
   public void blueAttacks3SettlersThatAreOnPlainsWhileLegionIsOnMountainAndWins(){
     Position blueLegionPosition = new Position(8,1);
@@ -60,10 +64,14 @@ public class TestEpsilonCiv {
     assertThat(attacksWonByPlayer, is(3));
     assertThat(game.getWinner(), is(Player.BLUE));
   }
+
+  // Ensure, that there is no winner found before players have 3 wins.
   @Test
   public void noWinnerBefore3Wins(){
     assertNull(game.getWinner());
   }
+
+  // Ensure, that defenses do not count towards victory.
   @Test
   public void defensesDontAddToVictory(){
     Position blueLegionPosition = new Position(3,2);
@@ -73,6 +81,8 @@ public class TestEpsilonCiv {
     int attacksWonByBlue = game.getAttacksWonByPlayer(Player.BLUE);
     assertThat(attacksWonByBlue, is(0));
   }
+
+  // Ensure, that the defensive strength is 12 for an archer at a city on a forest with a roll of 6.
   @Test
   public void ensureDefensiveStrengthIs12ForArcherAtCityOnForestWithARollOf6(){
     EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
@@ -86,6 +96,8 @@ public class TestEpsilonCiv {
     int correctDefense = (createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor)*dieValue;
     assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(9,9))*dieValue);
   }
+
+  // Ensure, that the defensive strength is 40 for an archar at a city on a forest with a roll of 4 with an ally unit factor of 10.
   @Test
   public void ensureDefensiveStrengthIs40ForArcherAtCityOnForestWithARollOf4withAllyUnitFactorOf10(){
     game.createCity(new Position(2,1), new CityImpl(Player.RED));
@@ -100,6 +112,8 @@ public class TestEpsilonCiv {
     int correctDefense = (createdUnitsBaseDefense*alliedCityFactor*defenderTerrainFactor+allyUnitFactor)*dieValue;
     assertEquals(correctDefense, as.calculateDefensiveStrength(game, new Position(2,1))*dieValue);
   }
+
+  // Ensure, that the attacking strength is 30 for an acher at a city with 3 neighbors getting a roll of 6.
   @Test
   public void ensureStrengthIs30ForArcherAtCityWith3NeighborsWithARollOf6(){
     EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
@@ -111,6 +125,8 @@ public class TestEpsilonCiv {
     game.createUnit(new Position(3,1), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     assertThat((3+1+1)*3*2, is(as.calculateDefensiveStrength(game, cityPosition)));
   }
+
+  // Ensure, that the attack fails, if a settler attacks a legion.
   @Test
   public void attackFailsIfSettlerAttacksLegion(){
     EpsilonCivAttackStrategy as = new EpsilonCivAttackStrategy(new DieStub(6));
