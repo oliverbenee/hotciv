@@ -36,6 +36,10 @@ public class GameConstants {
   public static final String ARCHER    = "archer";
   public static final String LEGION    = "legion";
   public static final String SETTLER   = "settler";
+
+  // ThetaCiv unit type
+  public static final String B52       = "b52";
+
   // Valid terrain types
   public static final String PLAINS    = "plains";
   public static final String OCEANS    = "ocean";
@@ -57,6 +61,7 @@ public class GameConstants {
     if(unit.equals(ARCHER)){return 3;}
     if(unit.equals(SETTLER)){return 2;}
     if(unit.equals(LEGION)){return 3;}
+    if(unit.equals(B52)){return 8;}
     return 0;
   }
 
@@ -64,6 +69,7 @@ public class GameConstants {
     if(unit.equals(ARCHER)){return 1;}
     if(unit.equals(SETTLER)){return 1;}
     if(unit.equals(LEGION)){return 1;}
+    if(unit.equals(B52)){return 2;}
     return 0;
   }
 
@@ -71,6 +77,12 @@ public class GameConstants {
     if(unit.equals(ARCHER)){return 2;}
     if(unit.equals(SETTLER)){return 0;}
     if(unit.equals(LEGION)){return 4;}
+    if(unit.equals(B52)){return 1;}
     return 0;
+  }
+
+  public static boolean getFlying(String unit){
+    if(unit.equals(B52)){return true;}
+    return false;
   }
 }

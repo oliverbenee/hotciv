@@ -137,16 +137,16 @@ public class GameImpl implements Game {
     UnitImpl unit = getUnitAt(from);
 
     boolean legalTile = legalTile(to);
-    if(!legalTile) return false;
+    if(!legalTile) {return false;}
 
     boolean friendlyTile = friendlyAtTargetPosition(to);
-    if(friendlyTile) return false;
+    if(friendlyTile) {return false;}
 
     boolean hasMoves = unitHasMoves(from);
-    if(!hasMoves) return false;
+    if(!hasMoves) {return false;}
 
     boolean playerInTurnOwnsUnit = playerOwnsUnit(from);
-    if(!playerInTurnOwnsUnit) return false;
+    if(!playerInTurnOwnsUnit) {return false;}
 
     boolean enemyTile = enemyAtTargetPosition(to);
     if(enemyTile) {

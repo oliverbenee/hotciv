@@ -106,6 +106,31 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 ## AbstractFactory requirements.
 * [OK] Implemented?
 
+## SemiCiv Requirements.
+* [OK] World aging. The algorithm of BetaCiv is used.
+  [OK] Unit actions. The settler can build cities like defined by GammaCiv.
+  [OK] World Layout. The world layout is as specified by DeltaCiv.
+  [OK] Winner. The winner is defined as outlined by EpsilonCiv.
+  [OK] Attacking. Attacks and defenses are handled as defined by EpsilonCiv.
+  [N/A] City workforce focus and population increase. These aspects are handled like specified
+  in EtaCiv.
+  Note: If you have not developed all the particular variants, then just make your Semi-
+  Civ the combination of all the advanced features that you have developed.
+  
+## ThetaCiv Requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-))
+* [OK] A new unit type, B52 bomber airplane, is introduced identified by the type string "b52". 
+* [OK] A bomber costs 60, 
+* [OK] travels a distance 2 (also over oceans and mountains), 
+* [OK] defense strength 8, 
+* [OK] attack strength 1.
+* [OK] Cities can, of course, produce B52s if the Game's method "changeProduc...." is called with the B52 type string.
+
+### B52 action. 
+* [] When a B52 is told to perform its action, it bombs the city below it, which have its population decreased by 1; 
+* [] if it reaches 0, then the city is removed. 
+* [] If there is no city, then if the tile's terrain is of type 'Forests' the bombing causes the terrain type to change to 'Plains'. 
+* [] All other terrain types are not affected by bombing.
+
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.
 * [OK] AttackStrategy gives a value, that is either 10 too high or 10 too low. (see TODO.)
