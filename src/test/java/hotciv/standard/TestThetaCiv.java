@@ -29,6 +29,7 @@ public class TestThetaCiv {
     Position redCityPosition = new Position(1,1);
     assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.LEGION));
     game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.B52));
   }
 
   // Ensure, that cities take 12 rounds to produce the B52 Bomber.
