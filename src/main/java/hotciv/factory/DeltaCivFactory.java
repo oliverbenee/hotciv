@@ -21,7 +21,7 @@ public class DeltaCivFactory implements HotCivFactory {
 
   @Override
   public MapStrategy createMapStrategy() {
-    return new AlphaCivMapStrategy();
+    return new DeltaCivMapStrategy();
   }
 
   @Override
