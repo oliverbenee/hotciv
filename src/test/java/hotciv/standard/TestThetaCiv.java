@@ -202,6 +202,29 @@ public class TestThetaCiv {
     game.moveUnit(new Position(3,1), blueCityPosition);
     assertThat(game.getCityAt(blueCityPosition).getOwner(), is(Player.BLUE));
   }
+
+  //Ensure, that B52 can still conquer cities normally.
+  @Test
+  public void b52CapturesOccupiedCities(){
+    Position redB52Position = new Position(1, 2);
+    Position blueCityPosition = new Position(4,1);
+    Position blueSettlerPosition = new Position(3,1);
+
+    assertNotNull(game.getUnitAt(blueSettlerPosition));
+    assertNull(game.getUnitAt(blueCityPosition));
+    game.endOfTurn();
+    game.moveUnit(blueSettlerPosition, blueCityPosition);
+    assertThat(game.getUnitAt(blueCityPosition).getTypeString(), is(GameConstants.SETTLER));
+    assertThat(game.getCityAt(blueCityPosition).getOwner(), is(Player.BLUE));
+    game.endOfTurn();
+    game.moveUnit(redB52Position, new Position(3,1));
+    assertThat(game.getUnitAt(new Position(3,1)).getTypeString(), is(GameConstants.B52));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(new Position(3,1), blueCityPosition);
+    assertThat(game.getUnitAt(blueCityPosition).getOwner(), is(Player.RED));
+    assertThat(game.getCityAt(blueCityPosition).getOwner(), is(Player.RED));
+  }
 }
 
 // ================================== TEST STUBS ===

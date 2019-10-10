@@ -129,7 +129,7 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 * [OK] the B52 can fly over mountains.
 * [OK] the B52 can fly over oceans. 
 * [OK] A B52 can overfly an enemy city without conquering it, if there are no units on the city. 
-* [] If there is an enemy unit on the enemy city tile, it is considered a normal attack and conquest.
+* [OK] If there is an enemy unit on the enemy city tile, it is considered a normal attack and conquest.
 
 ### B52 action. 
 * [OK] When a B52 is told to perform its action, it bombs the city below it, which have its population decreased by 1; 

@@ -173,6 +173,7 @@ public class GameImpl implements Game {
 
     boolean isBomber = getUnitAt(to).getTypeString().equals(GameConstants.B52);
     if(!isBomber) conquerCity(to);
+    if(isBomber && enemyTile) conquerCity(to);
 
     return false;
   }
