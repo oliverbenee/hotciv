@@ -9,6 +9,9 @@ public class ThetaCivActionStrategy implements ActionStrategy {
   public void performUnitActionAt(Position p, GameImpl game){
     UnitImpl unit = game.getUnitAt(p);
 
+    boolean playerInTurnOwnsUnit = unit.getOwner().equals(game.getPlayerInTurn());
+    if(!playerInTurnOwnsUnit) return;
+
     boolean isSettler = unit.getTypeString().equals(GameConstants.SETTLER);
     if(isSettler) performSettlerAction(p, game);
 
@@ -16,7 +19,7 @@ public class ThetaCivActionStrategy implements ActionStrategy {
     if(isArcher) performArcherAction(unit);
 
     boolean isB52 = unit.getTypeString().equals(GameConstants.B52);
-    if(isB52) performB52Action(p);
+    if(isB52) performB52Action(p, game);
   }
 
   // Settler unit action.
@@ -31,7 +34,15 @@ public class ThetaCivActionStrategy implements ActionStrategy {
   }
 
   // B52 unit action.
-  private void performB52Action(Position p){
-
+  private void performB52Action(Position p, GameImpl game){
+    boolean cityAtB52Position = game.getCityAt(p) != null;
+    if(cityAtB52Position) {
+      boolean cityHasOnePopulation = game.getCityAt(p).getSize() == 1;
+      if(cityHasOnePopulation) {
+        game.removeCity(p);
+      } else {
+        game.removeCitizenFromCity(p);
+      }
+    }
   }
 }

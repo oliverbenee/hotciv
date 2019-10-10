@@ -127,9 +127,9 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 
 ### B52 action. 
 * [] When a B52 is told to perform its action, it bombs the city below it, which have its population decreased by 1; 
-* [] if it reaches 0, then the city is removed. 
+* [OK] if it reaches 0, then the city is removed. 
 * [] If there is no city, then if the tile's terrain is of type 'Forests' the bombing causes the terrain type to change to 'Plains'. 
-* [] All other terrain types are not affected by bombing.
+* [OK] All other terrain types are not affected by bombing.
 
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.

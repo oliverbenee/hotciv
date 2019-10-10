@@ -7,11 +7,13 @@ public class CityImpl implements City {
   private Player owner;
   private int treasury;
   private String produced;
+  private int size;
 
   public CityImpl(Player owner){
     this.owner = owner;
     treasury = 0;
     produced = "legion";
+    size = 1;
   }
 
   @Override
@@ -20,7 +22,7 @@ public class CityImpl implements City {
   public void setOwner(Player p) {owner = p; }
 
   @Override
-  public int getSize() {return 1; }
+  public int getSize() {return size; }
 
   @Override
   public int getTreasury() {return treasury; }
@@ -38,5 +40,9 @@ public class CityImpl implements City {
   }
 
   public void removeFromTreasury(int amount) {treasury -= amount;}
+
+  public void removeCitizen(){
+    size-=1;
+  }
 }
 

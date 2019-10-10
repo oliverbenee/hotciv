@@ -240,4 +240,14 @@ public class GameImpl implements Game {
   public void setAttacksWonByPlayers(Player p, int i){winnerStrategy.incrementAttacksWonByPlayer(p);}
 
   public int getDefensiveStrength(Position p){return attackStrategy.calculateDefensiveStrength(this, p);}
+
+  public void removeCity(Position p){
+    boolean cityAtPosition = cities.containsKey(p);
+    if(cityAtPosition) cities.remove(p);
+  }
+
+  public void removeCitizenFromCity(Position p){
+    CityImpl city = cities.get(p);
+    city.removeCitizen();
+  }
 }

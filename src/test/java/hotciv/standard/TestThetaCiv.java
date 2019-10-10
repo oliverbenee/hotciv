@@ -265,8 +265,86 @@ public class TestThetaCiv {
     game.endOfTurn();
     assertThat(game.getUnitAt(redCityPosition).getAttackingStrength(), is(1));
   }
-}
 
-// TODO: Kan man lave unitActions på modstanderens bombefly?
+  @Test
+  public void blueCannotDoActionsOnEnemyB52(){
+    Position redCityPosition = new Position(1, 1);
+    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
+    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    //B52 has been produced.
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+    game.performUnitActionAt(redCityPosition);
+    assertNotNull(game.getCityAt(redCityPosition));
+  }
+
+  @Test
+  public void b52RemovesCityWhenBombedAt1Population(){
+    Position redCityPosition = new Position(1, 1);
+    Position blueCityPosition = new Position(4,1);
+    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
+    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    game.endOfTurn();
+    //B52 has been produced.
+    game.moveUnit(redCityPosition, new Position(2,1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(new Position(2,1), new Position(3,1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(new Position(3,1), blueCityPosition);
+    assertNotNull(game.getCityAt(blueCityPosition));
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    game.performUnitActionAt(blueCityPosition);
+    assertNull(game.getCityAt(blueCityPosition));
+  }
+}
 
 // TODO: HVORFOR VIRKER B52 FLYING NÅR MOVEUNIT ALDRIG CHECKER AT B52 KAN FLYVE?
