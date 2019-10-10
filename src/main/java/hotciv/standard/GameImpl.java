@@ -107,9 +107,14 @@ public class GameImpl implements Game {
 
   private void conquerCity(Position to){
     // Handle city conquest
-    if (getCityAt(to) != null && !getCityAt(to).getOwner().equals(getPlayerInTurn())) {
-      getCityAt(to).setOwner(getPlayerInTurn());
-    }
+    boolean cityExists = getCityAt(to) != null;
+    if(!cityExists) return;
+
+    boolean playerOwnsCity = getCityAt(to).getOwner().equals(getPlayerInTurn());
+    if(playerOwnsCity) return;
+
+    getCityAt(to).setOwner(getPlayerInTurn());
+
   }
 
   private boolean playerOwnsUnit(Position unitPosition){
@@ -166,7 +171,8 @@ public class GameImpl implements Game {
     createUnit(to, unit);
     getUnitAt(to).decreaseMoveCount();
 
-    conquerCity(to);
+    boolean isBomber = getUnitAt(to).getTypeString().equals(GameConstants.B52);
+    if(!isBomber) conquerCity(to);
 
     return false;
   }
@@ -247,13 +253,19 @@ public class GameImpl implements Game {
 
   public int getDefensiveStrength(Position p){return attackStrategy.calculateDefensiveStrength(this, p);}
 
+  private boolean cityAtPosition(Position p){
+    boolean cityExists = getCityAt(p) != null;
+    if(!cityExists) return false;
+    return true;
+  }
+
   private void removeCity(Position p){
-    boolean cityAtPosition = cities.containsKey(p);
+    boolean cityAtPosition = cityAtPosition(p);
     if(cityAtPosition) cities.remove(p);
   }
 
   void removeCitizenFromCity(Position p){
-    CityImpl city = cities.get(p);
+    CityImpl city = getCityAt(p);
     boolean cityHasOnePopulation = getCityAt(p).getSize() == 1;
     if(cityHasOnePopulation) {
       removeCity(p);

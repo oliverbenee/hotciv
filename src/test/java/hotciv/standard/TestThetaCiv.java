@@ -174,7 +174,7 @@ public class TestThetaCiv {
     assertNull(game.getCityAt(blueCityPosition));
   }
 
-  //Ensure, that B52 converts Forest tiles to plains tiles.
+  // Ensure, that B52 converts Forest tiles to plains tiles.
   @Test
   public void b52ConvertsForestToPlains(){
     Position redB52Position = new Position(1, 2);
@@ -187,6 +187,20 @@ public class TestThetaCiv {
     assertThat(game.getTileAt(forestPosition).getTypeString(), is(GameConstants.FOREST));
     game.performUnitActionAt(forestPosition);
     assertThat(game.getTileAt(forestPosition).getTypeString(), is(GameConstants.PLAINS));
+  }
+
+  //Ensure, that B52 can overfly a city without conquering it.
+  @Test
+  public void b52DoesntCaptureEmptyCities(){
+    Position redB52Position = new Position(1, 2);
+    Position blueCityPosition = new Position(4,1);
+    assertNull(game.getUnitAt(blueCityPosition));
+    assertThat(game.getCityAt(blueCityPosition).getOwner(), is(Player.BLUE));
+    game.moveUnit(redB52Position, new Position(3,1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(new Position(3,1), blueCityPosition);
+    assertThat(game.getCityAt(blueCityPosition).getOwner(), is(Player.BLUE));
   }
 }
 
@@ -207,6 +221,7 @@ class TestThetaCivMapStrategy implements MapStrategy {
     game.createCity(new Position(4, 1), new CityImpl(Player.BLUE));
     game.createUnit(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
     game.createUnit(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
+    game.createUnit(new Position(3,1), new UnitImpl(Player.BLUE, GameConstants.SETTLER, 1));
     game.createUnit(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER, 1));
     game.createUnit(new Position(1, 2), new UnitImpl(Player.RED, GameConstants.B52, 2));
   }

@@ -125,6 +125,12 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 * [OK] attack strength 1.
 * [OK] Cities can, of course, produce B52s if the Game's method "changeProduc...." is called with the B52 type string.
 
+### B52-related tests.
+* [OK] the B52 can fly over mountains.
+* [OK] the B52 can fly over oceans. 
+* [OK] A B52 can overfly an enemy city without conquering it, if there are no units on the city. 
+* [] If there is an enemy unit on the enemy city tile, it is considered a normal attack and conquest.
+
 ### B52 action. 
 * [OK] When a B52 is told to perform its action, it bombs the city below it, which have its population decreased by 1; 
 * [OK] if it reaches 0, then the city is removed. 
