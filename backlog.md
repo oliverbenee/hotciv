@@ -117,7 +117,7 @@ However, in case the game lasts more than 20 rounds then the winner is the first
   Note: If you have not developed all the particular variants, then just make your Semi-
   Civ the combination of all the advanced features that you have developed.
   
-## ThetaCiv Requirements. (Not implemented. Please refer to our mail-discussion from 18-09-2019 :-))
+## ThetaCiv Requirements. (Please refer to our mail-discussion from 18-09-2019 :-))
 * [OK] A new unit type, B52 bomber airplane, is introduced identified by the type string "b52". 
 * [OK] A bomber costs 60, 
 * [OK] travels a distance 2 (also over oceans and mountains), 
@@ -126,9 +126,9 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 * [OK] Cities can, of course, produce B52s if the Game's method "changeProduc...." is called with the B52 type string.
 
 ### B52 action. 
-* [] When a B52 is told to perform its action, it bombs the city below it, which have its population decreased by 1; 
+* [OK] When a B52 is told to perform its action, it bombs the city below it, which have its population decreased by 1; 
 * [OK] if it reaches 0, then the city is removed. 
-* [] If there is no city, then if the tile's terrain is of type 'Forests' the bombing causes the terrain type to change to 'Plains'. 
+* [OK] If there is no city, then if the tile's terrain is of type 'Forests' the bombing causes the terrain type to change to 'Plains'. 
 * [OK] All other terrain types are not affected by bombing.
 
 ## BUGS TO BE FIXED

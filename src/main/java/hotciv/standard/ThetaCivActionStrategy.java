@@ -8,18 +8,14 @@ public class ThetaCivActionStrategy implements ActionStrategy {
   @Override
   public void performUnitActionAt(Position p, GameImpl game){
     UnitImpl unit = game.getUnitAt(p);
+      boolean isSettler = unit.getTypeString().equals(GameConstants.SETTLER);
+      if (isSettler) performSettlerAction(p, game);
 
-    boolean playerInTurnOwnsUnit = unit.getOwner().equals(game.getPlayerInTurn());
-    if(!playerInTurnOwnsUnit) return;
+      boolean isArcher = unit.getTypeString().equals(GameConstants.ARCHER);
+      if (isArcher) performArcherAction(unit);
 
-    boolean isSettler = unit.getTypeString().equals(GameConstants.SETTLER);
-    if(isSettler) performSettlerAction(p, game);
-
-    boolean isArcher = unit.getTypeString().equals(GameConstants.ARCHER);
-    if(isArcher) performArcherAction(unit);
-
-    boolean isB52 = unit.getTypeString().equals(GameConstants.B52);
-    if(isB52) performB52Action(p, game);
+      boolean isB52 = unit.getTypeString().equals(GameConstants.B52);
+      if (isB52) performB52Action(p, game);
   }
 
   // Settler unit action.
@@ -37,5 +33,8 @@ public class ThetaCivActionStrategy implements ActionStrategy {
   private void performB52Action(Position p, GameImpl game){
     boolean cityAtB52Position = game.getCityAt(p) != null;
     if(cityAtB52Position) game.removeCitizenFromCity(p);
+
+    boolean forestAtB52Position = game.getTileAt(p).getTypeString().equals(GameConstants.FOREST);
+    if(forestAtB52Position) game.createTile(p, new TileImpl(GameConstants.PLAINS));
   }
 }

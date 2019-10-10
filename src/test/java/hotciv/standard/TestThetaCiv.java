@@ -18,7 +18,7 @@ public class TestThetaCiv {
    */
   @Before
   public void setUp() {
-    MapStrategy mapStrategy = new AlphaCivMapStrategy();
+    MapStrategy mapStrategy = new TestThetaCivMapStrategy();
     game = new GameImpl(new ThetaCivFactory());
     mapStrategy.createWorld(game);
   }
@@ -68,124 +68,50 @@ public class TestThetaCiv {
   // Ensure, that the B52 Bomber can be moved twice.
   @Test
   public void b52CanMoveTwice(){
-    Position redCityPosition = new Position(1,1);
-    Position targetPosition = new Position(3,1);
-    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
-    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.moveUnit(redCityPosition, targetPosition);
+    Position redB52Position = new Position(1,2);
+    Position targetPosition = new Position(3,2);
+    assertThat(game.getUnitAt(redB52Position).getOwner(), is(Player.RED));
+    game.moveUnit(redB52Position, targetPosition);
     assertThat(game.getUnitAt(targetPosition).getTypeString(), is(GameConstants.B52));
-
   }
 
   // Ensure, that the B52 Bomber can be moved over oceans.
   @Test
   public void b52CanMoveOverOceans(){
-    Position redCityPosition = new Position(1,1);
+    Position redB52Position = new Position(1,2);
     Position oceanPosition = new Position(1,0);
     assertThat(game.getTileAt(oceanPosition).getTypeString(), is(GameConstants.OCEANS));
-    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
-    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.B52));
-    game.moveUnit(redCityPosition, oceanPosition);
+    assertThat(game.getUnitAt(redB52Position).getTypeString(), is(GameConstants.B52));
+    game.moveUnit(redB52Position, oceanPosition);
     assertThat(game.getUnitAt(oceanPosition).getTypeString(), is(GameConstants.B52));
   }
 
   // Ensure, that the B52 Bomber can be moved over mountains.
   @Test
   public void b52CanMoveOverMountains(){
-    Position redCityPosition = new Position(1,1);
+    Position redB52Position = new Position(1,2);
     Position mountainPosition = new Position(1,1);
     assertThat(game.getTileAt(mountainPosition).getTypeString(), is(GameConstants.MOUNTAINS));
-    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
-    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    assertThat(game.getUnitAt(redCityPosition).getTypeString(), is(GameConstants.B52));
-    game.moveUnit(redCityPosition, mountainPosition);
+    assertThat(game.getUnitAt(redB52Position).getTypeString(), is(GameConstants.B52));
+    game.moveUnit(redB52Position, mountainPosition);
     assertThat(game.getUnitAt(mountainPosition).getTypeString(), is(GameConstants.B52));
   }
 
   // Ensure, that land units cannot move over oceans.
   @Test
   public void landUnitsCannotMoveOverOceans(){
-    Position blueUnitPosition = new Position(3,2);
+    Position blueLandUnitPosition = new Position(3,2);
+    Position intermediatePosition = new Position(2,1);
     Position oceanPosition = new Position(1,0);
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
-    UnitImpl blueUnit = game.getUnitAt(blueUnitPosition);
-    assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
-    game.moveUnit(blueUnitPosition, oceanPosition);
-    assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
+    UnitImpl blueUnit = game.getUnitAt(blueLandUnitPosition);
+    assertThat(game.getUnitAt(blueLandUnitPosition), is(blueUnit));
+    game.moveUnit(blueLandUnitPosition, intermediatePosition);
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(intermediatePosition, oceanPosition);
+    assertThat(game.getUnitAt(intermediatePosition), is(blueUnit));
     assertNull(game.getUnitAt(oceanPosition));
   }
 
@@ -195,6 +121,7 @@ public class TestThetaCiv {
     Position blueUnitPosition = new Position(3,2);
     assertThat(game.getUnitAt(blueUnitPosition).getTypeString(), is(GameConstants.LEGION));
     Position mountainPosition = new Position(2,2);
+    assertThat(game.getTileAt(mountainPosition).getTypeString(), is(GameConstants.MOUNTAINS));
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
     Unit blueUnit = game.getUnitAt(blueUnitPosition);
@@ -204,141 +131,40 @@ public class TestThetaCiv {
     assertNull(game.getUnitAt(mountainPosition));
   }
 
+  // Ensure, that B52 has 8 base defense.
   @Test
   public void b52Has8Defense(){
-    Position redCityPosition = new Position(1,1);
-    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
-    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    assertThat(game.getUnitAt(redCityPosition).getDefensiveStrength(), is(8));
+    Position redB52Position = new Position(1,2);
+    assertThat(game.getUnitAt(redB52Position).getDefensiveStrength(), is(8));
   }
 
+  // Ensure that B52 has 1 base attack.
   @Test
   public void b52Has1Attack(){
-    Position redCityPosition = new Position(1,1);
-    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
-    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    assertThat(game.getUnitAt(redCityPosition).getAttackingStrength(), is(1));
+    Position redB52Position = new Position(1,2);
+    assertThat(game.getUnitAt(redB52Position).getAttackingStrength(), is(1));
   }
 
+  // Ensure, that player blue cannot do actions on player reds B52.
   @Test
   public void blueCannotDoActionsOnEnemyB52(){
-    Position redCityPosition = new Position(1, 1);
-    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
-    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
+    Position redB52Position = new Position(1, 2);
+    Position redCityPosition = new Position(1,1);
+    assertThat(game.getUnitAt(redB52Position).getTypeString(), is(GameConstants.B52));
+    game.moveUnit(redB52Position, redCityPosition);
     game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    //B52 has been produced.
-    game.endOfTurn();
+    assertNotNull(game.getCityAt(redCityPosition));
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
     game.performUnitActionAt(redCityPosition);
     assertNotNull(game.getCityAt(redCityPosition));
   }
 
+  // Ensure, that a B52 removes a city, when the city is bombed and has one population.
   @Test
   public void b52RemovesCityWhenBombedAt1Population(){
-    Position redCityPosition = new Position(1, 1);
+    Position redB52Position = new Position(1, 2);
     Position blueCityPosition = new Position(4,1);
-    assertThat(game.getCityAt(redCityPosition).getOwner(), is(Player.RED));
-    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    game.endOfTurn();
-    //B52 has been produced.
-    game.moveUnit(redCityPosition, new Position(2,1));
-    game.endOfTurn();
-    game.endOfTurn();
-    game.moveUnit(new Position(2,1), new Position(3,1));
+    game.moveUnit(redB52Position, new Position(3,1));
     game.endOfTurn();
     game.endOfTurn();
     game.moveUnit(new Position(3,1), blueCityPosition);
@@ -347,6 +173,41 @@ public class TestThetaCiv {
     game.performUnitActionAt(blueCityPosition);
     assertNull(game.getCityAt(blueCityPosition));
   }
+
+  //Ensure, that B52 converts Forest tiles to plains tiles.
+  @Test
+  public void b52ConvertsForestToPlains(){
+    Position redB52Position = new Position(1, 2);
+    Position forestPosition = new Position(3,1);
+    assertThat(game.getUnitAt(redB52Position).getTypeString(), is(GameConstants.B52));
+    game.moveUnit(redB52Position, new Position(2,1));
+    assertThat(game.getUnitAt(new Position(2,1)).getTypeString(), is(GameConstants.B52));
+    game.moveUnit(new Position(2,1), forestPosition);
+    assertThat(game.getUnitAt(forestPosition).getTypeString(), is(GameConstants.B52));
+    assertThat(game.getTileAt(forestPosition).getTypeString(), is(GameConstants.FOREST));
+    game.performUnitActionAt(forestPosition);
+    assertThat(game.getTileAt(forestPosition).getTypeString(), is(GameConstants.PLAINS));
+  }
 }
 
-// TODO: HVORFOR VIRKER B52 FLYING NÅR MOVEUNIT ALDRIG CHECKER AT B52 KAN FLYVE?
+// ================================== TEST STUBS ===
+class TestThetaCivMapStrategy implements MapStrategy {
+  public void createWorld(GameImpl game) {
+    for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+      for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+        game.createTile(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+      }
+    }
+    game.createTile(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
+    game.createTile(new Position(0, 1), new TileImpl(GameConstants.HILLS));
+    game.createTile(new Position(1, 1), new TileImpl(GameConstants.MOUNTAINS));
+    game.createTile(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
+    game.createTile(new Position(3,1), new TileImpl(GameConstants.FOREST));
+    game.createCity(new Position(1, 1), new CityImpl(Player.RED));
+    game.createCity(new Position(4, 1), new CityImpl(Player.BLUE));
+    game.createUnit(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    game.createUnit(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
+    game.createUnit(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER, 1));
+    game.createUnit(new Position(1, 2), new UnitImpl(Player.RED, GameConstants.B52, 2));
+  }
+}

@@ -137,7 +137,10 @@ public class GameImpl implements Game {
     UnitImpl unit = getUnitAt(from);
 
     boolean legalTile = legalTile(to);
-    if(!legalTile) {return false;}
+    if(!legalTile) {
+      boolean isFlying = getUnitAt(from).getTypeString().equals(GameConstants.B52);
+      if(!isFlying) return false;
+    }
 
     boolean friendlyTile = friendlyAtTargetPosition(to);
     if(friendlyTile) {return false;}
@@ -197,7 +200,10 @@ public class GameImpl implements Game {
     city.setProduction(unitType);
   }
 
-  public void performUnitActionAt(Position p) {actionStrategy.performUnitActionAt(p, this);}
+  public void performUnitActionAt(Position p) {
+    boolean playerInTurnOwnsUnit = getPlayerInTurn().equals(getUnitAt(p).getOwner());
+    if (playerInTurnOwnsUnit) actionStrategy.performUnitActionAt(p, this);
+  }
 
   private boolean cityHasEnoughTreasury(Position cityPosition){
     CityImpl city = getCityAt(cityPosition);
