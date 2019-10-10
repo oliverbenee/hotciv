@@ -241,13 +241,19 @@ public class GameImpl implements Game {
 
   public int getDefensiveStrength(Position p){return attackStrategy.calculateDefensiveStrength(this, p);}
 
-  public void removeCity(Position p){
+  private void removeCity(Position p){
     boolean cityAtPosition = cities.containsKey(p);
     if(cityAtPosition) cities.remove(p);
   }
 
-  public void removeCitizenFromCity(Position p){
+  void removeCitizenFromCity(Position p){
     CityImpl city = cities.get(p);
-    city.removeCitizen();
+    boolean cityHasOnePopulation = getCityAt(p).getSize() == 1;
+    if(cityHasOnePopulation) {
+      removeCity(p);
+    }
+    if(!cityHasOnePopulation) {
+      city.removeCitizen();
+    }
   }
 }

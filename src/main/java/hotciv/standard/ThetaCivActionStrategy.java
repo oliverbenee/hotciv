@@ -36,13 +36,6 @@ public class ThetaCivActionStrategy implements ActionStrategy {
   // B52 unit action.
   private void performB52Action(Position p, GameImpl game){
     boolean cityAtB52Position = game.getCityAt(p) != null;
-    if(cityAtB52Position) {
-      boolean cityHasOnePopulation = game.getCityAt(p).getSize() == 1;
-      if(cityHasOnePopulation) {
-        game.removeCity(p);
-      } else {
-        game.removeCitizenFromCity(p);
-      }
-    }
+    if(cityAtB52Position) game.removeCitizenFromCity(p);
   }
 }

@@ -182,10 +182,11 @@ public class TestThetaCiv {
     Position oceanPosition = new Position(1,0);
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
-    Unit blueUnit = game.getUnitAt(blueUnitPosition);
+    UnitImpl blueUnit = game.getUnitAt(blueUnitPosition);
     assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
     game.moveUnit(blueUnitPosition, oceanPosition);
     assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
+    assertNull(game.getUnitAt(oceanPosition));
   }
 
   // Ensure, that land units cannot move over mountains.
@@ -200,6 +201,7 @@ public class TestThetaCiv {
     assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
     game.moveUnit(blueUnitPosition, mountainPosition);
     assertThat(game.getUnitAt(blueUnitPosition), is(blueUnit));
+    assertNull(game.getUnitAt(mountainPosition));
   }
 
   @Test
