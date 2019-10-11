@@ -159,6 +159,26 @@ public class TestThetaCiv {
     assertNotNull(game.getCityAt(redCityPosition));
   }
 
+  //Ensure, that settler unit action still works in this new actionstrategy.
+  @Test
+  public void settlerCanStillFoundCity(){
+    Position settlerPosition = new Position(4,3);
+    game.performUnitActionAt(settlerPosition);
+    assertNotNull(game.getCityAt(settlerPosition));
+  }
+
+  //Ensure, that archer unit action still works in this new actionstrategy.
+  @Test
+  public void archersDoubleTheirDefensiveStrengthWhenFortifying(){
+    Position archPos = new Position(2,0);
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getUnitAt(archPos).getTypeString(), is(GameConstants.ARCHER));
+    int inidef = game.getUnitAt(archPos).getDefensiveStrength();
+    game.performUnitActionAt(archPos);
+    int newdef = game.getUnitAt(archPos).getDefensiveStrength();
+    assertEquals(newdef, inidef*2);
+  }
+
   // Ensure, that a B52 removes a city, when the city is bombed and has one population.
   @Test
   public void b52RemovesCityWhenBombedAt1Population(){

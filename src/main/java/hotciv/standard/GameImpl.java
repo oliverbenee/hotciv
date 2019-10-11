@@ -36,7 +36,6 @@ public class GameImpl implements Game {
   private ActionStrategy actionStrategy;
   private MapStrategy mapStrategy;
   private AttackStrategy attackStrategy;
-  private HotCivFactory hotCivFactory;
   private Player playerInTurn;
   private int currentYear;
   private HashMap<Position, TileImpl> world = new HashMap();
@@ -45,7 +44,6 @@ public class GameImpl implements Game {
   private HashMap<Player, Integer> attackswon;
 
   public GameImpl(HotCivFactory factory){
-    this.hotCivFactory = factory;
     this.winnerStrategy = factory.createWinnerStrategy();
     this.ageStrategy = factory.createAgeStrategy();
     this.actionStrategy = factory.createActionStrategy();
@@ -246,13 +244,7 @@ public class GameImpl implements Game {
 
   void removeUnit(Position p){units.remove(p);}
 
-  public HashMap<Player, Integer> getAttacksWonForPlayers(){return attackswon;}
-
   public int getAttacksWonByPlayer(Player p){return winnerStrategy.getAttacksWonByPlayer(p);}
-
-  public void setAttacksWonByPlayers(Player p, int i){winnerStrategy.incrementAttacksWonByPlayer(p);}
-
-  public int getDefensiveStrength(Position p){return attackStrategy.calculateDefensiveStrength(this, p);}
 
   private boolean cityAtPosition(Position p){
     boolean cityExists = getCityAt(p) != null;
