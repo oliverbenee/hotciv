@@ -262,7 +262,7 @@ public class GameImpl implements Game {
 
   private void removeCity(Position p){
     boolean cityAtPosition = cityAtPosition(p);
-    if(cityAtPosition) removeCity(p);
+    if(cityAtPosition) cities.remove(p);
   }
 
   void removeCitizenFromCity(Position p){
