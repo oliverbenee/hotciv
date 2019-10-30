@@ -77,6 +77,8 @@ public class TranscriptDecorator implements Game {
   public void endOfTurn() {
     System.out.println(game.getPlayerInTurn() + " ends their turn.");
     game.endOfTurn();
+    boolean isRedsTurn = getPlayerInTurn().equals(Player.RED);
+    if(isRedsTurn) System.out.println("Game age is now: " + game.getAge());
   }
 
   @Override
