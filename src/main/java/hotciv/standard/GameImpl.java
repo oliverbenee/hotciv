@@ -173,7 +173,7 @@ public class GameImpl implements Game {
     if(!isBomber) conquerCity(to);
     if(isBomber && enemyTile) conquerCity(to);
 
-    return false;
+    return true;
   }
 
   public void endOfTurn() {

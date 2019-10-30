@@ -42,11 +42,33 @@ public class TestTranscriptDecorator {
     td.getAge();
   }
 
+  // Ensure, that unit movement is transcribed.
+  @Test
+  public void movementIsTranscribed(){
+    Position redB52Position = new Position(1,2);
+    Position targetPosition = new Position(2,2);
+    td.moveUnit(redB52Position, targetPosition);
+  }
+
+  // Ensure, that failed unit movement is transcribed.
+  @Test
+  public void failedMovementIsTranscribed(){
+    Position redB52Position = new Position(1,2);
+    Position failPosition = new Position(2,0);
+    assertNotNull(td.getUnitAt(failPosition));
+    td.moveUnit(redB52Position, failPosition);
+  }
+
+  // Ensure, that end of turn is transcribed.
+  @Test
+  public void endOfTurnIsTranscribed(){
+    td.endOfTurn();
+  }
+
   // Ensure, that unit actions are transcribed.
   @Test
   public void unitActionIsTranscribed(){
     Position redB52Position = new Position(1, 2);
     td.performUnitActionAt(redB52Position);
   }
-
-}
+  }
