@@ -8,23 +8,9 @@ import hotciv.framework.*;
  */
 public class TranscriptDecorator implements Game {
   private Game game;
-  private Game decoratee;
 
   public TranscriptDecorator(Game gamelogged){
     game = gamelogged;
-  }
-
-  public boolean toggleTranscriptDecorator(){
-    if(game == decoratee){
-      //enable the logging by decorating the component
-      decoratee = game; // but remember the component
-      game = new TranscriptDecorator(game);
-      return true;
-    } else {
-      //remove logging by making gameImpl point to the component object once again.
-      game = decoratee;
-      return  false;
-    }
   }
 
   @Override
@@ -95,7 +81,7 @@ public class TranscriptDecorator implements Game {
 
   @Override
   public void performUnitActionAt(Position p) {
-    String unitType = getUnitAt(p).getTypeString();
+    String unitType = game.getUnitAt(p).getTypeString();
     String action = "does nothing";
     boolean isSettler = unitType.equals(GameConstants.SETTLER);
     if (isSettler) action = "founds city at " + p;
