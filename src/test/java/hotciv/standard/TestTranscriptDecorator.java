@@ -10,15 +10,26 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class TestTranscriptDecorator {
   private Game game;
-  private GameImpl decoratee;
+  private Game decoratee;
 
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    MapStrategy mapStrategy = new TestThetaCivMapStrategy();
+    MapStrategy mapStrategy = new TestTranscriptDecoratorMapStrategy();
     decoratee = new GameImpl(new ThetaCivFactory());
-    mapStrategy.createWorld(decoratee);
+    mapStrategy.createWorld((GameImpl) decoratee);
     game = new TranscriptDecorator(decoratee);
+  }
+
+  public void toggleTranscript(){
+    if(game == decoratee){
+      //enable the logging by decorating the component
+      decoratee = game ; // but remember the component
+      game = new TranscriptDecorator(game);
+    } else {
+      //remove logging by making Game point to the component object once again
+      game = decoratee;
+    }
   }
 
   // Take Small Steps. Ensure, that something is transcripted from getWinner().
@@ -51,15 +62,6 @@ public class TestTranscriptDecorator {
     game.moveUnit(redB52Position, targetPosition);
   }
 
-  // Ensure, that failed unit movement is transcribed and notes it fails.
-  // TODO: MUST NOTE IT FAILS
-  @Test
-  public void failedMovementIsTranscribed(){
-    Position redB52Position = new Position(1,2);
-    Position failPosition = new Position(9,9);
-    game.moveUnit(redB52Position, failPosition);
-  }
-
   // Ensure, that end of turn is transcribed.
   @Test
   public void endOfTurnIsTranscribed(){
@@ -74,6 +76,34 @@ public class TestTranscriptDecorator {
     assertNotNull(game.getUnitAt(redB52Position));
     game.performUnitActionAt(redB52Position);
   }
+
+  // Ensure, that nothing is printed, when the toggle command is called.
+  @Test
+  public void dontTranscribeAfterToggling(){
+    toggleTranscript();
+    System.out.println("NOTHING SHOULD BE IN THIS BOX: ");
+    System.out.println("-------------------------------");
+    Position redB52Position = new Position(1, 2);
+    assertNotNull(game.getUnitAt(redB52Position));
+    game.performUnitActionAt(redB52Position);
+    System.out.println("-------------------------------");
+    System.out.println("END OF NOTHING SHOULD BE IN THIS BOX");
+  }
+
+  // Ensure, that something is printed, when the toggle command is called a second time
+  @Test
+  public void doTranscribeAfterTogglingTwice(){
+    toggleTranscript();
+    toggleTranscript();
+    System.out.println("SOMETHING SHOULD BE IN THIS BOX: ");
+    System.out.println("-------------------------------");
+    Position redB52Position = new Position(1, 2);
+    assertNotNull(game.getUnitAt(redB52Position));
+    game.performUnitActionAt(redB52Position);
+    System.out.println("-------------------------------");
+    System.out.println("END OF SOMETHING SHOULD BE IN THIS BOX");
+  }
+
 
   // ================================== TEST STUBS ===
   class TestTranscriptDecoratorMapStrategy implements MapStrategy {
