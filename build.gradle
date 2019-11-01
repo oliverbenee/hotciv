@@ -27,9 +27,15 @@ apply plugin: 'jacoco'
 
 repositories {
     jcenter()
+    // the fractal library is NOT in the official JCenter
+    // repository, only in Bærbak's public repository.
+    maven {
+        url 'https://dl.bintray.com/henrikbaerbak/maven'
+    }
 }
     
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
+    compile 'com.baerbak.maven:hotciv-fractal:1.0'
 }
