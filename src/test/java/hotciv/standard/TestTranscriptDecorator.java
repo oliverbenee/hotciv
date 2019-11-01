@@ -21,7 +21,7 @@ public class TestTranscriptDecorator {
     game = new TranscriptDecorator(decoratee);
   }
 
-  public void toggleTranscript(){
+  private void toggleTranscript(){
     if(game == decoratee){
       //enable the logging by decorating the component
       decoratee = game ; // but remember the component
@@ -60,6 +60,22 @@ public class TestTranscriptDecorator {
     Position redB52Position = new Position(1,2);
     Position targetPosition = new Position(2,2);
     game.moveUnit(redB52Position, targetPosition);
+  }
+
+  // Ensure, that failed unit movement is transcribed.
+  @Test
+  public void failedMovementIsTranscribed(){
+    Position redB52Position = new Position(1,2);
+    Position targetPosition = new Position(2,0);
+    game.moveUnit(redB52Position, targetPosition);
+    assertNotEquals(game.getUnitAt(targetPosition).getTypeString(), GameConstants.B52);
+  }
+
+  // Ensure, that changing production in a city is transcribed.
+  @Test
+  public void changingProductionIsTranscribed(){
+    Position redCityPosition = new Position(1,1);
+    game.changeProductionInCityAt(redCityPosition, GameConstants.B52);
   }
 
   // Ensure, that end of turn is transcribed.
@@ -103,6 +119,7 @@ public class TestTranscriptDecorator {
     System.out.println("-------------------------------");
     System.out.println("END OF SOMETHING SHOULD BE IN THIS BOX");
   }
+
 
 
   // ================================== TEST STUBS ===
