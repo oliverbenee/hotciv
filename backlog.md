@@ -137,6 +137,13 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 * [OK] If there is no city, then if the tile's terrain is of type 'Forests' the bombing causes the terrain type to change to 'Plains'. 
 * [OK] All other terrain types are not affected by bombing.
 
+### Transcription
+* [OK] Implemented?
+
+### Fractal Maps
+* [OK] Implemented?
+* [OK] Integration tested?
+
 ## BUGS TO BE FIXED
 * [OK] Empty catch block in moveUnit() method.
 * [OK] AttackStrategy gives a value, that is either 10 too high or 10 too low. (see TODO.)
