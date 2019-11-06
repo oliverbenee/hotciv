@@ -42,6 +42,7 @@ public class GameImpl implements Game {
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
   private HashMap<Player, Integer> attackswon;
+  private ArrayList<GameObserver> observers;
 
   public GameImpl(HotCivFactory factory){
     this.winnerStrategy = factory.createWinnerStrategy();
@@ -51,6 +52,7 @@ public class GameImpl implements Game {
     this.mapStrategy = factory.createMapStrategy();
     playerInTurn = Player.RED;
     currentYear = -4000;
+    this.observers = new ArrayList<>();
   }
 
   void createTile(Position p, TileImpl type) {world.put(p, type); }
@@ -112,7 +114,7 @@ public class GameImpl implements Game {
     if(playerOwnsCity) return;
 
     getCityAt(to).setOwner(getPlayerInTurn());
-
+    notifyWorldChangedAt(to);
   }
 
   private boolean playerOwnsUnit(Position unitPosition){
@@ -173,6 +175,9 @@ public class GameImpl implements Game {
     if(!isBomber) conquerCity(to);
     if(isBomber && enemyTile) conquerCity(to);
 
+    notifyWorldChangedAt(from);
+    notifyWorldChangedAt(to);
+
     return true;
   }
 
@@ -183,6 +188,7 @@ public class GameImpl implements Game {
       playerInTurn = Player.RED;
       endOfRound();
     }
+    notifyTurnEnds();
   }
 
   private void endOfRound() {
@@ -203,16 +209,20 @@ public class GameImpl implements Game {
   public void changeProductionInCityAt( Position p, String unitType ) {
     CityImpl city = cities.get(p);
     city.setProduction(unitType);
+    notifyWorldChangedAt(p);
   }
 
   public void performUnitActionAt(Position p) {
     boolean playerInTurnOwnsUnit = getPlayerInTurn().equals(getUnitAt(p).getOwner());
-    if (playerInTurnOwnsUnit) actionStrategy.performUnitActionAt(p, this);
+    if (playerInTurnOwnsUnit) {
+      actionStrategy.performUnitActionAt(p, this);
+      notifyWorldChangedAt(p);
+    }
   }
 
   @Override
   public void addObserver(GameObserver observer) {
-
+    observers.add(observer);
   }
 
   @Override
@@ -275,6 +285,18 @@ public class GameImpl implements Game {
     }
     if(!cityHasOnePopulation) {
       city.removeCitizen();
+    }
+  }
+
+  public void notifyWorldChangedAt(Position p){
+    for(GameObserver obs : observers){
+      obs.worldChangedAt(p);
+    }
+  }
+
+  public void notifyTurnEnds(){
+    for(GameObserver obs : observers){
+      obs.turnEnds(getPlayerInTurn(), getAge());
     }
   }
 }

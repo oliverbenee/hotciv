@@ -15,5 +15,6 @@ public class GammaCivActionStrategy implements ActionStrategy {
     if(unit.getTypeString().equals(GameConstants.ARCHER)) {
       unit.setFortify();
     }
+    game.notifyWorldChangedAt(p);
   }
 }
