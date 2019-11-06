@@ -210,6 +210,16 @@ public class GameImpl implements Game {
     if (playerInTurnOwnsUnit) actionStrategy.performUnitActionAt(p, this);
   }
 
+  @Override
+  public void addObserver(GameObserver observer) {
+
+  }
+
+  @Override
+  public void setTileFocus(Position position) {
+
+  }
+
   private boolean cityHasEnoughTreasury(Position cityPosition){
     CityImpl city = getCityAt(cityPosition);
     boolean cityTreasuryIsEnough = city.getTreasury() >= GameConstants.getPriceOfProduction(city.getProduction());
