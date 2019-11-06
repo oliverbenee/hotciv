@@ -243,11 +243,13 @@ public class GameImpl implements Game {
     boolean noUnitAtCityPosition = getUnitAt(cityPosition) == (null);
     if (noUnitAtCityPosition) {
       createUnit(cityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced)));
+      notifyWorldChangedAt(cityPosition);
     } else {
       for (Position surroundingCityPosition : hotciv.utility.Utility.get8neighborhoodOf(cityPosition)) {
         boolean noUnitAtSurroundingPosition = getUnitAt(surroundingCityPosition) == (null);
         if (noUnitAtSurroundingPosition) {
           createUnit(surroundingCityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced)));
+          notifyWorldChangedAt(surroundingCityPosition);
         }
       }
     }
