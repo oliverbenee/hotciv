@@ -30,4 +30,6 @@ public class GameObserverImpl implements GameObserver {
   public String getList(int index) {
     return observers.get(index);
   }
+
+  public int getSize(){return observers.size();}
 }

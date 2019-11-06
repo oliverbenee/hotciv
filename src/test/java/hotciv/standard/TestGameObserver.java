@@ -82,5 +82,28 @@ public class TestGameObserver {
     assertThat(game.getUnitAt(settlerPosition).getOwner(), is(game.getPlayerInTurn()));
     assertThat(game.getUnitAt(settlerPosition).getTypeString(), is(GameConstants.SETTLER));
     game.performUnitActionAt(settlerPosition);
+    String afterAction = observer.getList(0);
+    assertNotNull(afterAction);
+    System.out.println(afterAction);
+  }
+
+  @Test
+  public void shouldSaveWorldChangeWhenProductionIsChanged(){
+    Position redCityPosition = new Position(1,1);
+    assertNotNull(game.getCityAt(redCityPosition));
+    game.changeProductionInCityAt(redCityPosition, GameConstants.SETTLER);
+    assertThat(game.getCityAt(redCityPosition).getProduction(), is(GameConstants.SETTLER));
+    String action = observer.getList(0);
+    assertNotNull(action);
+    System.out.println(action);
+  }
+
+  @Test
+  public void shouldSavePlayerPerformingUnitAction(){
+    Position redSettlerPosition = new Position(4,3);
+    assertThat(observer.getSize(), is(0));
+    game.performUnitActionAt(redSettlerPosition);
+    assertNotNull(observer.getList(0));
+    System.out.println(observer.getList(0));
   }
 }
