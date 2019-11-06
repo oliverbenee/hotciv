@@ -43,6 +43,10 @@ public class StubGame2 implements Game {
 
   private Unit red_archer;
 
+  // === City handling ===
+  private Position pos_red_city;
+  private Position pos_blue_city;
+
   public Unit getUnitAt(Position p) {
     if ( p.equals(pos_archer_red) ) {
       return red_archer;
@@ -73,13 +77,16 @@ public class StubGame2 implements Game {
 
   // === Turn handling ===
   private Player inTurn;
+  private int age;
   public void endOfTurn() {
     System.out.println( "-- StubGame2 / endOfTurn called." );
-    inTurn = (getPlayerInTurn() == Player.RED ?
-              Player.BLUE : 
-              Player.RED );
-    // no age increments
-    gameObserver.turnEnds(inTurn, -4000);
+    if(inTurn == Player.RED) {
+      inTurn = Player.BLUE;
+    } else{
+      inTurn = Player.RED;
+      age += 100;
+    }
+    gameObserver.turnEnds(inTurn, age);
   }
   public Player getPlayerInTurn() { return inTurn; }
   
@@ -98,6 +105,8 @@ public class StubGame2 implements Game {
     pos_legion_blue = new Position( 3, 2);
     pos_settler_red = new Position( 4, 3);
     pos_bomb_red = new Position( 6, 4);
+    pos_red_city = new Position(1,1);
+    pos_blue_city = new Position(4,1);
 
     // the only one I need to store for this stub
     red_archer = new StubUnit( GameConstants.ARCHER, Player.RED );   
@@ -125,9 +134,13 @@ public class StubGame2 implements Game {
   }
 
   // TODO: Add more stub behaviour to test MiniDraw updating
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) {
+          if(p.equals(pos_blue_city)) return new StubCity(Player.BLUE);
+          if(p.equals(pos_red_city)) return new StubCity(Player.RED);
+          return null;
+  }
   public Player getWinner() { return null; }
-  public int getAge() { return 0; }  
+  public int getAge() { return age; }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}  
@@ -152,4 +165,37 @@ class StubUnit implements  Unit {
   public int getMoveCount() { return 1; }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
+}
+
+class StubCity implements City {
+  private Player owner;
+
+  public StubCity(Player p) {
+    this.owner = p;
+  }
+
+  @Override
+  public Player getOwner() {
+    return null;
+  }
+
+  @Override
+  public int getSize() {
+    return 1;
+  }
+
+  @Override
+  public int getTreasury() {
+    return 1;
+  }
+
+  @Override
+  public String getProduction() {
+    return null;
+  }
+
+  @Override
+  public String getWorkforceFocus() {
+    return null;
+  }
 }

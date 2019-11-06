@@ -18,23 +18,23 @@ import minidraw.standard.*;
  * that it is INCOMPLETE and that there are several options
  * for CLEANING UP THE CODE when you add features to it!
 
-   This source code is from the book 
+   This source code is from the book
      "Flexible, Reliable Software:
        Using Patterns and Agile Development"
      published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
+   Author:
+     Henrik B Christensen
      Department of Computer Science
      Aarhus University
-   
+
    Please visit http://www.baerbak.com/ for further information.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
- 
+
        http://www.apache.org/licenses/LICENSE-2.0
- 
+
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -42,9 +42,9 @@ import minidraw.standard.*;
    limitations under the License.
 */
 
-public class CivDrawing 
+public class CivDrawing
   implements Drawing, GameObserver {
-  
+
   protected Drawing delegate;
   /** store all moveable figures visible in this drawing = units */
   protected Map<Unit,UnitFigure> unitFigureMap;
@@ -52,7 +52,7 @@ public class CivDrawing
   /** the Game instance that this CivDrawing is going to render units
    * from */
   protected Game game;
-  
+
   public CivDrawing( DrawingEditor editor, Game game ) {
     super();
     this.delegate = new StandardDrawing();
@@ -68,7 +68,7 @@ public class CivDrawing
     // and the set of 'icons' in the status panel
     defineIcons();
   }
-  
+
   /** The CivDrawing should not allow client side
    * units to add and manipulate figures; only figures
    * that renders game objects are relevant, and these
@@ -115,6 +115,9 @@ public class CivDrawing
           // this list that is iterated by the
           // graphics rendering algorithms
           delegate.add(unitFigure);
+          // TODO: REIMPLEMENT REFRESH BUTTON
+          //delegate.add(refreshButton);
+          //delegate.add(ageText);
         }
       }
     }
@@ -135,17 +138,34 @@ public class CivDrawing
   }
 
   protected ImageFigure turnShieldIcon;
+  protected ImageFigure cityShieldIcon;
+  protected ImageFigure unitShieldIcon;
+  protected TextFigure ageText;
+
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
-    turnShieldIcon = 
+    turnShieldIcon =
       new ImageFigure( "redshield",
                        new Point( GfxConstants.TURN_SHIELD_X,
-                                  GfxConstants.TURN_SHIELD_Y ) ); 
+                                  GfxConstants.TURN_SHIELD_Y ) );
+    cityShieldIcon =
+      new ImageFigure("redshield",
+                       new Point( GfxConstants.CITY_SHIELD_X,
+                                  GfxConstants.CITY_SHIELD_Y) );
+    unitShieldIcon =
+      new ImageFigure("redshield",
+                       new Point( GfxConstants.UNIT_SHIELD_X,
+                                  GfxConstants.UNIT_SHIELD_Y) );
+
     // insert in delegate figure list to ensure graphical
     // rendering.
     delegate.add(turnShieldIcon);
   }
- 
+
+  protected void defineCityMap(){
+
+  }
+
   // === Observer Methods ===
 
   public void worldChangedAt(Position pos) {
@@ -153,24 +173,52 @@ public class CivDrawing
     System.out.println( "CivDrawing: world changes at "+pos);
     // this is a really brute-force algorithm: destroy
     // all known units and build up the entire set again
+    defineCityMap();
     defineUnitMap();
+    defineIcons();
 
-    // TODO: Cities may change on position as well
+    // TODO: Cities may change on position as well - DONE?
   }
 
   public void turnEnds(Player nextPlayer, int age) {
     // TODO: Remove system.out debugging output
     System.out.println( "CivDrawing: turnEnds for "+
                         nextPlayer+" at "+age );
-    String playername = "red";
+    String playername;
     if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
+    else { playername = "red"; }
     turnShieldIcon.set( playername+"shield",
-                        new Point( GfxConstants.TURN_SHIELD_X,
-                                   GfxConstants.TURN_SHIELD_Y ) );
+        new Point( GfxConstants.TURN_SHIELD_X,
+            GfxConstants.TURN_SHIELD_Y ) );
     // TODO: Age output pending
+    if(age < 0 ) ageText.setText((Math.abs(age)) + " BC");
+    ageText.setText((age) + " AD");
   }
 
   public void tileFocusChangedAt(Position position) {
+    String cityOwner = "";
+    boolean blueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
+    if (blueCity) cityOwner = "blue";
+    boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
+    if (redCity) cityOwner = "red";
+    cityShieldIcon.set(cityOwner + "shield",
+            new Point(
+                    GfxConstants.CITY_SHIELD_X,
+                    GfxConstants.CITY_SHIELD_Y));
+    delegate.add(cityShieldIcon);
+
+    String unitOwner = "";
+    boolean blueUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.BLUE);
+    if (blueUnit) unitOwner = "blue";
+    boolean redUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.RED);
+    if(redUnit) unitOwner = "red";
+    unitShieldIcon.set(unitOwner + "shield",
+            new Point(
+                      GfxConstants.UNIT_SHIELD_X,
+                      GfxConstants.UNIT_SHIELD_Y));
+    delegate.add(unitShieldIcon);
+
+
     // TODO: Implementation pending
     System.out.println( "Fake it: tileFocusChangedAt "+position );
   }
@@ -237,7 +285,7 @@ public class CivDrawing
 
   @Override
   public void addDrawingChangeListener(DrawingChangeListener arg0) {
-    delegate.addDrawingChangeListener(arg0);   
+    delegate.addDrawingChangeListener(arg0);
   }
 
   @Override
