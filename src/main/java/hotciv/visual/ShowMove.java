@@ -10,6 +10,7 @@ import javax.swing.*;
 import hotciv.framework.*;
 import hotciv.view.*;
 import hotciv.stub.*;
+import minidraw.standard.handlers.StandardRubberBandSelectionStrategy;
 
 /** Template code for exercise FRS 36.39.
 
@@ -40,5 +41,13 @@ public class ShowMove {
 
     // TODO: Replace the setting of the tool with your UnitMoveTool implementation.
     editor.setTool( new SelectionTool(editor) );
+  }
+}
+
+class MoveUnitTool extends AbstractTool implements Tool{
+  private Game game;
+  public MoveUnitTool(DrawingEditor editor, Game game) {
+    super(editor);
+    this.game = game;
   }
 }

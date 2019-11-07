@@ -76,10 +76,10 @@ class UpdateTool extends NullTool {
       game.endOfTurn();
       break;
     }
-    // Inspect unit at (3,4).
+    // Inspect blue unit at (2,3).
     case 3: {
-      editor.showStatus( "State change: Inspecting unit at (3,4)");
-      game.setTileFocus(new Position(3,9));
+      editor.showStatus( "State change: Inspecting unit at (2,3)");
+      game.setTileFocus(new Position(2,3));
     }
     // End turn (player red gets in turn). Age update.
     case 4: {
@@ -95,18 +95,23 @@ class UpdateTool extends NullTool {
     }
     // End turn 80 times to go to AD.
     case 6: {
-      editor.showStatus( "State change x80: End of turn. Check, that it goes to AD. ");
+      editor.showStatus( "State change x80: End of turn. Check, that it goes to AD. Blue should be in turn. ");
       for(int i=0; i<79; i++){
         game.endOfTurn();
       }
       break;
     }
-    // Inspect unit at (4,3).
-    case 7: {
-      editor.showStatus( "State change: Inspect Unit at (4,3)" );
-      game.setTileFocus(new Position(4,3));
-      break;
-    }
+    // End turn (player red gets in turn). No age update.
+      case 7: {
+        editor.showStatus( "State change: End of Turn (over to red). Check, that age got updated!" );
+        game.endOfTurn();
+        break;
+      }
+    // Inspect unit at (3,2).
+      case 8: {
+        editor.showStatus( "State change: Inspect blue Unit at (3,2)");
+        game.setTileFocus(new Position(2,3));
+      }
       // TODO: Add more state changes for other things to test
     default: {
       editor.showStatus("No more changes in my list...");

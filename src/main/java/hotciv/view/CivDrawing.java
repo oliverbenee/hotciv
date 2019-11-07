@@ -9,6 +9,8 @@ import java.util.List;
 import minidraw.framework.*;
 import minidraw.standard.*;
 
+import javax.xml.soap.Text;
+
 /** CivDrawing is a specialized Drawing (model component) from
  * MiniDraw that dynamically builds the list of Figures for MiniDraw
  * to render the Unit and other information objects that are visible
@@ -70,6 +72,14 @@ public class CivDrawing
     defineUnitMap();
     // and the set of 'icons' in the status panel
     defineIcons();
+    // and the cities.
+    defineCityMap();
+
+    ageText =
+            new TextFigure("4000 BC",
+                    new Point( GfxConstants.AGE_TEXT_X,
+                            GfxConstants.AGE_TEXT_Y));
+    delegate.add(ageText);
   }
 
   /** The CivDrawing should not allow client side
@@ -127,7 +137,6 @@ public class CivDrawing
    * from scratch
    */
   protected void defineCityMap(){
-    /**
     // ensure no cities of the old list are accidental in
     // the selection!
     clearSelection();
@@ -162,7 +171,6 @@ public class CivDrawing
         }
       }
     }
-    */
   }
 
   /** remove all city figures in this
@@ -197,7 +205,17 @@ public class CivDrawing
   protected ImageFigure cityShieldIcon;
   protected ImageFigure unitShieldIcon;
   protected ImageFigure workforceFocusIcon;
+  protected ImageFigure cityProductionIcon;
   protected TextFigure ageText;
+  protected TextFigure unitMoveText;
+
+  protected void defineText(){
+    unitMoveText =
+            new TextFigure("",
+                    new Point(GfxConstants.UNIT_COUNT_X,
+                            GfxConstants.UNIT_COUNT_Y));
+    delegate.add(unitMoveText);
+  }
 
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
@@ -226,13 +244,6 @@ public class CivDrawing
                     new Point( GfxConstants.WORKFORCEFOCUS_X,
                             GfxConstants.WORKFORCEFOCUS_Y));
     delegate.add(workforceFocusIcon);
-
-    // EKSEMPEL PÅ TEXTVIEW:
-    ageText =
-      new TextFigure("4000 BC",
-                      new Point( GfxConstants.AGE_TEXT_X,
-                                 GfxConstants.AGE_TEXT_Y));
-    delegate.add(ageText);
   }
 
   // === Observer Methods ===
@@ -244,9 +255,8 @@ public class CivDrawing
     // all known units and build up the entire set again
     defineCityMap();
     defineUnitMap();
-    //defineIcons();
-
-    // TODO: Cities may change on position as well - DONE?
+    defineText();
+    defineIcons();
   }
 
   public void turnEnds(Player nextPlayer, int age) {
@@ -257,7 +267,6 @@ public class CivDrawing
     if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
     else {
       playername = "red";
-      // TODO: Age output pending
       System.out.println("AGE PRINTING SHOULD HAPPEN");
       boolean isBC = age < 0;
       if(isBC) ageText.setText(Math.abs(age) + " BC");
@@ -275,11 +284,26 @@ public class CivDrawing
     if (blueCity) cityOwner = "blue";
     boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
     if (redCity) cityOwner = "red";
-    cityShieldIcon.set(cityOwner + "shield",
+    cityShieldIcon.set(cityOwner.toLowerCase() + "shield",
             new Point(
                     GfxConstants.CITY_SHIELD_X,
                     GfxConstants.CITY_SHIELD_Y));
     delegate.add(cityShieldIcon);
+
+    String cityProduction = game.getCityAt(position).getProduction();
+    cityProductionIcon.set(cityProduction,
+            new Point(
+                    GfxConstants.CITY_PRODUCTION_X,
+                    GfxConstants.CITY_PRODUCTION_Y));
+    delegate.add(cityProductionIcon);
+
+    String cityWorkForceFocus = game.getCityAt(position).getProduction();
+
+    workforceFocusIcon.set(cityWorkForceFocus,
+            new Point(
+                    GfxConstants.WORKFORCEFOCUS_X,
+                    GfxConstants.WORKFORCEFOCUS_Y) );
+    delegate.add(workforceFocusIcon);
 
     String unitOwner = "";
     boolean blueUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.BLUE);
@@ -291,6 +315,8 @@ public class CivDrawing
                       GfxConstants.UNIT_SHIELD_X,
                       GfxConstants.UNIT_SHIELD_Y));
     delegate.add(unitShieldIcon);
+    int moveCount = game.getUnitAt(position).getMoveCount();
+    unitMoveText.setText("" + moveCount);
 
     // TODO: Check for forgotten implementation elements?
     System.out.println( "tileFocusChangedAt "+position );
@@ -302,8 +328,9 @@ public class CivDrawing
     // everything. We simply rebuild the
     // entire Drawing.
     defineUnitMap();
+    defineCityMap();
+    defineText();
     defineIcons();
-    // TODO: Cities pending
   }
 
   @Override

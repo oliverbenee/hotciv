@@ -47,18 +47,24 @@ public class StubGame2 implements Game {
   private Position pos_red_city;
   private Position pos_blue_city;
 
+  private City red_city;
+  private City blue_city;
+
+  private HashMap<Position, City> cities;
+  private HashMap<Position, Unit> units;
+
   public Unit getUnitAt(Position p) {
     if ( p.equals(pos_archer_red) ) {
       return red_archer;
     }
     if ( p.equals(pos_settler_red) ) {
-      return new StubUnit( GameConstants.SETTLER, Player.RED );
+      return new StubUnit( GameConstants.SETTLER, Player.RED, 1);
     }
     if ( p.equals(pos_legion_blue) ) {
-      return new StubUnit( GameConstants.LEGION, Player.BLUE );
+      return new StubUnit( GameConstants.LEGION, Player.BLUE,1 );
     }
     if ( p.equals(pos_bomb_red) ) {
-      return new StubUnit( ThetaConstants.B52, Player.RED );
+      return new StubUnit( ThetaConstants.B52, Player.RED,1 );
     }
     return null;
   }
@@ -103,7 +109,8 @@ public class StubGame2 implements Game {
   } 
 
   public StubGame2() { 
-    defineWorld(1); 
+    defineWorld(1);
+    defineCities();
     // AlphaCiv configuration
     pos_archer_red = new Position( 2, 0);
     pos_legion_blue = new Position( 3, 2);
@@ -113,7 +120,7 @@ public class StubGame2 implements Game {
     pos_blue_city = new Position(4,1);
 
     // the only one I need to store for this stub
-    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED );   
+    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED, 1);
 
     inTurn = Player.RED;
   }
@@ -137,24 +144,49 @@ public class StubGame2 implements Game {
     }
   }
 
+  /** define cities.
+   *
+   * @param p the position in the world.
+   * @return
+   */
+  protected void defineCities(){
+    cities = new HashMap<>();
+    // Cities...
+    cities.put(pos_red_city, new StubCity(Player.RED));
+    cities.put(pos_blue_city, new StubCity(Player.BLUE));
+  }
+
+  /**
+   * define units
+   * @param p the position in the world.
+   * @return
+   */
+  protected void defineUnitMap(){
+    units = new HashMap<>();
+    units.put(new Position(2,0), new StubUnit(GameConstants.ARCHER, Player.RED, 1));
+    units.put(new Position(3,2), new StubUnit(GameConstants.LEGION, Player.BLUE, 1));
+    units.put(new Position(4,3), new StubUnit(GameConstants.SETTLER, Player.RED,1 ));
+  }
+
   // TODO: Add more stub behaviour to test MiniDraw updating
   public City getCityAt( Position p ) {
           if(p.equals(pos_blue_city)) return new StubCity(Player.BLUE);
           if(p.equals(pos_red_city)) return new StubCity(Player.RED);
           return null;
   }
-  public Player getWinner() { return null; }
+  public Player getWinner() { return Player.RED; }
   public int getAge() { return age; }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}  
+  public void performUnitActionAt( Position p ) {}
 
   public void setTileFocus(Position position) {
+    if(getCityAt(position) != null)
+
+    if(getUnitAt(position) != null)
     // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called.");
     System.out.println(" *** FULL IMPLEMENTATION PENDING ***");
-    Unit unitAtTile = getUnitAt(position);
-
   }
 
 }
@@ -162,13 +194,15 @@ public class StubGame2 implements Game {
 class StubUnit implements  Unit {
   private String type;
   private Player owner;
-  public StubUnit(String type, Player owner) {
+  private int moveCount;
+  public StubUnit(String type, Player owner, int moveCount) {
     this.type = type;
     this.owner = owner;
+    this.moveCount = moveCount;
   }
   public String getTypeString() { return type; }
   public Player getOwner() { return owner; }
-  public int getMoveCount() { return 1; }
+  public int getMoveCount() { return moveCount; }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
 }
