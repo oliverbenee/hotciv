@@ -77,17 +77,21 @@ public class StubGame2 implements Game {
 
   // === Turn handling ===
   private Player inTurn;
-  private int age;
+  private int age = -4000;
+
   public void endOfTurn() {
     System.out.println( "-- StubGame2 / endOfTurn called." );
-    if(inTurn == Player.RED) {
+    if (inTurn == Player.RED) {
       inTurn = Player.BLUE;
-    } else{
+      System.out.println("blue is now in turn.");
+    } else {
       inTurn = Player.RED;
       age += 100;
+      System.out.println("red is now in turn. Age is now: " + age);
     }
     gameObserver.turnEnds(inTurn, age);
   }
+
   public Player getPlayerInTurn() { return inTurn; }
   
 
@@ -148,7 +152,9 @@ public class StubGame2 implements Game {
   public void setTileFocus(Position position) {
     // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called.");
-    System.out.println(" *** IMPLEMENTATION PENDING ***");
+    System.out.println(" *** FULL IMPLEMENTATION PENDING ***");
+    Unit unitAtTile = getUnitAt(position);
+
   }
 
 }
@@ -176,7 +182,7 @@ class StubCity implements City {
 
   @Override
   public Player getOwner() {
-    return null;
+    return owner;
   }
 
   @Override

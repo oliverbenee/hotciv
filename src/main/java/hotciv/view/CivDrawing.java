@@ -48,6 +48,8 @@ public class CivDrawing
   protected Drawing delegate;
   /** store all moveable figures visible in this drawing = units */
   protected Map<Unit,UnitFigure> unitFigureMap;
+  /** store all cities visible in this drawing = cities */
+  protected Map<City,CityFigure> cityFigureMap;
 
   /** the Game instance that this CivDrawing is going to render units
    * from */
@@ -58,6 +60,7 @@ public class CivDrawing
     this.delegate = new StandardDrawing();
     this.game = game;
     this.unitFigureMap = new HashMap<>();
+    this.cityFigureMap = new HashMap<>();
 
     // register this unit drawing as listener to any game state
     // changes...
@@ -115,12 +118,65 @@ public class CivDrawing
           // this list that is iterated by the
           // graphics rendering algorithms
           delegate.add(unitFigure);
-          // TODO: REIMPLEMENT REFRESH BUTTON
-          //delegate.add(refreshButton);
-          //delegate.add(ageText);
         }
       }
     }
+  }
+
+  /** erase the old list of cities, and build a completely new
+   * from scratch
+   */
+  protected void defineCityMap(){
+    /**
+    // ensure no cities of the old list are accidental in
+    // the selection!
+    clearSelection();
+
+    // remove all city figures in this drawing
+    removeAllCityFigures();
+
+    // iterate world, and create a city figure for
+    // each city in the game world, as well as
+    // create an association between the city and
+    // the cityFigure in 'cityFigureMap'.
+    Position p;
+    for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
+      for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
+        p = new Position(r,c);
+        City city = game.getCityAt(p);
+        if ( city != null ) {
+          // TODO: Fix error
+          String owner = city.getOwner().toString();
+          // convert the unit's Position to (x,y) coordinates
+          Point point = new Point( GfxConstants.getXFromColumn(p.getColumn()),
+                  GfxConstants.getYFromRow(p.getRow()) );
+          CityFigure cityFigure =
+                  new CityFigure(city, point);
+          cityFigure.addFigureChangeListener(this);
+          cityFigureMap.put(city, cityFigure);
+
+          // also insert in delegate list as it is
+          // this list that is iterated by the
+          // graphics rendering algorithms
+          delegate.add(cityFigure);
+        }
+      }
+    }
+    */
+  }
+
+  /** remove all city figures in this
+   * drawing, and reset the map (city->cityfigure).
+   * It is important to actually remove the figures
+   * as it forces a graphical redraw of the screen
+   * where the unit figure was.
+   */
+  protected void removeAllCityFigures() {
+    for (City c : cityFigureMap.keySet()) {
+      CityFigure cf = cityFigureMap.get(c);
+      delegate.remove(cf);
+    }
+    unitFigureMap.clear();
   }
 
   /** remove all unit figures in this
@@ -140,6 +196,7 @@ public class CivDrawing
   protected ImageFigure turnShieldIcon;
   protected ImageFigure cityShieldIcon;
   protected ImageFigure unitShieldIcon;
+  protected ImageFigure workforceFocusIcon;
   protected TextFigure ageText;
 
   protected void defineIcons() {
@@ -148,22 +205,34 @@ public class CivDrawing
       new ImageFigure( "redshield",
                        new Point( GfxConstants.TURN_SHIELD_X,
                                   GfxConstants.TURN_SHIELD_Y ) );
-    cityShieldIcon =
-      new ImageFigure("redshield",
-                       new Point( GfxConstants.CITY_SHIELD_X,
-                                  GfxConstants.CITY_SHIELD_Y) );
-    unitShieldIcon =
-      new ImageFigure("redshield",
-                       new Point( GfxConstants.UNIT_SHIELD_X,
-                                  GfxConstants.UNIT_SHIELD_Y) );
-
     // insert in delegate figure list to ensure graphical
     // rendering.
     delegate.add(turnShieldIcon);
-  }
 
-  protected void defineCityMap(){
+    cityShieldIcon =
+            new ImageFigure("redshield",
+                    new Point( GfxConstants.CITY_SHIELD_X,
+                            GfxConstants.CITY_SHIELD_Y) );
+    delegate.add(cityShieldIcon);
 
+    unitShieldIcon =
+            new ImageFigure("redshield",
+                    new Point( GfxConstants.UNIT_SHIELD_X,
+                            GfxConstants.UNIT_SHIELD_Y) );
+    delegate.add(unitShieldIcon);
+
+    workforceFocusIcon =
+            new ImageFigure("hammer",
+                    new Point( GfxConstants.WORKFORCEFOCUS_X,
+                            GfxConstants.WORKFORCEFOCUS_Y));
+    delegate.add(workforceFocusIcon);
+
+    // EKSEMPEL PÅ TEXTVIEW:
+    ageText =
+      new TextFigure("4000 BC",
+                      new Point( GfxConstants.AGE_TEXT_X,
+                                 GfxConstants.AGE_TEXT_Y));
+    delegate.add(ageText);
   }
 
   // === Observer Methods ===
@@ -175,7 +244,7 @@ public class CivDrawing
     // all known units and build up the entire set again
     defineCityMap();
     defineUnitMap();
-    defineIcons();
+    //defineIcons();
 
     // TODO: Cities may change on position as well - DONE?
   }
@@ -186,13 +255,18 @@ public class CivDrawing
                         nextPlayer+" at "+age );
     String playername;
     if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
-    else { playername = "red"; }
+    else {
+      playername = "red";
+      // TODO: Age output pending
+      System.out.println("AGE PRINTING SHOULD HAPPEN");
+      boolean isBC = age < 0;
+      if(isBC) ageText.setText(Math.abs(age) + " BC");
+      if(!isBC) ageText.setText(Math.abs(age) + " AD");
+      System.out.println("AGE PRINTING SHOULD HAVE HAPPENED");
+    }
     turnShieldIcon.set( playername+"shield",
         new Point( GfxConstants.TURN_SHIELD_X,
             GfxConstants.TURN_SHIELD_Y ) );
-    // TODO: Age output pending
-    if(age < 0 ) ageText.setText((Math.abs(age)) + " BC");
-    ageText.setText((age) + " AD");
   }
 
   public void tileFocusChangedAt(Position position) {
@@ -218,9 +292,8 @@ public class CivDrawing
                       GfxConstants.UNIT_SHIELD_Y));
     delegate.add(unitShieldIcon);
 
-
-    // TODO: Implementation pending
-    System.out.println( "Fake it: tileFocusChangedAt "+position );
+    // TODO: Check for forgotten implementation elements?
+    System.out.println( "tileFocusChangedAt "+position );
   }
 
   @Override

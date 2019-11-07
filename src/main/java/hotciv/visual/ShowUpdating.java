@@ -58,27 +58,51 @@ class UpdateTool extends NullTool {
   private int count = 0;
   public void mouseDown(MouseEvent e, int x, int y) {
     switch(count) {
+    // Move archer to (1,1).
     case 0: {
       editor.showStatus( "State change: Moving archer to (1,1)" );
       game.moveUnit( new Position(2,0), new Position(1,1) );
       break;
     }
+    // Move archer to (2,2).
     case 1: {
       editor.showStatus( "State change: Moving archer to (2,2)" );
       game.moveUnit( new Position(1,1), new Position(2,2) );
       break;
     }
+    // End turn (player blue gets in turn).
     case 2: {
       editor.showStatus( "State change: End of Turn (over to blue)" );
       game.endOfTurn();
       break;
     }
+    // Inspect unit at (3,4).
     case 3: {
-      editor.showStatus( "State change: End of Turn (over to red)" );
+      editor.showStatus( "State change: Inspecting unit at (3,4)");
+      game.setTileFocus(new Position(3,9));
+    }
+    // End turn (player red gets in turn). Age update.
+    case 4: {
+      editor.showStatus( "State change: End of Turn (over to red). Check, that age got updated!" );
       game.endOfTurn();
       break;
     }
-    case 4: {
+    // End turn (player blue gets in turn). No age update.
+    case 5: {
+      editor.showStatus( "State change: End of Turn (over to blue). Check, that age did not get updated!" );
+      game.endOfTurn();
+      break;
+    }
+    // End turn 80 times to go to AD.
+    case 6: {
+      editor.showStatus( "State change x80: End of turn. Check, that it goes to AD. ");
+      for(int i=0; i<79; i++){
+        game.endOfTurn();
+      }
+      break;
+    }
+    // Inspect unit at (4,3).
+    case 7: {
       editor.showStatus( "State change: Inspect Unit at (4,3)" );
       game.setTileFocus(new Position(4,3));
       break;
