@@ -239,10 +239,11 @@ public class CivDrawing
                             GfxConstants.UNIT_SHIELD_Y) );
     delegate.add(unitShieldIcon);
 
+    // Not used in my variants.
     workforceFocusIcon =
-            new ImageFigure("hammer",
-                    new Point( GfxConstants.WORKFORCEFOCUS_X,
-                            GfxConstants.WORKFORCEFOCUS_Y));
+        new ImageFigure("hammer",
+            new Point( GfxConstants.WORKFORCEFOCUS_X,
+                GfxConstants.WORKFORCEFOCUS_Y));
     delegate.add(workforceFocusIcon);
   }
 
@@ -297,8 +298,8 @@ public class CivDrawing
                     GfxConstants.CITY_PRODUCTION_Y));
     delegate.add(cityProductionIcon);
 
-    String cityWorkForceFocus = game.getCityAt(position).getProduction();
-
+    //Not used in my variants. Since the workforce focus icon is required, however, here it is!
+    String cityWorkForceFocus = game.getCityAt(position).getWorkforceFocus();
     workforceFocusIcon.set(cityWorkForceFocus,
             new Point(
                     GfxConstants.WORKFORCEFOCUS_X,

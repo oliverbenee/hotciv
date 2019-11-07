@@ -41,6 +41,8 @@ public class StubGame2 implements Game {
   private Position pos_settler_red;
   private Position pos_bomb_red;
 
+  protected Map<Position, Unit> unitMap;
+
   private Unit red_archer;
 
   // === City handling ===
@@ -52,6 +54,38 @@ public class StubGame2 implements Game {
 
   private HashMap<Position, City> cities;
   private HashMap<Position, Unit> units;
+
+  // === Constructor handling ===
+  public StubGame2() {
+    defineWorld(1);
+    defineCities();
+    // AlphaCiv configuration
+    pos_archer_red = new Position( 2, 0);
+    pos_legion_blue = new Position( 3, 2);
+    pos_settler_red = new Position( 4, 3);
+    pos_bomb_red = new Position( 6, 4);
+    pos_red_city = new Position(1,1);
+    pos_blue_city = new Position(4,1);
+
+    // the only one I need to store for this stub
+    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED, 1);
+
+    inTurn = Player.RED;
+    units = new HashMap<>();
+    cities = new HashMap<>();
+    unitMap = new HashMap<>();
+  }
+
+  private void updateUnitMap(Position from, Position to){
+    createUnit(to, getUnitAt(from));
+    removeUnit(from);
+    StubUnit u = (StubUnit) getUnitAt(to);
+    u.decreaseMoveCount();
+  }
+
+  protected void createUnit(Position p, Unit unit){unitMap.put(p, unit);}
+
+  protected void removeUnit(Position p){unitMap.remove(p);}
 
   public Unit getUnitAt(Position p) {
     if ( p.equals(pos_archer_red) ) {
@@ -69,16 +103,35 @@ public class StubGame2 implements Game {
     return null;
   }
 
+  public boolean legalTile(Position to){
+    // Handle illegal tiles
+    boolean isOcean = getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
+    if(isOcean) return false;
+    boolean isMountain = getTileAt(to).getTypeString().equals(GameConstants.MOUNTAINS);
+    if(isMountain) return false;
+    return true;
+  }
+
   // Stub only allows moving red archer
-  public boolean moveUnit( Position from, Position to ) { 
-    System.out.println( "-- StubGame2 / moveUnit called: "+from+"->"+to );
-    if ( from.equals(pos_archer_red) ) {
-      pos_archer_red = to;
-    }
+  public boolean moveUnit( Position from, Position to ) {
+    System.out.println("-- StubGame2 / moveUnit called: " + from + "->" + to);
+    Unit unit = getUnitAt(from);
+    boolean isOwnUnit = getUnitAt(from) != null && getUnitAt(from).getOwner().equals(inTurn);
+    if(!isOwnUnit) return false;
+
+    boolean hasMoves = getUnitAt(from).getMoveCount() < 1;
+    if(!hasMoves) return false;
+
+    boolean legalTile = legalTile(to);
+    if(!legalTile) return false;
+
+    units.remove(from);
+    units.put(to, unit);
     // notify our observer(s) about the changes on the tiles
     gameObserver.worldChangedAt(from);
     gameObserver.worldChangedAt(to);
-    return true; 
+    updateUnitMap(from, to);
+    return true;
   }
 
   // === Turn handling ===
@@ -99,30 +152,12 @@ public class StubGame2 implements Game {
   }
 
   public Player getPlayerInTurn() { return inTurn; }
-  
 
   // === Observer handling ===
   protected GameObserver gameObserver;
   // observer list is only a single one...
   public void addObserver(GameObserver observer) {
     gameObserver = observer;
-  } 
-
-  public StubGame2() { 
-    defineWorld(1);
-    defineCities();
-    // AlphaCiv configuration
-    pos_archer_red = new Position( 2, 0);
-    pos_legion_blue = new Position( 3, 2);
-    pos_settler_red = new Position( 4, 3);
-    pos_bomb_red = new Position( 6, 4);
-    pos_red_city = new Position(1,1);
-    pos_blue_city = new Position(4,1);
-
-    // the only one I need to store for this stub
-    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED, 1);
-
-    inTurn = Player.RED;
   }
 
   // A simple implementation to draw the map of DeltaCiv
@@ -146,7 +181,6 @@ public class StubGame2 implements Game {
 
   /** define cities.
    *
-   * @param p the position in the world.
    * @return
    */
   protected void defineCities(){
@@ -158,7 +192,6 @@ public class StubGame2 implements Game {
 
   /**
    * define units
-   * @param p the position in the world.
    * @return
    */
   protected void defineUnitMap(){
@@ -205,6 +238,9 @@ class StubUnit implements  Unit {
   public int getMoveCount() { return moveCount; }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
+  public void decreaseMoveCount() {
+    moveCount--;
+  }
 }
 
 class StubCity implements City {
