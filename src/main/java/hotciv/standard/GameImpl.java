@@ -217,7 +217,13 @@ public class GameImpl implements Game {
 
   @Override
   public void setTileFocus(Position position) {
-
+    if(getCityAt(position) != null){
+      notifyTileFocusChangedAt(position);
+    }
+    if(getCityAt(position) != null){
+      notifyTileFocusChangedAt(position);
+    }
+    System.out.println("You clicked: " + position);
   }
 
   private boolean cityHasEnoughTreasury(Position cityPosition){
@@ -276,5 +282,9 @@ public class GameImpl implements Game {
     if(!cityHasOnePopulation) {
       city.removeCitizen();
     }
+  }
+
+  void notifyTileFocusChangedAt(Position p){
+
   }
 }

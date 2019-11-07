@@ -42,3 +42,41 @@ public class ShowSetFocus {
     editor.setTool( new SelectionTool(editor) );
   }
 }
+
+class SetFocusTool extends SelectionTool {
+  private Game game;
+  private Position unitPosition;
+  private Position cityPosition;
+
+  public SetFocusTool(DrawingEditor editor, Game game) {
+    super(editor);
+    this.game = game;
+  }
+
+  @Override
+  public void mouseDown(MouseEvent e, int x, int y) {
+    unitPosition = GfxConstants.getPositionFromXY(x,y);
+    cityPosition = GfxConstants.getPositionFromXY(x,y);
+
+    boolean isUnit = game.getUnitAt(unitPosition) != null;
+    boolean isCity = game.getCityAt(cityPosition) != null;
+
+    if(isUnit || isCity){
+      super.mouseDown(e,x,y);
+    }
+  }
+
+  @Override
+  public void mouseDrag(MouseEvent e, int x, int y){
+  }
+
+  @Override
+  public void mouseMove(MouseEvent e, int x, int y){
+
+  }
+
+  public void mouseUp(MouseEvent e, int x, int y) {
+    game.setTileFocus(cityPosition);
+    game.setTileFocus(unitPosition);
+  }
+}
