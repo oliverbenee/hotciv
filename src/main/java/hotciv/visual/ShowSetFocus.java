@@ -66,15 +66,6 @@ class SetFocusTool extends SelectionTool {
     }
   }
 
-  @Override
-  public void mouseDrag(MouseEvent e, int x, int y){
-  }
-
-  @Override
-  public void mouseMove(MouseEvent e, int x, int y){
-
-  }
-
   public void mouseUp(MouseEvent e, int x, int y) {
     game.setTileFocus(cityPosition);
     game.setTileFocus(unitPosition);

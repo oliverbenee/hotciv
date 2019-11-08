@@ -102,15 +102,25 @@ class UpdateTool extends NullTool {
       break;
     }
     // End turn (player red gets in turn). No age update.
-      case 7: {
-        editor.showStatus( "State change: End of Turn (over to red). Check, that age got updated!" );
-        game.endOfTurn();
-        break;
-      }
+    case 7: {
+      editor.showStatus( "State change: End of Turn (over to red). Check, that age got updated!" );
+      game.endOfTurn();
+      break;
+    }
     // Inspect unit at (3,2).
-      case 8: {
-        editor.showStatus( "State change: Inspect blue Unit at (3,2)");
-        game.setTileFocus(new Position(2,3));
+    case 8: {
+      editor.showStatus( "State change: Inspect blue Unit at (3,2)");
+      game.setTileFocus(new Position(2,3));
+    }
+    // Inspect city at (5,4).
+      case 9: {
+        editor.showStatus( "State change: inspect city at (5,4)");
+        game.setTileFocus(new Position(5,4));
+      }
+    // Bomb city at (5,4).
+      case 10: {
+        editor.showStatus("State change: Bomb city at (5,4)");
+        game.performUnitActionAt(new Position(5,4));
       }
       // TODO: Add more state changes for other things to test
     default: {

@@ -28,12 +28,12 @@ import hotciv.stub.*;
    commercial use, see http://www.baerbak.com/
  */
 public class ShowComposition {
-  
+
   public static void main(String[] args) {
     Game game = new StubGame2();
 
-    DrawingEditor editor = 
-      new MiniDrawApplication( "Click and/or drag any item to see all game actions",  
+    DrawingEditor editor =
+      new MiniDrawApplication( "Click and/or drag any item to see all game actions",
                                new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Click and drag any item to see Game's proper response.");
@@ -44,38 +44,39 @@ public class ShowComposition {
 
   static class CompositionTool implements Tool {
     private Game game;
+    private Position startPosition;
+    private Position currentPosition;
     private DrawingEditor editor;
     protected Tool childTool, cachedNullTool;
+    protected Tool actionTool, endOfTurnTool, moveTool, setFocusTool;
 
     public CompositionTool(DrawingEditor editor, Game game){
       this.editor = editor;
       this.game = game;
       childTool = cachedNullTool = new NullTool();
+      actionTool = new ShowAction.ActionTool(editor, game);
+      endOfTurnTool = new EndOfTurnTool(editor,game);
+      moveTool = new MoveUnitTool(editor, game);
+      setFocusTool = new SetFocusTool(editor, game);
     }
 
     @Override
     public void mouseDown(MouseEvent e, int x, int y){
-      Position endOfTurnShield = GfxConstants.getPositionFromXY(x,y);
-      Position unitPosition = GfxConstants.getPositionFromXY(x,y);
-
-      if(endOfTurnShield.equals(GfxConstants.getPositionFromXY(GfxConstants.TURN_SHIELD_X,GfxConstants.TURN_SHIELD_Y))){
-        cachedNullTool = new EndOfTurnTool(editor, game);
-      }
-      if(game.getUnitAt(unitPosition) != null && e.isShiftDown()){
-        cachedNullTool = new ShowAction.ActionTool(editor, game);
-      }
-      childTool.mouseDown(e, x, y);
+      actionTool.mouseDown(e, x, y);
+      endOfTurnTool.mouseDown(e, x, y);
+      moveTool.mouseDown(e, x, y);
+      setFocusTool.mouseDown(e, x, y);
     }
 
     @Override
     public void mouseDrag(MouseEvent e, int x, int y) {
-
+      actionTool.mouseDrag(e, x, y);
+      moveTool.mouseDrag(e, x, y);
+      setFocusTool.mouseDrag(e, x, y);
     }
 
     @Override
     public void mouseMove(MouseEvent e, int x, int y){
-      childTool.mouseMove(e, x, y);
-      cachedNullTool.mouseMove(e,x,y);
     }
 
     @Override
@@ -84,9 +85,9 @@ public class ShowComposition {
     }
 
     @Override
-    public void mouseUp(MouseEvent e, int x, int y){
-      childTool.mouseUp(e,x,y);
-      cachedNullTool.mouseUp(e,x,y);
+    public void mouseUp(MouseEvent e, int x, int y){ ;
+      moveTool.mouseUp(e, x, y);
+      setFocusTool.mouseUp(e,x,y);
     }
   }
 }

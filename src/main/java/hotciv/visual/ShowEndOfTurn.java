@@ -60,8 +60,4 @@ class EndOfTurnTool extends NullTool {
       editor.showStatus("A player has ended their turn. ");
     }
   }
-
-  public void mouseUp(MouseEvent e, int x, int y){
-    super.mouseUp(e, x, y);
-  }
 }

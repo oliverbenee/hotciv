@@ -162,5 +162,9 @@ However, in case the game lasts more than 20 rounds then the winner is the first
     * [OK] setFocus for cities.
 * [OK] 36.42: Develop a EndOfTurnTool. Gradle target: turn
 * [OK] 36.43: Develop a ActionTool. Gradle target: action
-* [] 36.44: Develop a CompositionTool. Gradle target: comp
+* [OK] 36.44: Develop a CompositionTool. Gradle target: comp
+    * [OK] ActionTool
+    * [OK] UnitMoveTool
+    * [OK] SetFocusTool
+    * [OK] EndOfTurnTool
 * [] Develop a complete GUI based SemiCiv for system testing: Combine your developed SemiCiv variant from the previous mandatory sprints with the solutions to exercises 37+38 (Domain to GUI coupling) and 39 to 44 (GUI to domain coupling). Gradle target: semi
