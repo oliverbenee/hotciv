@@ -45,21 +45,23 @@ public class ShowSetFocus {
 
 class SetFocusTool extends SelectionTool {
   private Game game;
-  private Position unitPosition;
-  private Position cityPosition;
+  private Position position;
+  private boolean isUnit;
+  private boolean isCity;
 
   public SetFocusTool(DrawingEditor editor, Game game) {
     super(editor);
     this.game = game;
+    isUnit = false;
+    isCity = false;
   }
 
   @Override
   public void mouseDown(MouseEvent e, int x, int y) {
-    unitPosition = GfxConstants.getPositionFromXY(x,y);
-    cityPosition = GfxConstants.getPositionFromXY(x,y);
+    position = GfxConstants.getPositionFromXY(x,y);
 
-    boolean isUnit = game.getUnitAt(unitPosition) != null;
-    boolean isCity = game.getCityAt(cityPosition) != null;
+    isUnit = game.getUnitAt(position) != null;
+    isCity = game.getCityAt(position) != null;
 
     if(isUnit || isCity){
       super.mouseDown(e,x,y);
@@ -67,14 +69,13 @@ class SetFocusTool extends SelectionTool {
   }
 
   public void mouseUp(MouseEvent e, int x, int y) {
-    game.setTileFocus(cityPosition);
-    game.setTileFocus(unitPosition);
+    game.setTileFocus(position);
     editor.showStatus("tile focus hasn't been fully implemented. ");
-    if(game.getUnitAt(unitPosition) != null){
-      editor.showStatus("Inspecting unit at: " + unitPosition);
+    if(game.getUnitAt(position) != null){
+      editor.showStatus("Inspecting unit at: " + position);
     }
-    if(game.getCityAt(cityPosition) != null){
-      editor.showStatus("Inspecting city at: " + cityPosition);
+    if(game.getCityAt(position) != null){
+      editor.showStatus("Inspecting city at: " + position);
     }
     super.mouseUp(e, x, y);
   }

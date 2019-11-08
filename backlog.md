@@ -162,7 +162,7 @@ However, in case the game lasts more than 20 rounds then the winner is the first
     * [OK] setFocus for cities.
 * [OK] 36.42: Develop a EndOfTurnTool. Gradle target: turn
 * [OK] 36.43: Develop a ActionTool. Gradle target: action
-* [] 36.44: Develop a CompositionTool. Gradle target: comp
+* [OK] 36.44: Develop a CompositionTool. Gradle target: comp
     * [OK] ActionTool
     * [OK] UnitMoveTool
     * [OK] SetFocusTool

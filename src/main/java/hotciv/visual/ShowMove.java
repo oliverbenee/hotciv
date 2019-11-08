@@ -58,22 +58,19 @@ class MoveUnitTool extends SelectionTool {
   @Override
   public void mouseDown(MouseEvent e, int x, int y) {
     startPosition = GfxConstants.getPositionFromXY(x, y);
-    System.out.print("Clicked " + startPosition);
-    boolean isFigure = editor.drawing().findFigure(x,y) != null;
-    if(isFigure) {
-      System.out.println("Unit found");
-    } else {
-      return;
-    }
-    boolean isOwnFigure = game.getUnitAt(startPosition).getOwner().equals(game.getPlayerInTurn());
-    if (isFigure && isOwnFigure) {
+    boolean isShiftNotDown = !e.isShiftDown();
+    boolean isFigure = editor.drawing().findFigure(x,y) instanceof UnitFigure;
+    if(isFigure && isShiftNotDown) {
+      boolean isOwnFigure = game.getUnitAt(startPosition).getOwner().equals(game.getPlayerInTurn());
+      if (isOwnFigure) {
       super.mouseDown(e, x, y);
       hasUnit = true;
       System.out.println("A movable unit is there!");
     } else {
-      System.out.println("no movable unit is there");
-      System.out.println(game.getUnitAt(startPosition).getOwner() + " is owner");
-      System.out.println(game.getPlayerInTurn() + " is in turn");
+        System.out.println("no movable unit is there");
+        System.out.println(game.getUnitAt(startPosition).getOwner() + " is owner");
+        System.out.println(game.getPlayerInTurn() + " is in turn");
+      }
     }
   }
 
@@ -85,9 +82,14 @@ class MoveUnitTool extends SelectionTool {
   public void mouseUp(MouseEvent e, int x, int y){
     currentPosition = GfxConstants.getPositionFromXY(x,y);
     super.mouseUp(e, x, y);
-    boolean isValidMove = game.moveUnit(startPosition, currentPosition);
-    if(isValidMove){
-      editor.showStatus("Moved unit!");
+    boolean isFigure = editor.drawing().findFigure(x,y) instanceof UnitFigure;
+    boolean isSamePostion = startPosition.equals(currentPosition);
+    if(isSamePostion) return;
+    if(isFigure && hasUnit) {
+      boolean isValidMove = game.moveUnit(startPosition, currentPosition);
+      if(isValidMove) {
+        editor.showStatus("Moved unit!");
+      }
     }
   }
 }

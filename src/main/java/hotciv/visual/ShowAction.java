@@ -61,11 +61,12 @@ public class ShowAction {
       unitPosition = GfxConstants.getPositionFromXY(x, y);
       System.out.print("Clicked " + unitPosition);
       System.out.println("Checking to do unit action");
-      boolean isFigure = editor.drawing().findFigure(x,y) != null;
+      boolean isFigure = editor.drawing().findFigure(x,y) instanceof UnitFigure;
+      if(!isFigure) return;
       boolean isOwnFigure = game.getUnitAt(unitPosition).getOwner().equals(game.getPlayerInTurn());
-      if (isFigure && isOwnFigure) {
-        super.mouseDown(e, x, y);
-        System.out.println("Friendly unit found");
+        if(isOwnFigure){
+          super.mouseDown(e, x, y);
+          System.out.println("Friendly unit found");
       } else {
         System.out.println("No unit is there");
         return;
@@ -75,7 +76,7 @@ public class ShowAction {
         System.out.println("Unit action will be performed..");
         game.performUnitActionAt(unitPosition);
       }
-      System.out.println("Tried to perform unit action at " + unitPosition);
+      System.out.println("no action performed at " + unitPosition);
     }
   }
 }

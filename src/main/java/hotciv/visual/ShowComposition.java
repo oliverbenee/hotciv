@@ -64,11 +64,13 @@ public class ShowComposition {
     @Override
     public void mouseDown(MouseEvent e, int x, int y){
       endOfTurnTool.mouseDown(e,x,y);
+      moveTool.mouseDown(e,x,y);
+      setFocusTool.mouseDown(e,x,y);
     }
 
     @Override
     public void mouseDrag(MouseEvent e, int x, int y) {
-
+      moveTool.mouseDrag(e,x,y);
     }
 
     @Override
@@ -81,7 +83,9 @@ public class ShowComposition {
     }
 
     @Override
-    public void mouseUp(MouseEvent e, int x, int y){ ;
+    public void mouseUp(MouseEvent e, int x, int y){
+      moveTool.mouseUp(e,x,y);
       actionTool.mouseUp(e,x,y);
+      setFocusTool.mouseUp(e,x,y);
     }
   }
