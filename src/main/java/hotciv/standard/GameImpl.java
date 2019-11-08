@@ -52,6 +52,7 @@ public class GameImpl implements Game {
     playerInTurn = Player.RED;
     currentYear = -4000;
     observers = new ArrayList<>();
+    mapStrategy.createWorld(this);
   }
 
   void createTile(Position p, TileImpl type) {world.put(p, type); }

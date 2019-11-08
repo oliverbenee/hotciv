@@ -87,7 +87,7 @@ class MoveUnitTool extends SelectionTool {
     super.mouseUp(e, x, y);
     boolean isValidMove = game.moveUnit(startPosition, currentPosition);
     if(isValidMove){
-      editor.showStatus(game.getUnitAt(currentPosition).getTypeString() + "Moved from " + startPosition + " to " + currentPosition + ".");
+      editor.showStatus("Moved unit!");
     }
   }
 }
