@@ -186,7 +186,7 @@ public class CivDrawing
       CityFigure cf = cityFigureMap.get(c);
       delegate.remove(cf);
     }
-    unitFigureMap.clear();
+    cityFigureMap.clear();
   }
 
   /** remove all unit figures in this
@@ -255,10 +255,6 @@ public class CivDrawing
     System.out.println( "CivDrawing: world changes at "+pos);
     // this is a really brute-force algorithm: destroy
     // all known units and build up the entire set again
-    defineCityMap();
-    defineUnitMap();
-    defineText();
-    defineIcons();
     requestUpdate();
   }
 
@@ -286,9 +282,9 @@ public class CivDrawing
 
       String cityOwner = "";
       boolean blueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
-      if (blueCity) cityOwner = "blue";
+        if (blueCity) cityOwner = "blue";
       boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
-      if (redCity) cityOwner = "red";
+        if (redCity) cityOwner = "red";
       cityShieldIcon.set(cityOwner.toLowerCase() + "shield",
               new Point(
                       GfxConstants.CITY_SHIELD_X,
@@ -353,9 +349,6 @@ public class CivDrawing
                       GfxConstants.CITY_SHIELD_X,
                       GfxConstants.CITY_SHIELD_Y));
     }
-
-
-
 
     delegate.add(unitShieldIcon);
     delegate.add(cityShieldIcon);

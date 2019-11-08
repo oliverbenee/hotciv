@@ -40,14 +40,54 @@ public class ShowMove {
     editor.showStatus("Move units to see Game's moveUnit method being called.");
 
     // TODO: Replace the setting of the tool with your UnitMoveTool implementation.
-    editor.setTool( new SelectionTool(editor) );
+    editor.setTool( new MoveUnitTool(editor, game));
   }
 }
 
-class MoveUnitTool extends AbstractTool implements Tool{
+class MoveUnitTool extends SelectionTool {
   private Game game;
+  private Position startPosition;
+  private Position currentPosition;
+  private boolean hasUnit;
+
   public MoveUnitTool(DrawingEditor editor, Game game) {
     super(editor);
     this.game = game;
+  }
+
+  @Override
+  public void mouseDown(MouseEvent e, int x, int y) {
+    startPosition = GfxConstants.getPositionFromXY(x, y);
+    System.out.print("Clicked " + startPosition);
+    boolean isFigure = editor.drawing().findFigure(x,y) != null;
+    if(isFigure) {
+      System.out.println("Unit found");
+    } else {
+      return;
+    }
+    boolean isOwnFigure = game.getUnitAt(startPosition).getOwner().equals(game.getPlayerInTurn());
+    if (isFigure && isOwnFigure) {
+      super.mouseDown(e, x, y);
+      hasUnit = true;
+      System.out.println("A movable unit is there!");
+    } else {
+      System.out.println("no movable unit is there");
+      System.out.println(game.getUnitAt(startPosition).getOwner() + " is owner");
+      System.out.println(game.getPlayerInTurn() + " is in turn");
+    }
+  }
+
+  @Override
+  public void mouseDrag(MouseEvent e, int x, int y){
+    super.mouseDrag(e, x, y);
+  }
+
+  public void mouseUp(MouseEvent e, int x, int y){
+    currentPosition = GfxConstants.getPositionFromXY(x,y);
+    super.mouseUp(e, x, y);
+    boolean isValidMove = game.moveUnit(startPosition, currentPosition);
+    if(isValidMove){
+      editor.showStatus(game.getUnitAt(currentPosition).getTypeString() + "Moved from " + startPosition + " to " + currentPosition + ".");
+    }
   }
 }

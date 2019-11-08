@@ -39,6 +39,54 @@ public class ShowComposition {
     editor.showStatus("Click and drag any item to see Game's proper response.");
 
     // TODO: Replace the setting of the tool with your CompositionTool implementation.
-    editor.setTool( new NullTool() );
+    editor.setTool( new CompositionTool(editor, game) );
+  }
+
+  static class CompositionTool implements Tool {
+    private Game game;
+    private DrawingEditor editor;
+    protected Tool childTool, cachedNullTool;
+
+    public CompositionTool(DrawingEditor editor, Game game){
+      this.editor = editor;
+      this.game = game;
+      childTool = cachedNullTool = new NullTool();
+    }
+
+    @Override
+    public void mouseDown(MouseEvent e, int x, int y){
+      Position endOfTurnShield = GfxConstants.getPositionFromXY(x,y);
+      Position unitPosition = GfxConstants.getPositionFromXY(x,y);
+
+      if(endOfTurnShield.equals(GfxConstants.getPositionFromXY(GfxConstants.TURN_SHIELD_X,GfxConstants.TURN_SHIELD_Y))){
+        cachedNullTool = new EndOfTurnTool(editor, game);
+      }
+      if(game.getUnitAt(unitPosition) != null && e.isShiftDown()){
+        cachedNullTool = new ShowAction.ActionTool(editor, game);
+      }
+      childTool.mouseDown(e, x, y);
+    }
+
+    @Override
+    public void mouseDrag(MouseEvent e, int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMove(MouseEvent e, int x, int y){
+      childTool.mouseMove(e, x, y);
+      cachedNullTool.mouseMove(e,x,y);
+    }
+
+    @Override
+    public void keyDown(KeyEvent e, int key) {
+
+    }
+
+    @Override
+    public void mouseUp(MouseEvent e, int x, int y){
+      childTool.mouseUp(e,x,y);
+      cachedNullTool.mouseUp(e,x,y);
+    }
   }
 }

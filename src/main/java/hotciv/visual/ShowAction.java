@@ -1,5 +1,7 @@
 package hotciv.visual;
 
+import hotciv.factory.SemiCivFactory;
+import hotciv.standard.GameImpl;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
@@ -39,6 +41,28 @@ public class ShowAction {
     editor.showStatus("Shift-Click on unit to see Game's performAction method being called.");
 
     // TODO: Replace the setting of the tool with your ActionTool implementation.
-    editor.setTool( new NullTool() );
+    editor.setTool(new ActionTool(editor, game));
+  }
+
+  static class ActionTool extends NullTool {
+    private Game game;
+    private DrawingEditor editor;
+    private Position unitPosition;
+
+    public ActionTool(DrawingEditor editor, Game game){
+      this.editor = editor;
+      this.game = game;
+    }
+
+    public void mouseDown(MouseEvent e, int x, int y){
+      unitPosition = GfxConstants.getPositionFromXY(x,y);
+      System.out.println("Checking to do unit action");
+      boolean isOwnUnit = game.getUnitAt(unitPosition).getOwner().equals(game.getPlayerInTurn());
+      if(isOwnUnit && e.isShiftDown()){
+        super.mouseDown(e,x,y);
+        System.out.println("Unit action will be performed..");
+        game.performUnitActionAt(unitPosition);
+      }
+    }
   }
 }

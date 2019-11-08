@@ -1,6 +1,8 @@
 package hotciv.stub;
 
 import hotciv.framework.*;
+import hotciv.standard.CityImpl;
+import hotciv.standard.UnitImpl;
 
 import java.util.*;
 
@@ -53,12 +55,12 @@ public class StubGame2 implements Game {
   private City blue_city;
 
   private HashMap<Position, City> cities;
-  private HashMap<Position, Unit> units;
 
   // === Constructor handling ===
   public StubGame2() {
     defineWorld(1);
     defineCities();
+    defineUnitMap();
     // AlphaCiv configuration
     pos_archer_red = new Position( 2, 0);
     pos_legion_blue = new Position( 3, 2);
@@ -71,9 +73,13 @@ public class StubGame2 implements Game {
     red_archer = new StubUnit( GameConstants.ARCHER, Player.RED, 1);
 
     inTurn = Player.RED;
-    units = new HashMap<>();
     cities = new HashMap<>();
     unitMap = new HashMap<>();
+
+    createUnit(pos_archer_red, new StubUnit(GameConstants.ARCHER, Player.RED, 1));
+    createUnit(pos_legion_blue, new StubUnit(GameConstants.LEGION, Player.BLUE, 1));
+    createUnit(pos_settler_red, new StubUnit(GameConstants.SETTLER, Player.RED, 1));
+    createUnit(pos_bomb_red, new StubUnit(GameConstants.B52, Player.RED, 2));
   }
 
   private void updateUnitMap(Position from, Position to){
@@ -88,19 +94,7 @@ public class StubGame2 implements Game {
   protected void removeUnit(Position p){unitMap.remove(p);}
 
   public Unit getUnitAt(Position p) {
-    if ( p.equals(pos_archer_red) ) {
-      return red_archer;
-    }
-    if ( p.equals(pos_settler_red) ) {
-      return new StubUnit( GameConstants.SETTLER, Player.RED, 1);
-    }
-    if ( p.equals(pos_legion_blue) ) {
-      return new StubUnit( GameConstants.LEGION, Player.BLUE,1 );
-    }
-    if ( p.equals(pos_bomb_red) ) {
-      return new StubUnit( ThetaConstants.B52, Player.RED,1 );
-    }
-    return null;
+    return unitMap.get(p);
   }
 
   public boolean legalTile(Position to){
@@ -115,6 +109,8 @@ public class StubGame2 implements Game {
   // Stub only allows moving red archer
   public boolean moveUnit( Position from, Position to ) {
     System.out.println("-- StubGame2 / moveUnit called: " + from + "->" + to);
+
+    /**
     Unit unit = getUnitAt(from);
     boolean isOwnUnit = getUnitAt(from) != null && getUnitAt(from).getOwner().equals(inTurn);
     if(!isOwnUnit) return false;
@@ -124,13 +120,15 @@ public class StubGame2 implements Game {
 
     boolean legalTile = legalTile(to);
     if(!legalTile) return false;
+     */
 
-    units.remove(from);
-    units.put(to, unit);
+    boolean exists = getUnitAt(from) != null;
+    if(!exists) return false;
+
+    updateUnitMap(from, to);
     // notify our observer(s) about the changes on the tiles
     gameObserver.worldChangedAt(from);
     gameObserver.worldChangedAt(to);
-    updateUnitMap(from, to);
     return true;
   }
 
@@ -195,10 +193,10 @@ public class StubGame2 implements Game {
    * @return
    */
   protected void defineUnitMap(){
-    units = new HashMap<>();
-    units.put(new Position(2,0), new StubUnit(GameConstants.ARCHER, Player.RED, 1));
-    units.put(new Position(3,2), new StubUnit(GameConstants.LEGION, Player.BLUE, 1));
-    units.put(new Position(4,3), new StubUnit(GameConstants.SETTLER, Player.RED,1 ));
+    unitMap = new HashMap<>();
+    unitMap.put(new Position(2,0), new StubUnit(GameConstants.ARCHER, Player.RED, 1));
+    unitMap.put(new Position(3,2), new StubUnit(GameConstants.LEGION, Player.BLUE, 1));
+    unitMap.put(new Position(4,3), new StubUnit(GameConstants.SETTLER, Player.RED,1 ));
   }
 
   // TODO: Add more stub behaviour to test MiniDraw updating
@@ -211,7 +209,22 @@ public class StubGame2 implements Game {
   public int getAge() { return age; }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+    StubUnit unit = (StubUnit) getUnitAt(p);
+    // Settler unit action.
+    if(unit.getTypeString().equals(GameConstants.SETTLER)){
+      System.out.println("Settler found!");
+      cities.put(p, new StubCity(getPlayerInTurn()));
+      removeUnit(p);
+      updateUnitMap(p, p);
+
+    }
+    // Archer unit action
+    if(unit.getTypeString().equals(GameConstants.ARCHER)) {
+      System.out.println("Archer found!");
+      unit.setFortify();
+    }
+  }
 
   public void setTileFocus(Position position) {
     gameObserver.tileFocusChangedAt(position);
@@ -219,25 +232,41 @@ public class StubGame2 implements Game {
     System.out.println("-- StubGame2 / setTileFocus called.");
     System.out.println(" It was called at the Position: " + position);
   }
-
 }
 
 class StubUnit implements  Unit {
   private String type;
   private Player owner;
   private int moveCount;
+  private boolean fortify;
   public StubUnit(String type, Player owner, int moveCount) {
     this.type = type;
     this.owner = owner;
     this.moveCount = moveCount;
+    this.fortify = false;
   }
   public String getTypeString() { return type; }
   public Player getOwner() { return owner; }
-  public int getMoveCount() { return moveCount; }
+  public int getMoveCount() {
+    if(!fortify){return moveCount;
+    } else {
+      return 0;
+    }
+  }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
   public void decreaseMoveCount() {
     moveCount--;
+  }
+  public void setFortify() {
+    boolean isFortified = fortify;
+    if(!isFortified) {
+      fortify = true;
+      System.out.println("fortified archer!");
+    } else {
+      fortify = false;
+      System.out.println("unfortified archer!");
+    }
   }
 }
 
