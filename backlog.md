@@ -154,7 +154,7 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 * [PARTIAL] EpsilonCiv uses stub class DieStub
 
 ## INTEGRATION OF HOTCIV GUI
-* [OK?] 36.37: Implement and JUnit test the Observer pattern 'Subject' role behaviour in your HotCiv framework code. Make the test cases part of the normal JUnit test suite
+* [OK] 36.37: Implement and JUnit test the Observer pattern 'Subject' role behaviour in your HotCiv framework code. Make the test cases part of the normal JUnit test suite
 * [OK] 36.38: Complete the implementation of the provided CivDrawing class such that all state changes in a Game are observed and reflected in proper GUI updates. (Hint: It is a bad idea to integrate with your real HotCiv Game implementation, instead extend the provided StubGame2.java or make another stub implementation, to avoid difficult-to-test conditions. (Note that some 'observer related' code needs to be copied/duplicated from the Observer exercise above into your stub game). Gradle target: update
 * [OK] 36.39: Develop a UnitMoveTool. Gradle target: move
 * [OK] 36.40: Develop a SetFocusTool that sets the focus on a tile and updates the GUI with city and/or unit information in the status panel. Gradle target: setfocus
@@ -162,9 +162,9 @@ However, in case the game lasts more than 20 rounds then the winner is the first
     * [OK] setFocus for cities.
 * [OK] 36.42: Develop a EndOfTurnTool. Gradle target: turn
 * [OK] 36.43: Develop a ActionTool. Gradle target: action
-* [OK] 36.44: Develop a CompositionTool. Gradle target: comp
-    * [OK] ActionTool
-    * [OK] UnitMoveTool
-    * [OK] SetFocusTool
-    * [OK] EndOfTurnTool
+* [] 36.44: Develop a CompositionTool. Gradle target: comp
+    * [] ActionTool
+    * [] UnitMoveTool
+    * [] SetFocusTool
+    * [] EndOfTurnTool
 * [] Develop a complete GUI based SemiCiv for system testing: Combine your developed SemiCiv variant from the previous mandatory sprints with the solutions to exercises 37+38 (Domain to GUI coupling) and 39 to 44 (GUI to domain coupling). Gradle target: semi
