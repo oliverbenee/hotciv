@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.City;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
 public class CityImpl implements City {
@@ -12,7 +13,7 @@ public class CityImpl implements City {
   public CityImpl(Player owner){
     this.owner = owner;
     treasury = 0;
-    produced = "legion";
+    produced = GameConstants.LEGION;
     size = 1;
   }
 

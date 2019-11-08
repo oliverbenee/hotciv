@@ -204,7 +204,6 @@ public class StubGame2 implements Game {
     unitMap.put(new Position(4,3), new StubUnit(GameConstants.SETTLER, Player.RED,1 ));
   }
 
-  // TODO: Add more stub behaviour to test MiniDraw updating
   public City getCityAt( Position p ) {
           return cities.get(p);
   }
@@ -235,7 +234,6 @@ public class StubGame2 implements Game {
 
   public void setTileFocus(Position position) {
     gameObserver.tileFocusChangedAt(position);
-    // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called.");
     System.out.println(" It was called at the Position: " + position);
   }

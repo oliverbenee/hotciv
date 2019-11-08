@@ -16,7 +16,7 @@ import javax.xml.soap.Text;
  * to render the Unit and other information objects that are visible
  * in the Game instance.
  *
- * TODO: This is a TEMPLATE for the SWEA Exercise! This means
+ * This is a TEMPLATE for the SWEA Exercise! This means
  * that it is INCOMPLETE and that there are several options
  * for CLEANING UP THE CODE when you add features to it!
 
@@ -156,7 +156,6 @@ public class CivDrawing
         p = new Position(r,c);
         City city = game.getCityAt(p);
         if ( city != null ) {
-          // TODO: Fix error
           String owner = city.getOwner().toString();
           // convert the unit's Position to (x,y) coordinates
           Point point = new Point( GfxConstants.getXFromColumn(p.getColumn()),
@@ -201,6 +200,7 @@ public class CivDrawing
       delegate.remove(uf);
     }
     unitFigureMap.clear();
+    //System.out.println("Redrawing units.");
   }
 
   protected ImageFigure turnShieldIcon;
@@ -220,7 +220,7 @@ public class CivDrawing
   }
 
   protected void defineIcons() {
-    // TODO: Further development to include rest of figures needed
+    // TODO: Further development to include rest of figures needed?
     turnShieldIcon =
       new ImageFigure( "redshield",
                        new Point( GfxConstants.TURN_SHIELD_X,
@@ -228,6 +228,8 @@ public class CivDrawing
     // insert in delegate figure list to ensure graphical
     // rendering.
     delegate.add(turnShieldIcon);
+
+    //System.out.println("define icons");
 
     cityShieldIcon =
             new ImageFigure("redshield",
@@ -246,13 +248,19 @@ public class CivDrawing
             new Point( GfxConstants.WORKFORCEFOCUS_X,
                 GfxConstants.WORKFORCEFOCUS_Y));
     delegate.add(workforceFocusIcon);
+
+    /*TODO: Defaults to legion. */
+    cityProductionIcon =
+            new ImageFigure("legion",
+              new Point (GfxConstants.CITY_PRODUCTION_X,
+                      GfxConstants.CITY_PRODUCTION_Y));
+    delegate.add(cityProductionIcon);
   }
 
   // === Observer Methods ===
 
   public void worldChangedAt(Position pos) {
-    // TODO: Remove system.out debugging output
-    System.out.println( "CivDrawing: world changes at "+pos);
+    //System.out.println( "CivDrawing: world changes at "+pos);
     // this is a really brute-force algorithm: destroy
     // all known units and build up the entire set again
     defineCityMap();
@@ -260,18 +268,15 @@ public class CivDrawing
   }
 
   public void turnEnds(Player nextPlayer, int age) {
-    // TODO: Remove system.out debugging output
-    System.out.println( "CivDrawing: turnEnds for "+
-                        nextPlayer+" at "+age );
     String playername;
     if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
     else {
       playername = "red";
-      System.out.println("AGE PRINTING SHOULD HAPPEN");
+      //System.out.println("AGE PRINTING SHOULD HAPPEN");
       boolean isBC = age < 0;
       if(isBC) ageText.setText(Math.abs(age) + " BC");
       if(!isBC) ageText.setText(Math.abs(age) + " AD");
-      System.out.println("AGE PRINTING SHOULD HAVE HAPPENED");
+      //System.out.println("AGE PRINTING SHOULD HAVE HAPPENED");
     }
     turnShieldIcon.set( playername+"shield",
         new Point( GfxConstants.TURN_SHIELD_X,
@@ -355,8 +360,7 @@ public class CivDrawing
     delegate.add(cityShieldIcon);
     delegate.add((unitMoveText));
 
-    // TODO: Check for forgotten implementation elements?
-    System.out.println( "tileFocusChangedAt "+position );
+    // System.out.println( "tileFocusChangedAt "+position );
   }
 
   @Override

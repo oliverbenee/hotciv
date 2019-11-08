@@ -42,6 +42,7 @@ public class GameImpl implements Game {
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
   private ArrayList<GameObserver> observers;
+  private GameObserver gameObserver;
 
   public GameImpl(HotCivFactory factory){
     this.winnerStrategy = factory.createWinnerStrategy();
@@ -53,6 +54,8 @@ public class GameImpl implements Game {
     currentYear = -4000;
     observers = new ArrayList<>();
     mapStrategy.createWorld(this);
+    gameObserver = new GameObserverImpl();
+    observers.add(gameObserver);
   }
 
   void createTile(Position p, TileImpl type) {world.put(p, type); }
@@ -175,6 +178,9 @@ public class GameImpl implements Game {
     if(!isBomber) conquerCity(to);
     if(isBomber && enemyTile) conquerCity(to);
 
+    gameObserver.worldChangedAt(from);
+    gameObserver.worldChangedAt(to);
+
     return true;
   }
 
@@ -185,6 +191,7 @@ public class GameImpl implements Game {
       playerInTurn = Player.RED;
       endOfRound();
     }
+    gameObserver.turnEnds(getPlayerInTurn(), getAge());
   }
 
   private void endOfRound() {
@@ -210,19 +217,22 @@ public class GameImpl implements Game {
   public void performUnitActionAt(Position p) {
     boolean playerInTurnOwnsUnit = getPlayerInTurn().equals(getUnitAt(p).getOwner());
     if (playerInTurnOwnsUnit) actionStrategy.performUnitActionAt(p, this);
+    gameObserver.worldChangedAt(p);
   }
 
   @Override
   public void addObserver(GameObserver observer) {
     observers.add(observer);
+    gameObserver = observer;
   }
 
   @Override
   public void setTileFocus(Position position) {
+    gameObserver.tileFocusChangedAt(position);
     if(getCityAt(position) != null){
       notifyTileFocusChangedAt(position);
     }
-    if(getCityAt(position) != null){
+    if(getUnitAt(position) != null){
       notifyTileFocusChangedAt(position);
     }
   }
@@ -286,6 +296,6 @@ public class GameImpl implements Game {
   }
 
   void notifyTileFocusChangedAt(Position p){
-
+    gameObserver.tileFocusChangedAt(p);
   }
 }

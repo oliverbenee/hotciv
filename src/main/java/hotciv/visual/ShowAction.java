@@ -76,7 +76,6 @@ public class ShowAction {
         System.out.println("Unit action will be performed..");
         game.performUnitActionAt(unitPosition);
       }
-      System.out.println("no action performed at " + unitPosition);
     }
   }
 }
