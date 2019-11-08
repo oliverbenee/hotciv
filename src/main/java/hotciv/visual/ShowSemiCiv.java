@@ -11,12 +11,12 @@ import minidraw.standard.NullTool;
 public class ShowSemiCiv {
   public static void main(String[] args) {
 
-    GameImpl game = new GameImpl(new AlphaCivFactory());
+    Game game = new GameImpl(new SemiCivFactory());
 
     DrawingEditor editor =
             new MiniDrawApplication( "Paint the HotCiv world map...",
                     new HotCivFactory4(game) );
     editor.open();
-    editor.setTool( new ShowComposition.CompositionTool(editor, game) );
+    editor.setTool( new CompositionTool(editor, game) );
   }
 }

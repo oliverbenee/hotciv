@@ -120,14 +120,8 @@ public class StubGame2 implements Game {
       return false;
     }
 
-    /**
-    Unit unit = getUnitAt(from);
     boolean isOwnUnit = getUnitAt(from) != null && getUnitAt(from).getOwner().equals(inTurn);
     if(!isOwnUnit) return false;
-
-    boolean legalTile = legalTile(to);
-    if(!legalTile) return false;
-     */
 
     boolean exists = getUnitAt(from) != null;
     if(!exists) return false;

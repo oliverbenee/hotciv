@@ -33,22 +33,23 @@ public class ShowComposition {
     Game game = new StubGame2();
 
     DrawingEditor editor =
-      new MiniDrawApplication( "Click and/or drag any item to see all game actions",
-                               new HotCivFactory4(game) );
+            new MiniDrawApplication("Click and/or drag any item to see all game actions",
+                    new HotCivFactory4(game));
     editor.open();
     editor.showStatus("Click and drag any item to see Game's proper response.");
 
     // TODO: Replace the setting of the tool with your CompositionTool implementation.
-    editor.setTool( new CompositionTool(editor, game) );
+    editor.setTool(new CompositionTool(editor, game));
   }
+}
 
-  static class CompositionTool implements Tool {
+  class CompositionTool implements Tool {
     private Game game;
     private Position startPosition;
     private Position currentPosition;
     private DrawingEditor editor;
-    protected Tool childTool, cachedNullTool;
-    protected Tool actionTool, endOfTurnTool, moveTool, setFocusTool;
+    private Tool childTool, cachedNullTool;
+    private Tool actionTool, endOfTurnTool, moveTool, setFocusTool;
 
     public CompositionTool(DrawingEditor editor, Game game){
       this.editor = editor;
@@ -90,4 +91,3 @@ public class ShowComposition {
       setFocusTool.mouseUp(e,x,y);
     }
   }
-}
