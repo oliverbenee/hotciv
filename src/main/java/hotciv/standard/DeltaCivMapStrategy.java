@@ -80,5 +80,8 @@ public class DeltaCivMapStrategy implements MapStrategy {
     }
     game.createCity(new Position(8,12), new CityImpl(Player.RED));
     game.createCity(new Position(4,5), new CityImpl(Player.BLUE));
+    game.createUnit(new Position(4,4), new UnitImpl(Player.BLUE, GameConstants.LEGION,1));
+    game.createUnit(new Position(3,8), new UnitImpl(Player.RED, GameConstants.ARCHER, 1));
+    game.createUnit(new Position(5,5), new UnitImpl(Player.RED, GameConstants.SETTLER, 1));
   }
 }
