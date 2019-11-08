@@ -54,15 +54,28 @@ public class ShowAction {
       this.game = game;
     }
 
-    public void mouseDown(MouseEvent e, int x, int y){
-      unitPosition = GfxConstants.getPositionFromXY(x,y);
+    public void mouseDown(MouseEvent e, int x, int y){}
+
+    @Override
+    public void mouseUp(MouseEvent e, int x, int y){
+      unitPosition = GfxConstants.getPositionFromXY(x, y);
+      System.out.print("Clicked " + unitPosition);
       System.out.println("Checking to do unit action");
-      boolean isOwnUnit = game.getUnitAt(unitPosition).getOwner().equals(game.getPlayerInTurn());
-      if(isOwnUnit && e.isShiftDown()){
-        super.mouseDown(e,x,y);
+      boolean isFigure = editor.drawing().findFigure(x,y) != null;
+      boolean isOwnFigure = game.getUnitAt(unitPosition).getOwner().equals(game.getPlayerInTurn());
+      if (isFigure && isOwnFigure) {
+        super.mouseDown(e, x, y);
+        System.out.println("Friendly unit found");
+      } else {
+        System.out.println("No unit is there");
+        return;
+      }
+      boolean isShiftDown = e.isShiftDown();
+      if(isShiftDown){
         System.out.println("Unit action will be performed..");
         game.performUnitActionAt(unitPosition);
       }
+      System.out.println("Tried to perform unit action at " + unitPosition);
     }
   }
 }

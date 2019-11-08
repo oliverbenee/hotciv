@@ -50,9 +50,11 @@ public class StubGame2 implements Game {
   // === City handling ===
   private Position pos_red_city;
   private Position pos_blue_city;
+  private Position pos_blue_city_2;
 
   private City red_city;
   private City blue_city;
+  private City blue_city_2;
 
   private HashMap<Position, City> cities;
 
@@ -68,25 +70,26 @@ public class StubGame2 implements Game {
     pos_bomb_red = new Position( 6, 4);
     pos_red_city = new Position(1,1);
     pos_blue_city = new Position(4,1);
+    pos_blue_city_2 = new Position(6,4);
 
     // the only one I need to store for this stub
     red_archer = new StubUnit( GameConstants.ARCHER, Player.RED, 1);
 
     inTurn = Player.RED;
     cities = new HashMap<>();
+    cities.put(pos_red_city, new StubCity(Player.RED));
+    cities.put(pos_blue_city, new StubCity(Player.BLUE));
     unitMap = new HashMap<>();
 
     createUnit(pos_archer_red, new StubUnit(GameConstants.ARCHER, Player.RED, 1));
     createUnit(pos_legion_blue, new StubUnit(GameConstants.LEGION, Player.BLUE, 1));
     createUnit(pos_settler_red, new StubUnit(GameConstants.SETTLER, Player.RED, 1));
     createUnit(pos_bomb_red, new StubUnit(GameConstants.B52, Player.RED, 2));
+    createCity(pos_blue_city_2, new StubCity(Player.BLUE));
   }
 
-  private void updateUnitMap(Position from, Position to){
-    createUnit(to, getUnitAt(from));
-    removeUnit(from);
-    StubUnit u = (StubUnit) getUnitAt(to);
-    u.decreaseMoveCount();
+  protected void createCity(Position p, StubCity stubCity) {
+    cities.put(p, stubCity);
   }
 
   protected void createUnit(Position p, Unit unit){unitMap.put(p, unit);}
@@ -110,13 +113,17 @@ public class StubGame2 implements Game {
   public boolean moveUnit( Position from, Position to ) {
     System.out.println("-- StubGame2 / moveUnit called: " + from + "->" + to);
 
+    boolean hasNoMoves = getUnitAt(from).getMoveCount() < 1;
+    if(hasNoMoves) {
+      gameObserver.worldChangedAt(from);
+      gameObserver.worldChangedAt(to);
+      return false;
+    }
+
     /**
     Unit unit = getUnitAt(from);
     boolean isOwnUnit = getUnitAt(from) != null && getUnitAt(from).getOwner().equals(inTurn);
     if(!isOwnUnit) return false;
-
-    boolean hasMoves = getUnitAt(from).getMoveCount() < 1;
-    if(!hasMoves) return false;
 
     boolean legalTile = legalTile(to);
     if(!legalTile) return false;
@@ -125,7 +132,11 @@ public class StubGame2 implements Game {
     boolean exists = getUnitAt(from) != null;
     if(!exists) return false;
 
-    updateUnitMap(from, to);
+    createUnit(to, getUnitAt(from));
+    removeUnit(from);
+    StubUnit u = (StubUnit) getUnitAt(to);
+    u.decreaseMoveCount();
+
     // notify our observer(s) about the changes on the tiles
     gameObserver.worldChangedAt(from);
     gameObserver.worldChangedAt(to);
@@ -201,9 +212,7 @@ public class StubGame2 implements Game {
 
   // TODO: Add more stub behaviour to test MiniDraw updating
   public City getCityAt( Position p ) {
-          if(p.equals(pos_blue_city)) return new StubCity(Player.BLUE);
-          if(p.equals(pos_red_city)) return new StubCity(Player.RED);
-          return null;
+          return cities.get(p);
   }
   public Player getWinner() { return Player.RED; }
   public int getAge() { return age; }
@@ -216,14 +225,18 @@ public class StubGame2 implements Game {
       System.out.println("Settler found!");
       cities.put(p, new StubCity(getPlayerInTurn()));
       removeUnit(p);
-      updateUnitMap(p, p);
-
     }
     // Archer unit action
     if(unit.getTypeString().equals(GameConstants.ARCHER)) {
       System.out.println("Archer found!");
       unit.setFortify();
     }
+    // Bomber unit action
+    if(unit.getTypeString().equals(GameConstants.B52)) {
+      System.out.println("Bomber found!");
+      cities.remove(p);
+    }
+    gameObserver.worldChangedAt(p);
   }
 
   public void setTileFocus(Position position) {
