@@ -214,12 +214,10 @@ public class StubGame2 implements Game {
   public void performUnitActionAt( Position p ) {}
 
   public void setTileFocus(Position position) {
-    if(getCityAt(position) != null)
-
-    if(getUnitAt(position) != null)
+    gameObserver.tileFocusChangedAt(position);
     // TODO: setTileFocus implementation pending.
     System.out.println("-- StubGame2 / setTileFocus called.");
-    System.out.println(" *** FULL IMPLEMENTATION PENDING ***");
+    System.out.println(" It was called at the Position: " + position);
   }
 
 }

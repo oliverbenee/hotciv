@@ -10,10 +10,12 @@ public class GammaCivActionStrategy implements ActionStrategy {
     if(unit.getTypeString().equals(GameConstants.SETTLER)){
       game.createCity(p, new CityImpl(game.getPlayerInTurn()));
       game.removeUnit(p);
+      //game.notifyWorldChangedAt(p);
     }
     // Archer unit action
     if(unit.getTypeString().equals(GameConstants.ARCHER)) {
       unit.setFortify();
+      //game.notifyWorldChangedAt(p);
     }
   }
 }

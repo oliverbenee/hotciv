@@ -38,7 +38,6 @@ public class ShowEndOfTurn {
     editor.open();
     editor.showStatus("Click to shield to see Game's endOfTurn method being called.");
 
-    // TODO: Replace the setting of the tool with your EndOfTurnTool implementation.
     editor.setTool( new EndOfTurnTool(editor, game));
   }
 }
@@ -58,6 +57,7 @@ class EndOfTurnTool extends NullTool {
     if(endOfTurnShield.equals(GfxConstants.getPositionFromXY(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y + 16))){
       super.mouseDown(e,x,y);
       game.endOfTurn();
+      editor.showStatus("A player has ended their turn. ");
     }
   }
 

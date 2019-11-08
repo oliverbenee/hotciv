@@ -74,6 +74,8 @@ public class CivDrawing
     defineIcons();
     // and the cities.
     defineCityMap();
+    // add text.
+    defineText();
 
     ageText =
             new TextFigure("4000 BC",
@@ -239,7 +241,6 @@ public class CivDrawing
                             GfxConstants.UNIT_SHIELD_Y) );
     delegate.add(unitShieldIcon);
 
-    // Not used in my variants.
     workforceFocusIcon =
         new ImageFigure("hammer",
             new Point( GfxConstants.WORKFORCEFOCUS_X,
@@ -258,6 +259,7 @@ public class CivDrawing
     defineUnitMap();
     defineText();
     defineIcons();
+    requestUpdate();
   }
 
   public void turnEnds(Player nextPlayer, int age) {
@@ -280,44 +282,84 @@ public class CivDrawing
   }
 
   public void tileFocusChangedAt(Position position) {
-    String cityOwner = "";
-    boolean blueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
-    if (blueCity) cityOwner = "blue";
-    boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
-    if (redCity) cityOwner = "red";
-    cityShieldIcon.set(cityOwner.toLowerCase() + "shield",
-            new Point(
-                    GfxConstants.CITY_SHIELD_X,
-                    GfxConstants.CITY_SHIELD_Y));
-    delegate.add(cityShieldIcon);
+    if(game.getCityAt(position) != null && game.getCityAt(position).getProduction() != null && game.getCityAt(position).getWorkforceFocus() != null) {
 
-    String cityProduction = game.getCityAt(position).getProduction();
-    cityProductionIcon.set(cityProduction,
-            new Point(
-                    GfxConstants.CITY_PRODUCTION_X,
-                    GfxConstants.CITY_PRODUCTION_Y));
-    delegate.add(cityProductionIcon);
+      String cityOwner = "";
+      boolean blueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
+      if (blueCity) cityOwner = "blue";
+      boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
+      if (redCity) cityOwner = "red";
+      cityShieldIcon.set(cityOwner.toLowerCase() + "shield",
+              new Point(
+                      GfxConstants.CITY_SHIELD_X,
+                      GfxConstants.CITY_SHIELD_Y));
+      delegate.add(cityShieldIcon);
 
-    //Not used in my variants. Since the workforce focus icon is required, however, here it is!
-    String cityWorkForceFocus = game.getCityAt(position).getWorkforceFocus();
+      String cityProduction = game.getCityAt(position).getProduction();
+      cityProductionIcon.set(cityProduction,
+              new Point(
+                      GfxConstants.CITY_PRODUCTION_X,
+                      GfxConstants.CITY_PRODUCTION_Y));
+      delegate.add(cityProductionIcon);
+    }
+
+    /** Not used in my variants.
+     * TODO: remove
+    String cityWorkForceFocus = GameConstants.LEGION;
+    if(game.getCityAt(position).getWorkforceFocus() != null) {
+      cityWorkForceFocus = game.getCityAt(position).getWorkforceFocus();
+    }
     workforceFocusIcon.set(cityWorkForceFocus,
             new Point(
                     GfxConstants.WORKFORCEFOCUS_X,
                     GfxConstants.WORKFORCEFOCUS_Y) );
     delegate.add(workforceFocusIcon);
+     */
 
     String unitOwner = "";
     boolean blueUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.BLUE);
-    if (blueUnit) unitOwner = "blue";
-    boolean redUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.RED);
-    if(redUnit) unitOwner = "red";
-    unitShieldIcon.set(unitOwner + "shield",
-            new Point(
+    if (blueUnit) {
+      System.out.println("Blue unit found!");
+      unitShieldIcon.set(GfxConstants.BLUE_SHIELD,
+              new Point(
                       GfxConstants.UNIT_SHIELD_X,
                       GfxConstants.UNIT_SHIELD_Y));
+      int moveCount = game.getUnitAt(position).getMoveCount();
+      unitMoveText.setText(moveCount + "");
+    }
+    boolean redUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.RED);
+    if(redUnit) {
+      System.out.println("Red unit found!");
+      unitShieldIcon.set(GfxConstants.RED_SHIELD,
+              new Point(
+                      GfxConstants.UNIT_SHIELD_X,
+                      GfxConstants.UNIT_SHIELD_Y));
+      int moveCount = game.getUnitAt(position).getMoveCount();
+      unitMoveText.setText(moveCount + "");
+    }
+    boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
+    if(redCity) {
+        System.out.println("Red city found!");
+        cityShieldIcon.set(GfxConstants.RED_SHIELD,
+                new Point(
+                        GfxConstants.CITY_SHIELD_X,
+                        GfxConstants.CITY_SHIELD_Y));
+    }
+    boolean blueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
+    if(blueCity) {
+      System.out.println("Blue city found!");
+      cityShieldIcon.set(GfxConstants.BLUE_SHIELD,
+              new Point(
+                      GfxConstants.CITY_SHIELD_X,
+                      GfxConstants.CITY_SHIELD_Y));
+    }
+
+
+
+
     delegate.add(unitShieldIcon);
-    int moveCount = game.getUnitAt(position).getMoveCount();
-    unitMoveText.setText("" + moveCount);
+    delegate.add(cityShieldIcon);
+    delegate.add((unitMoveText));
 
     // TODO: Check for forgotten implementation elements?
     System.out.println( "tileFocusChangedAt "+position );

@@ -41,7 +41,7 @@ public class GameImpl implements Game {
   private HashMap<Position, TileImpl> world = new HashMap();
   private HashMap<Position, CityImpl> cities = new HashMap();
   private HashMap<Position, UnitImpl> units = new HashMap();
-  private HashMap<Player, Integer> attackswon;
+  private ArrayList<GameObserver> observers;
 
   public GameImpl(HotCivFactory factory){
     this.winnerStrategy = factory.createWinnerStrategy();
@@ -51,6 +51,7 @@ public class GameImpl implements Game {
     this.mapStrategy = factory.createMapStrategy();
     playerInTurn = Player.RED;
     currentYear = -4000;
+    observers = new ArrayList<>();
   }
 
   void createTile(Position p, TileImpl type) {world.put(p, type); }
@@ -212,7 +213,7 @@ public class GameImpl implements Game {
 
   @Override
   public void addObserver(GameObserver observer) {
-
+    observers.add(observer);
   }
 
   @Override
@@ -223,7 +224,6 @@ public class GameImpl implements Game {
     if(getCityAt(position) != null){
       notifyTileFocusChangedAt(position);
     }
-    System.out.println("You clicked: " + position);
   }
 
   private boolean cityHasEnoughTreasury(Position cityPosition){

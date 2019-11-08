@@ -39,7 +39,7 @@ public class ShowSetFocus {
     editor.showStatus("Click a tile to see Game's setFocus method being called.");
 
     // TODO: Replace the setting of the tool with your SetFocusTool implementation.
-    editor.setTool( new SelectionTool(editor) );
+    editor.setTool( new SetFocusTool(editor, game) );
   }
 }
 
@@ -78,5 +78,13 @@ class SetFocusTool extends SelectionTool {
   public void mouseUp(MouseEvent e, int x, int y) {
     game.setTileFocus(cityPosition);
     game.setTileFocus(unitPosition);
+    editor.showStatus("tile focus hasn't been fully implemented. ");
+    if(game.getUnitAt(unitPosition) != null){
+      editor.showStatus("Inspecting unit at: " + unitPosition);
+    }
+    if(game.getCityAt(cityPosition) != null){
+      editor.showStatus("Inspecting city at: " + cityPosition);
+    }
+    super.mouseUp(e, x, y);
   }
 }
