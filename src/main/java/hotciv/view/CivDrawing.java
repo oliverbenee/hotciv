@@ -251,7 +251,7 @@ public class CivDrawing
 
     /*TODO: Defaults to legion. */
     cityProductionIcon =
-            new ImageFigure("legion",
+            new ImageFigure(GfxConstants.NOTHING,
               new Point (GfxConstants.CITY_PRODUCTION_X,
                       GfxConstants.CITY_PRODUCTION_Y));
     delegate.add(cityProductionIcon);
@@ -263,8 +263,7 @@ public class CivDrawing
     //System.out.println( "CivDrawing: world changes at "+pos);
     // this is a really brute-force algorithm: destroy
     // all known units and build up the entire set again
-    defineCityMap();
-    defineUnitMap();
+    requestUpdate();
   }
 
   public void turnEnds(Player nextPlayer, int age) {
@@ -281,6 +280,7 @@ public class CivDrawing
     turnShieldIcon.set( playername+"shield",
         new Point( GfxConstants.TURN_SHIELD_X,
             GfxConstants.TURN_SHIELD_Y ) );
+    requestUpdate();
   }
 
   public void tileFocusChangedAt(Position position) {
@@ -305,19 +305,6 @@ public class CivDrawing
       delegate.add(cityProductionIcon);
     }
 
-    /** Not used in my variants.
-     * TODO: remove
-    String cityWorkForceFocus = GameConstants.LEGION;
-    if(game.getCityAt(position).getWorkforceFocus() != null) {
-      cityWorkForceFocus = game.getCityAt(position).getWorkforceFocus();
-    }
-    workforceFocusIcon.set(cityWorkForceFocus,
-            new Point(
-                    GfxConstants.WORKFORCEFOCUS_X,
-                    GfxConstants.WORKFORCEFOCUS_Y) );
-    delegate.add(workforceFocusIcon);
-     */
-
     String unitOwner = "";
     boolean blueUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.BLUE);
     if (blueUnit) {
@@ -339,28 +326,31 @@ public class CivDrawing
       int moveCount = game.getUnitAt(position).getMoveCount();
       unitMoveText.setText(moveCount + "");
     }
-    boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
-    if(redCity) {
+    boolean isCity = game.getCityAt(position) != null;
+    if(isCity){
+      boolean isRedCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
+      if(isRedCity) {
         System.out.println("Red city found!");
+        //City shield Icon.
         cityShieldIcon.set(GfxConstants.RED_SHIELD,
                 new Point(
                         GfxConstants.CITY_SHIELD_X,
                         GfxConstants.CITY_SHIELD_Y));
+      }
+      boolean isBlueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
+      if(isBlueCity) {
+        // City production icon.
+        System.out.println("Blue city found!");
+        cityShieldIcon.set(GfxConstants.BLUE_SHIELD,
+                new Point(
+                        GfxConstants.CITY_SHIELD_X,
+                        GfxConstants.CITY_SHIELD_Y));
+      }
     }
-    boolean blueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
-    if(blueCity) {
-      System.out.println("Blue city found!");
-      cityShieldIcon.set(GfxConstants.BLUE_SHIELD,
-              new Point(
-                      GfxConstants.CITY_SHIELD_X,
-                      GfxConstants.CITY_SHIELD_Y));
-    }
-
+    
     delegate.add(unitShieldIcon);
     delegate.add(cityShieldIcon);
     delegate.add((unitMoveText));
-
-    // System.out.println( "tileFocusChangedAt "+position );
   }
 
   @Override
