@@ -345,6 +345,8 @@ public class TestAlphaCiv {
     game.endOfTurn();
     game.produceUnit(redCityPosition);
     UnitImpl firstUnit = game.getUnitAt(redCityPosition);
+    assertThat(firstUnit.getTypeString(), is(GameConstants.LEGION));
+    game.changeProductionInCityAt(redCityPosition, GameConstants.ARCHER);
     game.endOfTurn();
     game.endOfTurn();
     game.endOfTurn();
@@ -352,8 +354,8 @@ public class TestAlphaCiv {
     game.endOfTurn();
     game.endOfTurn();
     game.produceUnit(redCityPosition);
-    UnitImpl secondUnit = game.getUnitAt(new Position(1,2));
-    assertThat(secondUnit.getTypeString(), is(GameConstants.LEGION));
+    Unit secondUnit = game.getUnitAt(new Position(0,1));
+    assertThat(secondUnit.getTypeString(), is(GameConstants.ARCHER));
   }
 
   //Ensure, that players can conquer cities.
