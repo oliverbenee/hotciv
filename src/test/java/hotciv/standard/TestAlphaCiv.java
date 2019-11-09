@@ -354,7 +354,9 @@ public class TestAlphaCiv {
     game.endOfTurn();
     game.endOfTurn();
     game.produceUnit(redCityPosition);
-    Unit secondUnit = game.getUnitAt(new Position(0,1));
+    int secondUnitRow = 0;
+    int secondUnitColumn = 1;
+    Unit secondUnit = game.getUnitAt(new Position(secondUnitRow, secondUnitColumn));
     assertThat(secondUnit.getTypeString(), is(GameConstants.ARCHER));
   }
 
