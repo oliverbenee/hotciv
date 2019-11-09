@@ -64,10 +64,10 @@ class UpdateTool extends NullTool {
       game.moveUnit( new Position(2,0), new Position(1,1) );
       break;
     }
-    // Move archer to (2,2).
+    // Move archer to (2,2). Shouldn't work.
     case 1: {
-      editor.showStatus( "State change: Moving archer to (2,2)" );
-      game.moveUnit( new Position(1,1), new Position(2,2) );
+      editor.showStatus( "State change: Moving archer to (2,2). Shouldn't work. " );
+      game.moveUnit( new Position(1,1), new Position(2,2));
       break;
     }
     // End turn (player blue gets in turn).
@@ -76,53 +76,56 @@ class UpdateTool extends NullTool {
       game.endOfTurn();
       break;
     }
-    // Inspect blue unit at (2,3).
+    // Inspect blue unit at (3,2).
     case 3: {
-      editor.showStatus( "State change: Inspecting unit at (2,3)");
-      game.setTileFocus(new Position(2,3));
+      editor.showStatus( "State change: Inspecting unit at (3,2)");
+      game.setTileFocus(new Position(3,2));
+      break;
     }
-    // End turn (player red gets in turn). Age update.
+    // Move legion to (4,2).
     case 4: {
+        editor.showStatus( "State change: move legion to (4,2).");
+        game.moveUnit(new Position(3,2), new Position(4,2));
+        break;
+      }
+    // End turn (player red gets in turn). Age update.
+    case 5: {
       editor.showStatus( "State change: End of Turn (over to red). Check, that age got updated!" );
       game.endOfTurn();
       break;
     }
     // End turn (player blue gets in turn). No age update.
-    case 5: {
+    case 6: {
       editor.showStatus( "State change: End of Turn (over to blue). Check, that age did not get updated!" );
       game.endOfTurn();
       break;
     }
     // End turn 80 times to go to AD.
-    case 6: {
-      editor.showStatus( "State change x80: End of turn. Check, that it goes to AD. Blue should be in turn. ");
+    case 7: {
+      editor.showStatus( "State change x79: End of turn. Check, that it goes to AD. Blue should be in turn. ");
       for(int i=0; i<79; i++){
         game.endOfTurn();
       }
       break;
     }
-    // End turn (player red gets in turn). No age update.
-    case 7: {
-      editor.showStatus( "State change: End of Turn (over to red). Check, that age got updated!" );
-      game.endOfTurn();
+    // Inspect unit at (4,3).
+    case 8: {
+      editor.showStatus( "State change: Inspect red Unit at (4,3)");
+      game.setTileFocus(new Position(4,3));
       break;
     }
-    // Inspect unit at (3,2).
-    case 8: {
-      editor.showStatus( "State change: Inspect blue Unit at (3,2)");
-      game.setTileFocus(new Position(2,3));
-    }
-    // Inspect city at (5,4).
+    // Inspect city at (4,1).
       case 9: {
-        editor.showStatus( "State change: inspect city at (5,4)");
-        game.setTileFocus(new Position(5,4));
+        editor.showStatus( "State change: inspect city at (4,1)");
+        game.setTileFocus(new Position(4,1));
+        break;
       }
-    // Bomb city at (5,4).
+    // perform settler action at (4,3).
       case 10: {
-        editor.showStatus("State change: Bomb city at (5,4)");
-        game.performUnitActionAt(new Position(5,4));
+        editor.showStatus("State change: Perform settler action at (4,3)");
+        game.performUnitActionAt(new Position(4,3));
+        break;
       }
-      // TODO: Add more state changes for other things to test
     default: {
       editor.showStatus("No more changes in my list...");
     }
