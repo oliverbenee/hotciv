@@ -274,9 +274,11 @@ class StubUnit implements  Unit {
 }
 
 class StubCity implements City {
+  private String nextUnit;
   private Player owner;
 
   public StubCity(Player p) {
+    this.nextUnit = GameConstants.LEGION;
     this.owner = p;
   }
 
@@ -297,7 +299,11 @@ class StubCity implements City {
 
   @Override
   public String getProduction() {
-    return GameConstants.LEGION;
+    if(getOwner().equals(Player.RED)){
+      return GameConstants.B52;
+    } else {
+      return GameConstants.ARCHER;
+    }
   }
 
   @Override

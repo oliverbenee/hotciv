@@ -285,7 +285,10 @@ public class CivDrawing
   }
 
   public void tileFocusChangedAt(Position position) {
-    if(game.getCityAt(position) != null && game.getCityAt(position).getProduction() != null && game.getCityAt(position).getWorkforceFocus() != null) {
+    if(game.getCityAt(position) != null){
+      boolean hasProduction = game.getCityAt(position).getProduction() != null;
+      boolean hasWorkForceFocus = game.getCityAt(position).getWorkforceFocus() != null;
+      if(hasProduction && hasWorkForceFocus){
       boolean blueCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.BLUE);
         if (blueCity) cityname = "blue";
       boolean redCity = game.getCityAt(position) != null && game.getCityAt(position).getOwner().equals(Player.RED);
@@ -303,9 +306,11 @@ public class CivDrawing
                       GfxConstants.CITY_PRODUCTION_X,
                       GfxConstants.CITY_PRODUCTION_Y));
       delegate.add(cityProductionIcon);
+      }
     }
 
-    if(game.getUnitAt(position) != null) {
+    boolean isUnit = game.getUnitAt(position) != null;
+    if(isUnit) {
       boolean blueUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.BLUE);
       if (blueUnit) unitname = "blue";
       boolean redUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.RED);
