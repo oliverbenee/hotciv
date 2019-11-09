@@ -210,6 +210,17 @@ public class CivDrawing
     //System.out.println("Redrawing units.");
   }
 
+  /** remove all unit figures in this
+   * drawing, and reset the map (unit->unitfigure).
+   * It is important to actually remove the figures
+   * as it forces a graphical redraw of the screen
+   * where the unit figure was.
+   */
+  protected void removeAllTextFigures() {
+    delegate.remove(ageText);
+    delegate.remove(unitMoveText);
+  }
+
   protected ImageFigure turnShieldIcon;
   protected ImageFigure cityShieldIcon;
   protected ImageFigure unitShieldIcon;
@@ -319,24 +330,9 @@ public class CivDrawing
                       GfxConstants.UNIT_SHIELD_X,
                       GfxConstants.UNIT_SHIELD_Y));
       delegate.add(unitShieldIcon);
+      int moveCount = game.getUnitAt(position).getMoveCount();
+      unitMoveText.setText(moveCount + "");
     }
-
-
-
-    /**
-    boolean blueUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.BLUE);
-      if (blueUnit) unitname = "blue";
-    boolean redUnit = game.getUnitAt(position) != null && game.getUnitAt(position).getOwner().equals(Player.RED);
-      if (redUnit) unitname = "red";
-    unitShieldIcon.set(unitname.toLowerCase() + "shield",
-            new Point(
-                    GfxConstants.CITY_SHIELD_X,
-                    GfxConstants.CITY_SHIELD_Y));
-    delegate.add(unitShieldIcon);
-    unitMoveText.setText("");
-    int moveCount = game.getUnitAt(position).getMoveCount();
-    unitMoveText.setText(moveCount + "");
-     */
 
     delegate.add(unitShieldIcon);
     delegate.add(cityShieldIcon);
@@ -345,14 +341,17 @@ public class CivDrawing
   }
 
   @Override
-  public void requestUpdate() {
+  public void requestUpdate()
+  {
+    removeAllCityFigures();
+    removeAllUnitFigures();
     // A request has been issued to repaint
     // everything. We simply rebuild the
     // entire Drawing.
     defineCityMap();
     defineUnitMap();
-    defineText();
     defineIcons();
+    defineText();
   }
 
   @Override
