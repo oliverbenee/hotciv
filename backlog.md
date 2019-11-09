@@ -167,6 +167,7 @@ However, in case the game lasts more than 20 rounds then the winner is the first
     * [OK] ActionTool
     * [OK] UnitMoveTool
         * [] KNOWN BUG: Moving a unit again on the map makes it stay there. The bug corrects itself by clicking anywhere.
+                This is moveunit's fault.
     * [OK] SetFocusTool
     * [OK] EndOfTurnTool
 * [OK?] Develop a complete GUI based SemiCiv for system testing: Combine your developed SemiCiv variant from the previous mandatory sprints with the solutions to exercises 37+38 (Domain to GUI coupling) and 39 to 44 (GUI to domain coupling). Gradle target: semi
