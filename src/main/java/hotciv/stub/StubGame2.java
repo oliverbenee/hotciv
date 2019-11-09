@@ -62,9 +62,6 @@ public class StubGame2 implements Game {
 
   // === Constructor handling ===
   public StubGame2() {
-    defineWorld(1);
-    defineCities();
-    defineUnitMap();
     // AlphaCiv configuration
     pos_archer_red = new Position( 2, 0);
     pos_legion_blue = new Position( 3, 2);
@@ -79,17 +76,17 @@ public class StubGame2 implements Game {
 
     inTurn = Player.RED;
     cities = new HashMap<>();
-    cities.put(pos_red_city, new StubCity(Player.RED));
-    cities.put(pos_blue_city, new StubCity(Player.BLUE));
-    cities.put(pos_blue_city_2, new StubCity(Player.BLUE));
+    defineCities();
     unitMap = new HashMap<>();
 
     createUnit(pos_archer_red, new StubUnit(GameConstants.ARCHER, Player.RED, 1));
     createUnit(pos_legion_blue, new StubUnit(GameConstants.LEGION, Player.BLUE, 1));
     createUnit(pos_settler_red, new StubUnit(GameConstants.SETTLER, Player.RED, 1));
     createUnit(pos_bomb_red, new StubUnit(GameConstants.B52, Player.RED, 2));
-    createCity(pos_blue_city_2, new StubCity(Player.BLUE));
-    createCity(pos_red_city, new StubCity(Player.RED));
+
+    defineWorld(1);
+    defineCities();
+    defineUnitMap();
 
     observers = new ArrayList<>();
     gameObserver = new GameObserverImpl();
@@ -300,11 +297,11 @@ class StubCity implements City {
 
   @Override
   public String getProduction() {
-    return null;
+    return GameConstants.LEGION;
   }
 
   @Override
   public String getWorkforceFocus() {
-    return null;
+    return GameConstants.productionFocus;
   }
 }
