@@ -80,15 +80,24 @@ public class CivDrawing
     defineUnitMap();
     // and the set of 'icons' in the status panel
     defineIcons();
-    // add text.
-    defineText();
-
 
     ageText =
             new TextFigure("4000 BC",
                     new Point( GfxConstants.AGE_TEXT_X,
                             GfxConstants.AGE_TEXT_Y));
     delegate.add(ageText);
+
+    unitMoveText =
+            new TextFigure("N/A",
+                    new Point( GfxConstants.UNIT_COUNT_X,
+                            GfxConstants.UNIT_COUNT_Y));
+    delegate.add(unitMoveText);
+
+    cityProductionIcon =
+            new ImageFigure(GfxConstants.NOTHING,
+                    new Point (GfxConstants.CITY_PRODUCTION_X,
+                            GfxConstants.CITY_PRODUCTION_Y));
+    delegate.add(cityProductionIcon);
   }
 
   /** The CivDrawing should not allow client side
@@ -210,17 +219,6 @@ public class CivDrawing
     //System.out.println("Redrawing units.");
   }
 
-  /** remove all unit figures in this
-   * drawing, and reset the map (unit->unitfigure).
-   * It is important to actually remove the figures
-   * as it forces a graphical redraw of the screen
-   * where the unit figure was.
-   */
-  protected void removeAllTextFigures() {
-    delegate.remove(ageText);
-    delegate.remove(unitMoveText);
-  }
-
   protected ImageFigure turnShieldIcon;
   protected ImageFigure cityShieldIcon;
   protected ImageFigure unitShieldIcon;
@@ -228,14 +226,6 @@ public class CivDrawing
   protected ImageFigure cityProductionIcon;
   protected TextFigure ageText;
   protected TextFigure unitMoveText;
-
-  protected void defineText(){
-    unitMoveText =
-            new TextFigure("",
-                    new Point(GfxConstants.UNIT_COUNT_X,
-                            GfxConstants.UNIT_COUNT_Y));
-    delegate.add(unitMoveText);
-  }
 
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed?
@@ -247,7 +237,7 @@ public class CivDrawing
     // rendering.
     delegate.add(turnShieldIcon);
 
-    //System.out.println("define icons");
+    System.out.println("define icons");
 
     cityShieldIcon =
             new ImageFigure(cityname + "shield",
@@ -266,12 +256,6 @@ public class CivDrawing
             new Point( GfxConstants.WORKFORCEFOCUS_X,
                 GfxConstants.WORKFORCEFOCUS_Y));
     delegate.add(workforceFocusIcon);
-
-    cityProductionIcon =
-            new ImageFigure(GfxConstants.NOTHING,
-              new Point (GfxConstants.CITY_PRODUCTION_X,
-                      GfxConstants.CITY_PRODUCTION_Y));
-    delegate.add(cityProductionIcon);
   }
 
   // === Observer Methods ===
@@ -313,7 +297,8 @@ public class CivDrawing
       delegate.add(cityShieldIcon);
 
       String cityProduction = game.getCityAt(position).getProduction();
-      cityProductionIcon.set(cityProduction,
+      System.out.println("Production: " + cityProduction);
+      cityProductionIcon.set(cityProduction.toLowerCase(),
               new Point(
                       GfxConstants.CITY_PRODUCTION_X,
                       GfxConstants.CITY_PRODUCTION_Y));
@@ -334,8 +319,6 @@ public class CivDrawing
       unitMoveText.setText(moveCount + "");
     }
 
-    delegate.add(unitShieldIcon);
-    delegate.add(cityShieldIcon);
     delegate.add(unitMoveText);
     requestUpdate();
   }
@@ -351,7 +334,6 @@ public class CivDrawing
     defineCityMap();
     defineUnitMap();
     defineIcons();
-    defineText();
   }
 
   @Override
