@@ -25,8 +25,5 @@ public class GameObserverImpl implements GameObserver {
   public void tileFocusChangedAt(Position position) {
     observerList.add("Tile focus is changed at " + position);
   }
-
-  public String getList(int index){
-    return observerList.get(index);
-  }
+  
 }
