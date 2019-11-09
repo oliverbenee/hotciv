@@ -2,6 +2,7 @@ package hotciv.stub;
 
 import hotciv.framework.*;
 import hotciv.standard.CityImpl;
+import hotciv.standard.GameObserverImpl;
 import hotciv.standard.UnitImpl;
 
 import java.util.*;
@@ -57,6 +58,7 @@ public class StubGame2 implements Game {
   private City blue_city_2;
 
   private HashMap<Position, City> cities;
+  private ArrayList<GameObserver> observers;
 
   // === Constructor handling ===
   public StubGame2() {
@@ -67,7 +69,7 @@ public class StubGame2 implements Game {
     pos_archer_red = new Position( 2, 0);
     pos_legion_blue = new Position( 3, 2);
     pos_settler_red = new Position( 4, 3);
-    pos_bomb_red = new Position( 6, 4);
+    pos_bomb_red = new Position( 6, 5);
     pos_red_city = new Position(1,1);
     pos_blue_city = new Position(4,1);
     pos_blue_city_2 = new Position(6,4);
@@ -79,6 +81,7 @@ public class StubGame2 implements Game {
     cities = new HashMap<>();
     cities.put(pos_red_city, new StubCity(Player.RED));
     cities.put(pos_blue_city, new StubCity(Player.BLUE));
+    cities.put(pos_blue_city_2, new StubCity(Player.BLUE));
     unitMap = new HashMap<>();
 
     createUnit(pos_archer_red, new StubUnit(GameConstants.ARCHER, Player.RED, 1));
@@ -86,6 +89,12 @@ public class StubGame2 implements Game {
     createUnit(pos_settler_red, new StubUnit(GameConstants.SETTLER, Player.RED, 1));
     createUnit(pos_bomb_red, new StubUnit(GameConstants.B52, Player.RED, 2));
     createCity(pos_blue_city_2, new StubCity(Player.BLUE));
+    createCity(pos_red_city, new StubCity(Player.RED));
+
+    observers = new ArrayList<>();
+    gameObserver = new GameObserverImpl();
+    observers.add(gameObserver);
+
   }
 
   protected void createCity(Position p, StubCity stubCity) {
@@ -98,15 +107,6 @@ public class StubGame2 implements Game {
 
   public Unit getUnitAt(Position p) {
     return unitMap.get(p);
-  }
-
-  public boolean legalTile(Position to){
-    // Handle illegal tiles
-    boolean isOcean = getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
-    if(isOcean) return false;
-    boolean isMountain = getTileAt(to).getTypeString().equals(GameConstants.MOUNTAINS);
-    if(isMountain) return false;
-    return true;
   }
 
   // Stub only allows moving red archer
@@ -191,6 +191,7 @@ public class StubGame2 implements Game {
     // Cities...
     cities.put(pos_red_city, new StubCity(Player.RED));
     cities.put(pos_blue_city, new StubCity(Player.BLUE));
+    cities.put(pos_blue_city_2, new StubCity(Player.BLUE));
   }
 
   /**
