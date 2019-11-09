@@ -70,7 +70,6 @@ class SetFocusTool extends SelectionTool {
 
   public void mouseUp(MouseEvent e, int x, int y) {
     game.setTileFocus(position);
-    editor.showStatus("tile focus hasn't been fully implemented. ");
     if(game.getUnitAt(position) != null){
       editor.showStatus("Inspecting unit at: " + position);
     }

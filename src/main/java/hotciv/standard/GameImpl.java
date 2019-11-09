@@ -255,6 +255,7 @@ public class GameImpl implements Game {
         boolean noUnitAtSurroundingPosition = getUnitAt(surroundingCityPosition) == (null);
         if (noUnitAtSurroundingPosition) {
           createUnit(surroundingCityPosition, new UnitImpl(city.getOwner(), unitProduced, GameConstants.getMoveDistance(unitProduced)));
+          return;
         }
       }
     }
