@@ -13,4 +13,7 @@ public class OperationConstants {
   public static final String CITY_GET_TREASURY = "operation_city_get_treasury";
   public static final String CITY_GET_PRODUCTION = "operation_city_get_production";
   public static final String CITY_GET_WORKFORCE_FOCUS = "operation_city_get_workforce_focus";
+
+  //Tile method
+  public static final String TILE_GET_TYPESTRING = "operation_tile_get_typestring";
 }
