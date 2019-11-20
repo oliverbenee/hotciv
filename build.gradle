@@ -33,12 +33,13 @@ repositories {
         url 'https://dl.bintray.com/henrikbaerbak/maven'
     }
 }
-    
+
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
     compile 'com.baerbak.maven:hotciv-fractal:1.0'
     compile 'com.baerbak.maven:minidraw:1.13'
+    compile 'com.baerbak.maven:broker:1.7'
 }
 
 // === Execution tasks - for running the various integration tests
@@ -126,4 +127,12 @@ task semi(type: JavaExec) {
 
     main = 'hotciv.visual.ShowSemiCiv'
     classpath = sourceSets.main.runtimeClasspath
+}
+
+task hotcivServer(type: JavaExec) {
+    group 'SWEA Distribution'
+    description 'Run HotCiv server (Socket)'
+
+    classpath sourceSets.test.runtimeClasspath
+    main = 'hotciv.broker.main.HotCivServer'
 }
