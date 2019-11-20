@@ -103,9 +103,11 @@ public class StubGame3 implements Game, Servant {
 
 class StubCity2 implements City {
   private Player owner;
+  private String produced;
 
   public StubCity2(Player p) {
     this.owner = p;
+    this.produced = GameConstants.ARCHER;
   }
 
   @Override
@@ -120,21 +122,17 @@ class StubCity2 implements City {
 
   @Override
   public int getTreasury() {
-    return 1;
+    return 10;
   }
 
   @Override
   public String getProduction() {
-    if(getOwner().equals(Player.RED)){
-      return GameConstants.B52;
-    } else {
-      return GameConstants.ARCHER;
-    }
+    return produced;
   }
 
   @Override
   public String getWorkforceFocus() {
-    return GameConstants.productionFocus;
+    return GameConstants.foodFocus;
   }
 }
 

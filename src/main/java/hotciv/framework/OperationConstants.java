@@ -10,4 +10,7 @@ public class OperationConstants {
   //City methods
   public static final String CITY_GET_OWNER = "operation_city_get_owner";
   public static final String CITY_GET_SIZE = "operation_city_get_size";
+  public static final String CITY_GET_TREASURY = "operation_city_get_treasury";
+  public static final String CITY_GET_PRODUCTION = "operation_city_get_production";
+  public static final String CITY_GET_WORKFORCE_FOCUS = "operation_city_get_workforce_focus";
 }
