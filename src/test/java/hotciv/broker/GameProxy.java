@@ -51,8 +51,8 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public boolean moveUnit(Position from, Position to) {
-    // Først næste iteration.
-    return false;
+    boolean moved = requestor.sendRequestAndAwaitReply("operation_move_unit", OperationConstants.MOVE_UNIT, boolean.class, from, to);
+    return moved;
   }
 
   @Override
@@ -66,12 +66,14 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public void changeProductionInCityAt(Position p, String unitType) {
-
+    requestor.sendRequestAndAwaitReply("operation_city_change_production", OperationConstants.CITY_CHANGE_PRODUCTION, String.class);
+    // TODO: HVORDAN TESTER VI DET HER?
   }
 
   @Override
   public void performUnitActionAt(Position p) {
-
+    requestor.sendRequestAndAwaitReply("operation_unit_action", OperationConstants.UNIT_ACTION, boolean.class);
+    // TODO: IMPLEMENT ?
   }
 
   @Override

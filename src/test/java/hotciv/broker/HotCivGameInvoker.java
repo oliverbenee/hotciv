@@ -47,17 +47,33 @@ public class HotCivGameInvoker implements Invoker {
        int age = game.getAge();
        // Used to convert int to String.
        StringBuilder sb = new StringBuilder();
-       sb.append("");
        sb.append(age);
        String ageString = sb.toString();
-       reply = new ReplyObject(HttpServletResponse.SC_CREATED, ageString);
+       reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(ageString));
      }
      // End of turn
      if(operationName.equals(OperationConstants.END_OF_TURN)){
        game.endOfTurn();
        String uid = game.getPlayerInTurn().toString();
-       reply = new ReplyObject(HttpServletResponse.SC_CREATED, uid);
+       reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(uid));
      }
+     // Move Unit
+     if(operationName.equals(OperationConstants.MOVE_UNIT)) {
+       Position from = gson.fromJson(array.get(0), Position.class);
+       Position to = gson.fromJson(array.get(1), Position.class);
+       boolean moved = game.moveUnit(from, to);
+       reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(moved));
+     }
+     /* Change production
+     TODO: DETTE ER PASS BY VALUE - FØRST NÆSTE UGE
+     if(operationName.equals(OperationConstants.CITY_CHANGE_PRODUCTION)) {
+       Position cityPosition = new Position(1,1);
+       game.changeProductionInCityAt(cityPosition, GameConstants.B52);
+       String uid = game.getCityAt(cityPosition).getProduction();
+       reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(uid));
+     }
+     */
+     // Perform unit action
    } catch (Exception e){}
     return reply;
   }

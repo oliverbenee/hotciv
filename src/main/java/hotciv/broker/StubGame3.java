@@ -4,6 +4,7 @@ import frds.broker.Servant;
 import hotciv.framework.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class StubGame3 implements Game, Servant {
@@ -12,12 +13,21 @@ public class StubGame3 implements Game, Servant {
 
   private Unit red_archer;
   private Player inTurn;
+  private Position position_of_red_archer;
+  private HashMap<Position, Unit> unitMap;
+
+  private StubCity2 green_city;
 
   public StubGame3() {
     observers = new ArrayList<>();
 
     // the only one I need to store for this stub
-    red_archer = new StubUnit2( GameConstants.ARCHER, Player.RED, 1);
+    red_archer = new StubUnit2(GameConstants.ARCHER, Player.RED, 1);
+
+    // Only implement a single archer, assign it to red.
+    Position position_of_red_archer = new Position(2,1);
+    unitMap = new HashMap<>();
+    unitMap.put(position_of_red_archer, red_archer);
 
     inTurn = Player.RED;
   }
@@ -27,8 +37,6 @@ public class StubGame3 implements Game, Servant {
     return null;
   }
 
-  // Only implement a single archer, assign it to red, and has 2 move.
-  Position position_of_red_archer = new Position(2,1);
   @Override
   public Unit getUnitAt(Position p) {
     if(p.equals(position_of_red_archer)){
@@ -62,8 +70,12 @@ public class StubGame3 implements Game, Servant {
     return 69;
   }
 
+  // Implement extra Position for Red archer to move to.
   @Override
   public boolean moveUnit(Position from, Position to) {
+    Position new_position_of_red_archer = new Position(3,1);
+    unitMap.remove(from);
+    unitMap.put(new_position_of_red_archer, red_archer);
     return true;
   }
 
@@ -81,7 +93,9 @@ public class StubGame3 implements Game, Servant {
 
   @Override
   public void changeProductionInCityAt(Position p, String unitType) {
-
+    if(p.equals(position_of_green_city)){
+      green_city.setProduction(unitType);
+    }
   }
 
   @Override
@@ -133,6 +147,10 @@ class StubCity2 implements City {
   @Override
   public String getWorkforceFocus() {
     return GameConstants.foodFocus;
+  }
+
+  public void setProduction(String unitType){
+    produced = unitType;
   }
 }
 

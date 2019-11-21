@@ -55,6 +55,7 @@ public class TestGameBroker {
   @Test
   public void shouldGetGameAge(){
     int age = game.getAge();
+    // 69 is set as unique value.
     assertThat(age, is(69));
   }
 
@@ -72,4 +73,23 @@ public class TestGameBroker {
     Player secondInTurn = game.getPlayerInTurn();
     assertThat(secondInTurn, is(Player.YELLOW));
   }
+
+  @Test
+  public void shouldMoveUnit() {
+    Position position_of_red_archer = new Position(2,0);
+    Position end_position = new Position(3,1);
+    boolean moved = game.moveUnit(position_of_red_archer, end_position);
+    assertThat(moved, is(true));
+  }
+
+  // TODO: KAN MAN OVERHOVEDET TESTE FOR CHANGE PRODUCTION I BROKER 1?
+  // TODO: KAN MAN OVERHOVEDET TESTE FOR CHANGE WORKFORCE FOCUS I BROKER 1?
+  /*
+  @Test
+  public void shouldChangeProduction(){
+    Position green_city_position = new Position(1,1);
+    game.changeProductionInCityAt(green_city_position, GameConstants.B52);
+    assertThat(game.getCityAt(green_city_position).getProduction(), is(GameConstants.B52));
+  }
+  */
 }

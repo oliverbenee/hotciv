@@ -31,7 +31,7 @@ public class HotCivCityInvoker implements Invoker {
     City city = lookupCity(objectId);
     // Get city owner
     if(operationName.equals(OperationConstants.CITY_GET_OWNER)){
-      String uid = city.getOwner().toString();
+      Player uid = city.getOwner();
       reply = new ReplyObject(HttpServletResponse.SC_CREATED,
               gson.toJson(uid));
     }
@@ -67,6 +67,11 @@ public class HotCivCityInvoker implements Invoker {
       reply = new ReplyObject(HttpServletResponse.SC_CREATED,
               gson.toJson(uid));
     }
+    /* Change city production TODO: DETTE ER PASS BY VALUE - FØRST NÆSTE UGE
+    if(operationName.equals(OperationConstants.CITY_CHANGE_PRODUCTION)){
+      String uid = "";
+    }
+    */
 
     return reply;
   }
