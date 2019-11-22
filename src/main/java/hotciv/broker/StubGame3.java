@@ -24,6 +24,9 @@ public class StubGame3 implements Game, Servant {
     // the only one I need to store for this stub
     red_archer = new StubUnit2(GameConstants.ARCHER, Player.RED, 1);
 
+    // the only one i need to store for this stub
+    green_city = new StubCity2(Player.GREEN);
+
     // Only implement a single archer, assign it to red.
     Position position_of_red_archer = new Position(2,1);
     unitMap = new HashMap<>();

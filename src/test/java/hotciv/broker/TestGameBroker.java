@@ -16,11 +16,14 @@ import org.junit.*;
 import org.junit.Before;
 import hotciv.factory.AlphaCivFactory;
 import javax.rmi.CORBA.Stub;
+import java.lang.reflect.Array;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class TestGameBroker {
   private Game game;
+  private LocalMethodClientRequestHandler lmcrh;
   private GameObserver nullObserver;
 
   /** Fixture for broker testing. */
@@ -36,8 +39,9 @@ public class TestGameBroker {
 
     // Create client side broker implementations, using the local
     // method client request handler to avoid any real IPC layer.
-    ClientRequestHandler crh =
+    ClientRequestHandler lmcrh =
             new LocalMethodClientRequestHandler(invoker);
+    ClientRequestHandler crh = lmcrh;
     Requestor requestor =
             new StandardJSONRequestor(crh);
 
@@ -82,14 +86,28 @@ public class TestGameBroker {
     assertThat(moved, is(true));
   }
 
-  // TODO: KAN MAN OVERHOVEDET TESTE FOR CHANGE PRODUCTION I BROKER 1?
-  // TODO: KAN MAN OVERHOVEDET TESTE FOR CHANGE WORKFORCE FOCUS I BROKER 1?
-  /*
+  /* TODO: IMPLEMENT AFTER GETUNITAT IN BROKER 2.
+  @Test
+  public void shouldPerformAction(){
+
+    Position position_of_red_archer = new Position(2,0);
+    game.performUnitActionAt(
+            position_of_red_archer
+    );
+    game.getUnitAt(position_of_red_archer).getMoveCount();
+  }
+   */
+
   @Test
   public void shouldChangeProduction(){
     Position green_city_position = new Position(1,1);
+    assertNotNull(game.getCityAt(green_city_position));
+    assertThat(game.getCityAt(green_city_position).getProduction(), is(GameConstants.ARCHER));
     game.changeProductionInCityAt(green_city_position, GameConstants.B52);
+    /* TODO: IMPLEMENT AFTER GETCITYAT IN BROKER 2. BLUEJ DEBUGGER SAYS EVERYTHING IS FINE.
     assertThat(game.getCityAt(green_city_position).getProduction(), is(GameConstants.B52));
+    String last = lmcrh.getLastReply().getPayload();
+    assertThat(last, is(GameConstants.B52));
+     */
   }
-  */
 }

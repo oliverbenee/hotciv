@@ -8,6 +8,9 @@ import hotciv.framework.Game;
 
 public class LocalMethodClientRequestHandler implements ClientRequestHandler {
   private final Invoker invoker;
+  // field used for test spy
+  private ReplyObject lastreply;
+
   public LocalMethodClientRequestHandler(Invoker invoker) {
     this.invoker = invoker;
   }
@@ -18,6 +21,8 @@ public class LocalMethodClientRequestHandler implements ClientRequestHandler {
     ReplyObject reply = invoker.handleRequest(requestObject.getObjectId(), requestObject.getOperationName()
             , requestObject.getPayload());
     System.out.println(" --< " + reply);
+    // field used for test spy
+    lastreply = reply;
     return reply;
   }
 
@@ -30,4 +35,6 @@ public class LocalMethodClientRequestHandler implements ClientRequestHandler {
   public void close() {
 
   }
+
+  public ReplyObject getLastReply() {return lastreply;}
 }

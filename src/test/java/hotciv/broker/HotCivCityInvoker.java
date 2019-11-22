@@ -36,7 +36,8 @@ public class HotCivCityInvoker implements Invoker {
               gson.toJson(uid));
     }
     // Get city size
-    if(operationName.equals(OperationConstants.CITY_GET_SIZE)){
+    boolean isGetSize = operationName.equals(OperationConstants.CITY_GET_SIZE);
+    if(isGetSize){
       int size = city.getSize();
       // Used to convert int to String.
       StringBuilder sb = new StringBuilder();
@@ -46,7 +47,8 @@ public class HotCivCityInvoker implements Invoker {
       reply = new ReplyObject(HttpServletResponse.SC_CREATED, sizeString);
     }
     // Get city treasury
-    if(operationName.equals(OperationConstants.CITY_GET_TREASURY)){
+    boolean isGetTreasury = operationName.equals(OperationConstants.CITY_GET_TREASURY);
+    if(isGetTreasury){
       int treasury = city.getTreasury();
       // Used to convert int to String.
       StringBuilder sb = new StringBuilder();
@@ -56,18 +58,20 @@ public class HotCivCityInvoker implements Invoker {
       reply = new ReplyObject(HttpServletResponse.SC_CREATED, treasuryString);
     }
     // Get city production
-    if(operationName.equals(OperationConstants.CITY_GET_PRODUCTION)){
+    boolean isGetProduction = operationName.equals(OperationConstants.CITY_GET_PRODUCTION);
+    if(isGetProduction){
       String uid = city.getProduction();
       reply = new ReplyObject(HttpServletResponse.SC_CREATED,
               gson.toJson(uid));
     }
     // Get city workforce focus
-    if(operationName.equals(OperationConstants.CITY_GET_WORKFORCE_FOCUS)){
+    boolean isGetWorkforceFocus = operationName.equals(OperationConstants.CITY_GET_WORKFORCE_FOCUS);
+    if(isGetWorkforceFocus){
       String uid = city.getWorkforceFocus();
       reply = new ReplyObject(HttpServletResponse.SC_CREATED,
               gson.toJson(uid));
     }
-    /* Change city production TODO: DETTE ER PASS BY VALUE - FØRST NÆSTE UGE
+    /* Change city production TODO: DETTE ER PASS BY VALUE - FØRST NÆSTE UGE - BROKER 2 - HVORDAN TESTER VI DET HER
     if(operationName.equals(OperationConstants.CITY_CHANGE_PRODUCTION)){
       String uid = "";
     }

@@ -30,7 +30,8 @@ public class HotCivTileInvoker implements Invoker {
 
     try {
       // Get Type String
-      if (operationName.equals(OperationConstants.TILE_GET_TYPESTRING)) {
+      boolean isGetTypeString = operationName.equals(OperationConstants.TILE_GET_TYPESTRING);
+      if(isGetTypeString) {
         String uid = tile.getTypeString();
         reply = new ReplyObject(HttpServletResponse.SC_CREATED,
                 gson.toJson(uid));

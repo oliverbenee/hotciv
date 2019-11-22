@@ -27,8 +27,8 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public City getCityAt(Position p) {
-    //Først næste iteration.
-    return null;
+    //TODO: Først næste iteration.
+    return new StubCity2(Player.RED);
   }
 
   @Override
@@ -66,14 +66,19 @@ public class GameProxy implements Game, ClientProxy {
 
   @Override
   public void changeProductionInCityAt(Position p, String unitType) {
-    requestor.sendRequestAndAwaitReply("operation_city_change_production", OperationConstants.CITY_CHANGE_PRODUCTION, String.class);
-    // TODO: HVORDAN TESTER VI DET HER?
+    System.out.println("Sending request to change production");
+    requestor.sendRequestAndAwaitReply("operation_city_change_production", OperationConstants.CITY_CHANGE_PRODUCTION, null, p, unitType);
+    // TODO: IMPLEMENTER MED TEST SPY I BROKER 2
   }
 
   @Override
   public void performUnitActionAt(Position p) {
-    requestor.sendRequestAndAwaitReply("operation_unit_action", OperationConstants.UNIT_ACTION, boolean.class);
-    // TODO: IMPLEMENT ?
+    /* TODO: IMPLEMENTER I BROKER 2.
+    requestor.sendRequestAndAwaitReply(
+            "operation_unit_action",
+            OperationConstants.UNIT_ACTION, null, p);
+    TODO: LAV BOOLEAN OM TIL NULL
+     */
   }
 
   @Override

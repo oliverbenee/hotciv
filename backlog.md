@@ -175,8 +175,10 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 ## Broker 1
 * [OK?] Broker 1.1: 
     * [OK?] Game methods, that do not return references
+        * [] With the exception of perform unit action
 * [OK] Broker 1.2: 
     * [OK] City methods
+        * [OK?] Well, with the exception of changing city production.
     * [] Unit methods - OPTIONAL
     * [OK] Tile methods
 * [OK] Broker 1.3: 

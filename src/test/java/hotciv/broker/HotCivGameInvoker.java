@@ -31,19 +31,22 @@ public class HotCivGameInvoker implements Invoker {
 
     try {
      // Get Winner
-     if (operationName.equals(OperationConstants.OPERATION_WINNER)) {
+     boolean isWinner = operationName.equals(OperationConstants.OPERATION_WINNER);
+     if(isWinner) {
        String uid = game.getWinner().toString();
        reply = new ReplyObject(HttpServletResponse.SC_CREATED,
                gson.toJson(uid));
      }
      // Get player in turn
-     if(operationName.equals(OperationConstants.PLAYER_IN_TURN)){
+     boolean isPlayerInTurn = operationName.equals(OperationConstants.PLAYER_IN_TURN);
+     if(isPlayerInTurn){
        String uid = game.getPlayerInTurn().toString();
        reply = new ReplyObject(HttpServletResponse.SC_CREATED,
                gson.toJson(uid));
      }
      // Get world age
-     if (operationName.equals(OperationConstants.CURRENT_WORLD_AGE)) {
+     boolean isCurrentAge = operationName.equals(OperationConstants.CURRENT_WORLD_AGE);
+     if(isCurrentAge) {
        int age = game.getAge();
        // Used to convert int to String.
        StringBuilder sb = new StringBuilder();
@@ -52,27 +55,29 @@ public class HotCivGameInvoker implements Invoker {
        reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(ageString));
      }
      // End of turn
-     if(operationName.equals(OperationConstants.END_OF_TURN)){
+     boolean isEndOfTurn = operationName.equals(OperationConstants.END_OF_TURN);
+     if(isEndOfTurn){
        game.endOfTurn();
        String uid = game.getPlayerInTurn().toString();
        reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(uid));
      }
      // Move Unit
-     if(operationName.equals(OperationConstants.MOVE_UNIT)) {
+     boolean isMoveUnit = operationName.equals(OperationConstants.MOVE_UNIT);
+     if(isMoveUnit) {
        Position from = gson.fromJson(array.get(0), Position.class);
        Position to = gson.fromJson(array.get(1), Position.class);
        boolean moved = game.moveUnit(from, to);
        reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(moved));
      }
-     /* Change production
-     TODO: DETTE ER PASS BY VALUE - FØRST NÆSTE UGE
-     if(operationName.equals(OperationConstants.CITY_CHANGE_PRODUCTION)) {
-       Position cityPosition = new Position(1,1);
-       game.changeProductionInCityAt(cityPosition, GameConstants.B52);
-       String uid = game.getCityAt(cityPosition).getProduction();
-       reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(uid));
+     // Change production TODO: DETTE ER PASS BY VALUE - FØRST NÆSTE UGE - BROKER 2 - IMPLEMENTER TEST EFTER FUNGERENDE GETCITYAT.
+     boolean isChangeProductionInCity = operationName.equals(OperationConstants.CITY_CHANGE_PRODUCTION);
+     if(isChangeProductionInCity) {
+       Position cityPosition = gson.fromJson(array.get(0), Position.class);
+       System.out.println("Finding city at: " + game.getCityAt(cityPosition));
+       String production = gson.fromJson(array.get(1), String.class);
+       game.changeProductionInCityAt(cityPosition, production);
+       reply = new ReplyObject(HttpServletResponse.SC_CREATED, gson.toJson(array));
      }
-     */
      // Perform unit action
    } catch (Exception e){}
     return reply;

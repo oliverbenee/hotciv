@@ -24,9 +24,6 @@ public class HotCivStoryTest {
 
     // Set up broker part
 
-
-
-    /**Requestor requestor = new StandardJSONRequestor(crh);*/
     // Server side implementation.
     Game servant = new StubGame3();
     GameObserver nullObserver = new NullObserver();
@@ -63,6 +60,16 @@ public class HotCivStoryTest {
     System.out.println("------------------------------");
     System.out.println("| moveUnit():                |");
     System.out.println(game.moveUnit(new Position(2, 0), new Position(3, 1)));
+    System.out.println("------------------------------");
+    System.out.println("| changeProductioninCityAt:  |");
+    System.out.println("| " + game.getCityAt(new Position(1,1)));
+    System.out.println("| Initial production:        |");
+    System.out.println("| " + game.getCityAt(new Position(1,1)).getProduction());
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.SETTLER);
+    // TODO: CHANGE TO REFLECT BROKER 2.
+    System.out.println("| IntJ debugger will show B52|");
+    System.out.println("| End prod. should be same:  |");
+    System.out.println("| " + game.getCityAt(new Position(1,1)).getProduction());
     System.out.println("------------------------------");
   }
 }
