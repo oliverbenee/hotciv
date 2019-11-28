@@ -222,8 +222,8 @@ public class TestSemiCiv {
     game.endOfTurn();
     game.endOfTurn();
     assertThat(game.getUnitAt(cityPosition).getMoveCount(), is(1));
-    game.moveUnit(cityPosition, new Position(2, 1));
-    assertThat(game.getUnitAt(new Position(2, 1)).getMoveCount(), is(0));
+    game.moveUnit(cityPosition, new Position(8,13));
+    assertThat(game.getUnitAt(new Position(8, 13)).getMoveCount(), is(0));
   }
 
   // Ensure, that when archers fortify, they cannot move.
@@ -392,5 +392,28 @@ public class TestSemiCiv {
     game.createUnit(new Position(8, 8), new UnitImpl(Player.BLUE, GameConstants.LEGION, 1));
     game.moveUnit(settlerPosition, legionPosition);
 
+  }
+
+  // Ensure, that units cannot move two tiles
+  @Test
+  public void unitsCannotMoveTooManyColumns() {
+    Position legionPosition = new Position(8, 8);
+    game.createUnit(legionPosition, new UnitImpl(Player.RED, GameConstants.LEGION, 1));
+    Position targetPosition = new Position(8,11);
+    assertNotNull(game.getUnitAt(legionPosition));
+    assertNull(game.getUnitAt(targetPosition));
+    game.moveUnit(legionPosition, targetPosition);
+    assertNull(game.getUnitAt(targetPosition));
+  }
+
+  // Ensure, that units cannot move two tiles
+  @Test
+  public void unitsCannotMoveTwoRows() {
+    Position legionPosition = new Position(8, 8);
+    game.createUnit(legionPosition, new UnitImpl(Player.RED, GameConstants.LEGION, 1));
+    Position targetPosition = new Position(10,8);
+    assertNull(game.getUnitAt(targetPosition));
+    game.moveUnit(legionPosition,  targetPosition);
+    assertNull(game.getUnitAt(targetPosition));
   }
 }

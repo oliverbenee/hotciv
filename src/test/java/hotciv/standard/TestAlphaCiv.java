@@ -199,7 +199,11 @@ public class TestAlphaCiv {
     assertEquals(game.getUnitAt(redpos).getOwner(), Player.RED);
     Position bluepos = new Position(3,2);
     assertEquals(game.getUnitAt(bluepos).getOwner(), Player.BLUE);
-    game.moveUnit(redpos, bluepos);
+    Position midpos = new Position(3,1);
+    game.moveUnit(redpos, midpos);
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(midpos, bluepos);
     assertEquals(game.getUnitAt(bluepos).getOwner(), Player.RED);
     assertNotEquals(game.getUnitAt(bluepos).getOwner(), Player.BLUE);
   }

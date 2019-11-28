@@ -150,9 +150,9 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 
 ## Other
 * [OK] Refactoring of EpsilonCivDynamicAttackStrategy is VERY MUCH NEEDED.
-* [PARTIAL] Correct design of attackstrategy
-* [PARTIAL] EpsilonCiv uses stub class DieStub
-* [] Fix moveunit to only allow movement distance of one tile.
+* [OK] Correct design of attackstrategy
+* [OK] EpsilonCiv uses stub class DieStub
+* [OK] Fix moveunit to only allow movement distance of one tile.
 
 ## INTEGRATION OF HOTCIV GUI
 * [OK] 36.37: Implement and JUnit test the Observer pattern 'Subject' role behaviour in your HotCiv framework code. Make the test cases part of the normal JUnit test suite

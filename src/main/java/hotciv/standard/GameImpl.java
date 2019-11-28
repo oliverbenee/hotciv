@@ -170,6 +170,12 @@ public class GameImpl implements Game {
       }
     }
 
+    boolean tooManyColumns = unit.getMoveCount() < Math.abs((Math.abs(from.getColumn()) - Math.abs(to.getColumn())));
+    if(tooManyColumns) return false;
+
+    boolean tooManyRows = unit.getMoveCount() < Math.abs((Math.abs(from.getRow()) - Math.abs(to.getRow())));
+    if(tooManyRows) return false;
+
     removeUnit(from);
     createUnit(to, unit);
     getUnitAt(to).decreaseMoveCount();

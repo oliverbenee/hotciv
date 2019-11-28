@@ -237,7 +237,10 @@ public class TestThetaCiv {
     assertThat(game.getUnitAt(blueCityPosition).getTypeString(), is(GameConstants.SETTLER));
     assertThat(game.getCityAt(blueCityPosition).getOwner(), is(Player.BLUE));
     game.endOfTurn();
-    game.moveUnit(redB52Position, new Position(3,1));
+    game.moveUnit(redB52Position, new Position(2,1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(new Position(2,1), new Position(3,1));
     assertThat(game.getUnitAt(new Position(3,1)).getTypeString(), is(GameConstants.B52));
     game.endOfTurn();
     game.endOfTurn();
