@@ -63,12 +63,5 @@ public class CompositionTool implements Tool {
       editor.showStatus("Requested refresh of the map. Might take a while..");
       editor.drawing().requestUpdate();
     }
-
-    // is it refresh position?
-//    refreshBtn = GfxConstants.getPositionFromXY(GfxConstants.REFRESH_BUTTON_X, GfxConstants.REFRESH_BUTTON_Y);
-//    if(refreshBtn.equals(GfxConstants.getPositionFromXY(x,y))){
-//      editor.showStatus("Requested refresh of the map. Might take a while..");
-//      editor.drawing().requestUpdate();
-//    }
   }
 }
