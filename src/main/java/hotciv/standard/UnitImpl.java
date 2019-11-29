@@ -1,16 +1,20 @@
 package hotciv.standard;
 import hotciv.framework.*;
 
+import java.util.UUID;
+
 public class UnitImpl implements Unit {
   private Player owner;
   private String type;
   private int moveCount;
   private boolean fortify;
+  private String id;
 
   public UnitImpl(Player owner, String unitType, int moveCount){
     this.owner = owner;
     this.type = unitType;
     this.moveCount = moveCount;
+    this.id = UUID.randomUUID().toString();
   }
 
   public String getTypeString() {
@@ -45,5 +49,10 @@ public class UnitImpl implements Unit {
 
   public int getAttackingStrength(){
     return 1;
+  }
+
+  @Override
+  public String getId() {
+    return id;
   }
 }

@@ -5,18 +5,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
+import hotciv.framework.GameConstants;
+import hotciv.framework.NameService;
 import hotciv.framework.OperationConstants;
 import hotciv.framework.Tile;
+import hotciv.stub.StubTile;
 
 import javax.servlet.http.HttpServletResponse;
 
 public class HotCivTileInvoker implements Invoker {
-  private Tile tile;
   private final Gson gson;
+  private NameService nameService;
 
-  public HotCivTileInvoker(Tile servant) {
-    tile = servant;
+  public HotCivTileInvoker(NameService nameService) {
     gson = new Gson();
+    this.nameService = nameService;
   }
 
   @Override
@@ -32,8 +35,9 @@ public class HotCivTileInvoker implements Invoker {
       // Get Type String
       boolean isGetTypeString = operationName.equals(OperationConstants.TILE_GET_TYPESTRING);
       if(isGetTypeString) {
+        Tile tile = nameService.getTile(objectId);
         String uid = tile.getTypeString();
-        reply = new ReplyObject(HttpServletResponse.SC_CREATED,
+        reply = new ReplyObject(HttpServletResponse.SC_OK,
                 gson.toJson(uid));
       }
     } catch (Exception e) {}

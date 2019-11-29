@@ -2,24 +2,34 @@ package hotciv.broker;
 
 import frds.broker.Servant;
 import hotciv.framework.*;
+import hotciv.stub.StubTile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class StubGame3 implements Game, Servant {
   private ArrayList<GameObserver> observers;
   private GameObserver gameObserver;
 
-  private Unit red_archer;
+  private StubUnit2 red_archer;
   private Player inTurn;
   private Position position_of_red_archer;
   private HashMap<Position, Unit> unitMap;
+  private HashMap<Position, City> cityMap;
 
   private StubCity2 green_city;
 
+  private String lasttype;
+
   public StubGame3() {
     observers = new ArrayList<>();
+
+    cityMap = new HashMap<>();
+    // the only one i need to store for this stub
+    Position position_of_green_city = new Position(1,1);
+    cityMap.put(position_of_green_city, new StubCity2(Player.GREEN));
 
     // the only one I need to store for this stub
     red_archer = new StubUnit2(GameConstants.ARCHER, Player.RED, 1);
@@ -33,29 +43,38 @@ public class StubGame3 implements Game, Servant {
     unitMap.put(position_of_red_archer, red_archer);
 
     inTurn = Player.RED;
+    lasttype = "";
   }
+
+  // Only implement 1 tile for each of the types in AlphaCiv
+  Position oceanPosition = new Position(1,0);
+  Position hillsPosition = new Position(0,1);
+  Position mountain1Position = new Position(1,1);
+  Position mountain2Position = new Position(2,2);
 
   @Override
   public Tile getTileAt(Position p) {
-    return null;
+    boolean isOceanPosition = p.equals(oceanPosition);
+    if(isOceanPosition){ return new StubTile(GameConstants.OCEANS); }
+    boolean isHillsPosition = p.equals(hillsPosition);
+    if (isHillsPosition){ return new StubTile(GameConstants.HILLS); }
+    boolean isMountain1Position = p.equals(mountain1Position);
+    if (isMountain1Position) {return new StubTile(GameConstants.MOUNTAINS);}
+    boolean isMountain2Position = p.equals(mountain2Position);
+    if(isMountain2Position){return new StubTile(GameConstants.MOUNTAINS);}
+    return new StubTile(GameConstants.PLAINS);
   }
 
   @Override
   public Unit getUnitAt(Position p) {
-    if(p.equals(position_of_red_archer)){
-      return red_archer;
-    }
-    return null;
+    return unitMap.get(p);
   }
 
   // Only implement a single city, assign it to green, which has size 4
   Position position_of_green_city = new Position(1,1);
   @Override
   public City getCityAt(Position p) {
-    if(p.equals(position_of_green_city)){
-      return new StubCity2(Player.GREEN);
-    }
-    return null;
+    return cityMap.get(p);
   }
 
   @Override
@@ -97,13 +116,23 @@ public class StubGame3 implements Game, Servant {
   @Override
   public void changeProductionInCityAt(Position p, String unitType) {
     if(p.equals(position_of_green_city)){
+      System.out.println("Changing city production");
       green_city.setProduction(unitType);
+      lasttype = green_city.getProduction();
+      System.out.println("to: " + unitType);
     }
+  }
+
+  public String getLastType(){
+    return lasttype;
   }
 
   @Override
   public void performUnitActionAt(Position p) {
-
+    if(p.equals(position_of_red_archer)){
+      red_archer.setFortify();
+    }
+    lasttype = "performed unit action";
   }
 
   @Override
@@ -121,10 +150,12 @@ public class StubGame3 implements Game, Servant {
 class StubCity2 implements City {
   private Player owner;
   private String produced;
+  private String id;
 
-  public StubCity2(Player p) {
-    this.owner = p;
+  public StubCity2(Player owner) {
+    this.owner = owner;
     this.produced = GameConstants.ARCHER;
+    this.id = UUID.randomUUID().toString();
   }
 
   @Override
@@ -155,6 +186,8 @@ class StubCity2 implements City {
   public void setProduction(String unitType){
     produced = unitType;
   }
+
+  public String getId(){return id;}
 }
 
 class StubUnit2 implements  Unit {
@@ -162,11 +195,14 @@ class StubUnit2 implements  Unit {
   private Player owner;
   private int moveCount;
   private boolean fortify;
+  private String id;
+
   public StubUnit2(String type, Player owner, int moveCount) {
     this.type = type;
     this.owner = owner;
     this.moveCount = moveCount;
     this.fortify = false;
+    this.id = UUID.randomUUID().toString();
   }
   public String getTypeString() { return type; }
   public Player getOwner() { return owner; }
@@ -176,8 +212,8 @@ class StubUnit2 implements  Unit {
       return 0;
     }
   }
-  public int getDefensiveStrength() { return 0; }
-  public int getAttackingStrength() { return 0; }
+  public int getDefensiveStrength() { return 5; }
+  public int getAttackingStrength() { return 6; }
   public void decreaseMoveCount() {
     moveCount--;
   }
@@ -191,4 +227,5 @@ class StubUnit2 implements  Unit {
       System.out.println("unfortified archer!");
     }
   }
+  public String getId(){return id;}
 }

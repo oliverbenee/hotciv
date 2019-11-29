@@ -193,7 +193,6 @@ public class StubGame2 implements Game {
 
   /**
    * define units
-   * @return
    */
   protected void defineUnitMap(){
     unitMap = new HashMap<>();
@@ -258,6 +257,13 @@ class StubUnit implements  Unit {
   }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
+
+  @Override
+  public String getId() {
+    System.out.println("StubUnit2 - getId called. This is bad.");
+    return null;
+  }
+
   public void decreaseMoveCount() {
     moveCount--;
   }
@@ -309,5 +315,10 @@ class StubCity implements City {
   @Override
   public String getWorkforceFocus() {
     return GameConstants.productionFocus;
+  }
+
+  @Override
+  public String getId() {
+    return null;
   }
 }

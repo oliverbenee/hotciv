@@ -62,4 +62,9 @@ public interface City {
    */
   public String getWorkforceFocus();
 
+  /** return the id of the city as a string. The
+   * string is randomly generated.
+   * @return the unique id string.
+   */
+  public String getId();
 }

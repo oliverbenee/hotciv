@@ -7,15 +7,21 @@ import hotciv.framework.Tile;
 
 public class TileProxy implements Tile, ClientProxy {
 
+  private String id;
   private final Requestor requestor;
 
-  public TileProxy(Requestor crh) {
+  public TileProxy(String id, Requestor crh) {
+    this.id = id;
     this.requestor = crh;
   }
 
   @Override
   public String getTypeString() {
-    String type = requestor.sendRequestAndAwaitReply("operation_tile_get_typestring", OperationConstants.TILE_GET_TYPESTRING, String.class);
+    String type = requestor.sendRequestAndAwaitReply(getId(), OperationConstants.TILE_GET_TYPESTRING, String.class);
     return type;
+  }
+
+  public String getId(){
+    return id;
   }
 }

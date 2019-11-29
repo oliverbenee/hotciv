@@ -6,18 +6,19 @@ import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import hotciv.framework.City;
+import hotciv.framework.NameService;
 import hotciv.framework.OperationConstants;
 import hotciv.framework.Player;
 
 import javax.servlet.http.HttpServletResponse;
 
 public class HotCivCityInvoker implements Invoker {
-  private City city;
   private final Gson gson;
+  private NameService nameService;
 
-  public HotCivCityInvoker(City servant){
-    city = servant;
+  public HotCivCityInvoker(NameService nameService){
     gson = new Gson();
+    this.nameService = nameService;
   }
   @Override
   public ReplyObject handleRequest(String objectId, String operationName, String payload) {
@@ -28,16 +29,22 @@ public class HotCivCityInvoker implements Invoker {
     JsonArray array =
             parser.parse(payload).getAsJsonArray();
 
-    City city = lookupCity(objectId);
+
     // Get city owner
     if(operationName.equals(OperationConstants.CITY_GET_OWNER)){
-      Player uid = city.getOwner();
-      reply = new ReplyObject(HttpServletResponse.SC_CREATED,
-              gson.toJson(uid));
+      City city = nameService.getCity(objectId);
+      if(city != null) {
+        Player uid = city.getOwner();
+        System.out.println("Player: " + uid);
+        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(uid));
+      } else {
+        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson("no city found"));
+      }
     }
     // Get city size
     boolean isGetSize = operationName.equals(OperationConstants.CITY_GET_SIZE);
     if(isGetSize){
+      City city = nameService.getCity(objectId);
       int size = city.getSize();
       // Used to convert int to String.
       StringBuilder sb = new StringBuilder();
@@ -49,6 +56,7 @@ public class HotCivCityInvoker implements Invoker {
     // Get city treasury
     boolean isGetTreasury = operationName.equals(OperationConstants.CITY_GET_TREASURY);
     if(isGetTreasury){
+      City city = nameService.getCity(objectId);
       int treasury = city.getTreasury();
       // Used to convert int to String.
       StringBuilder sb = new StringBuilder();
@@ -60,6 +68,7 @@ public class HotCivCityInvoker implements Invoker {
     // Get city production
     boolean isGetProduction = operationName.equals(OperationConstants.CITY_GET_PRODUCTION);
     if(isGetProduction){
+      City city = nameService.getCity(objectId);
       String uid = city.getProduction();
       reply = new ReplyObject(HttpServletResponse.SC_CREATED,
               gson.toJson(uid));
@@ -67,21 +76,16 @@ public class HotCivCityInvoker implements Invoker {
     // Get city workforce focus
     boolean isGetWorkforceFocus = operationName.equals(OperationConstants.CITY_GET_WORKFORCE_FOCUS);
     if(isGetWorkforceFocus){
+      City city = nameService.getCity(objectId);
       String uid = city.getWorkforceFocus();
       reply = new ReplyObject(HttpServletResponse.SC_CREATED,
               gson.toJson(uid));
     }
-    /* Change city production TODO: DETTE ER PASS BY VALUE - FØRST NÆSTE UGE - BROKER 2 - HVORDAN TESTER VI DET HER
+    // Change city production
     if(operationName.equals(OperationConstants.CITY_CHANGE_PRODUCTION)){
       String uid = "";
     }
-    */
 
     return reply;
-  }
-
-  private City lookupCity(String objectId){
-    City city = new StubCity2(Player.GREEN);
-    return city;
   }
 }

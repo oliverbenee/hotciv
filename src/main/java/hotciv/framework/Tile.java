@@ -37,5 +37,11 @@ public interface Tile {
    * engine, as they correspond to named image files.
    * @return the type type as string
    */
-  public String getTypeString(); 
+  public String getTypeString();
+
+  /** return the id of the tile as a string. The
+   * string is randomly generated.
+   * @return the unique id string.
+   */
+  public String getId();
 }

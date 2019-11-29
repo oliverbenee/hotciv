@@ -43,6 +43,7 @@ public class HotCivStoryTest {
   }
 
   private static void testSimpleMethods(Game game) {
+    System.out.println("Why the hell are you running this. You are supposed to use hotcivClient lol.");
     System.out.println("=== Testing simple methods ===");
     System.out.println("------------------------------");
     System.out.println("| getPlayerInTurn():         |");
@@ -66,7 +67,6 @@ public class HotCivStoryTest {
     System.out.println("| Initial production:        |");
     System.out.println("| " + game.getCityAt(new Position(1,1)).getProduction());
     game.changeProductionInCityAt(new Position(1,1), GameConstants.SETTLER);
-    // TODO: CHANGE TO REFLECT BROKER 2.
     System.out.println("| IntJ debugger will show B52|");
     System.out.println("| End prod. should be same:  |");
     System.out.println("| " + game.getCityAt(new Position(1,1)).getProduction());

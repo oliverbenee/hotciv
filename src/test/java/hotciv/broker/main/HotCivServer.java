@@ -4,10 +4,10 @@ import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.ipc.socket.SocketServerRequestHandler;
 import frds.broker.marshall.json.StandardJSONRequestor;
-import hotciv.broker.GameProxy;
-import hotciv.broker.HotCivGameInvoker;
-import hotciv.broker.StubGame3;
+import hotciv.broker.*;
+import hotciv.factory.SemiCivFactory;
 import hotciv.framework.Game;
+import hotciv.framework.NameService;
 import hotciv.standard.GameImpl;
 
 /**
@@ -25,8 +25,8 @@ public class HotCivServer {
   public HotCivServer() throws Exception {
     int port = 25565;
 
-    Game gameServant = new StubGame3();
-    Invoker invoker = new HotCivGameInvoker(gameServant);
+    Game gameServant = new GameImpl(new SemiCivFactory());
+    Invoker invoker = new HotCivGameRootInvoker(gameServant);
 
     // Configure a socket based server request handler
     SocketServerRequestHandler ssrh =

@@ -175,12 +175,38 @@ However, in case the game lasts more than 20 rounds then the winner is the first
 ## Broker 1
 * [OK?] Broker 1.1: 
     * [OK?] Game methods, that do not return references
-        * [] With the exception of perform unit action
+        * [OK] With the exception of perform unit action
 * [OK] Broker 1.2: 
     * [OK] City methods
         * [OK?] Well, with the exception of changing city production.
-    * [] Unit methods - OPTIONAL
+    * [OK] Unit methods - OPTIONAL
     * [OK] Tile methods
 * [OK] Broker 1.3: 
     * [OK] hotCivServer
     * [OK] hotCivStoryTest
+    
+## Broker 2
+* [OK] Broker 2.1:
+    * [OK] Game methods, that transfer objects using TDD and Test doubles. 
+        * [OK] getUnitAt (OPTIONAL)
+        * [OK] getCityAt
+        * [OK] getTileAt
+* [OK] Broker 2.2:
+    * [OK] Integrate type invokers and implement Multi-Type dispatching.
+        * [OK] Remove the fake-it objectId
+        * [OK] And integrate it into a full Multi Type Dispatcher system // ROOT INVOKER
+* [OK] Broker 2.3:
+    * [OK] System test. 
+        * [OK] Develop and manually system test/demonstrate that two socket based hotciv clients (target: 'hotcivClient'), 
+        * [OK] connected to the hotciv server (target: 'hotcivServer'), 
+        * [OK] each presenting the user with the MiniDraw based GUI can execute properly as a distributed system. 
+        
+        * [OK] Your system test should validate that the two players can:
+            * [OK] move units
+            * [OK] end the turn
+            * [OK] set focus (locally)
+            * [OK] refresh the GUI by clicking the 'Rfsh' Button
+            * [OK] show unit attack behaviour
+            * [OK] show city behaviour (unit creation)
+        
+        

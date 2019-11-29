@@ -63,4 +63,10 @@ public interface Unit {
    * @return attack strength
    */
   public int getAttackingStrength();
+
+  /** return the id of the city as a string. The
+   * string is randomly generated.
+   * @return the unique id string.
+   */
+  public String getId();
 }

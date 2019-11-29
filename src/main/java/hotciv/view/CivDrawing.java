@@ -226,6 +226,7 @@ public class CivDrawing
   protected ImageFigure cityProductionIcon;
   protected TextFigure ageText;
   protected TextFigure unitMoveText;
+  protected ImageFigure refreshButton;
 
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed?
@@ -256,6 +257,12 @@ public class CivDrawing
             new Point( GfxConstants.WORKFORCEFOCUS_X,
                 GfxConstants.WORKFORCEFOCUS_Y));
     delegate.add(workforceFocusIcon);
+
+    refreshButton =
+            new ImageFigure("refresh",
+                    new Point( GfxConstants.REFRESH_BUTTON_X,
+                            GfxConstants.REFRESH_BUTTON_Y));
+    delegate.add(refreshButton);
   }
 
   // === Observer Methods ===
@@ -282,6 +289,26 @@ public class CivDrawing
             GfxConstants.TURN_SHIELD_Y ) );
     delegate.add(turnShieldIcon);
     requestUpdate();
+  }
+
+  public void refreshAgeAndPinTurn(){
+    Player nextPlayer = game.getPlayerInTurn();
+    int age = game.getAge();
+    System.out.println("AGE PRINTING SHOULD HAPPEN: " + age);
+    boolean isBC = age < 0;
+    if(isBC) ageText.setText(Math.abs(age) + " BC");
+    if(!isBC) ageText.setText(Math.abs(age) + " AD");
+    delegate.add(ageText);
+    System.out.println("AGE PRINTING SHOULD HAVE HAPPENED");
+
+    if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
+    else {
+      playername = "red";
+    }
+    turnShieldIcon.set( playername+"shield",
+            new Point( GfxConstants.TURN_SHIELD_X,
+                    GfxConstants.TURN_SHIELD_Y ) );
+    delegate.add(turnShieldIcon);
   }
 
   public void tileFocusChangedAt(Position position) {
@@ -339,6 +366,7 @@ public class CivDrawing
     defineCityMap();
     defineUnitMap();
     defineIcons();
+    refreshAgeAndPinTurn();
   }
 
   @Override

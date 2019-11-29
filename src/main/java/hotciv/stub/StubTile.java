@@ -2,6 +2,8 @@ package hotciv.stub;
 
 import hotciv.framework.*;
 
+import java.util.UUID;
+
 /** Implementation of Tile for the stub.
    This source code is from the book 
      "Flexible, Reliable Software:
@@ -30,9 +32,16 @@ import hotciv.framework.*;
 
 
 public class StubTile implements Tile {
+  private String id;
   private String type;
   public StubTile(String type) {
     this.type = type;
+    id = UUID.randomUUID().toString();
   }
   public String getTypeString() { return type; }
+
+  @Override
+  public String getId(){
+    return id;
+  }
 }
