@@ -57,9 +57,9 @@ public class CompositionTool implements Tool {
     actionTool.mouseUp(e,x,y);
     setFocusTool.mouseUp(e,x,y);
     startPosition = GfxConstants.getPositionFromXY(x, y);
-
-    if(x > GfxConstants.REFRESH_BUTTON_X && x < GfxConstants.REFRESH_BUTTON_X + 45
-            && GfxConstants.REFRESH_BUTTON_Y < y && y < GfxConstants.REFRESH_BUTTON_Y + 18){
+    boolean isAtRefreshButton = x > GfxConstants.REFRESH_BUTTON_X && x < GfxConstants.REFRESH_BUTTON_X + 45
+            && GfxConstants.REFRESH_BUTTON_Y < y && y < GfxConstants.REFRESH_BUTTON_Y + 18;
+    if(isAtRefreshButton){
       editor.showStatus("Requested refresh of the map. Might take a while..");
       editor.drawing().requestUpdate();
     }
